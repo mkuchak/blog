@@ -3,6 +3,7 @@ import { Inter as FontSans } from "next/font/google";
 import { ThemeProvider } from "~/components/theme-provider";
 import { cn } from "~/lib/utils";
 import "./globals.css";
+import { Header } from "~/components/header";
 
 export const fontSans = FontSans({
   subsets: ["latin"],
@@ -11,7 +12,7 @@ export const fontSans = FontSans({
 
 export const metadata: Metadata = {
   title: "Kuchak",
-  description: "Personal portal to present projects and ideas",
+  description: "Personal blog to present projects and ideas",
 };
 
 export default function RootLayout({
@@ -33,6 +34,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <Header />
           {children}
         </ThemeProvider>
       </body>
