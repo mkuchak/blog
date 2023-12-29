@@ -6,8 +6,8 @@ import { socialNetworks } from "~/constants/social-networks";
 
 export default function Home() {
   return (
-    <main className="container flex min-h-screen flex-col items-center justify-between p-24 space-y-24">
-      <section className="flex items-center justify-center space-x-8">
+    <main className="container flex min-h-screen flex-col items-center justify-between py-40 p-24 space-y-24">
+      <section className="flex items-center justify-center space-x-16">
         <Image
           src="https://github.com/mkuchak.png"
           alt="Marcos"
@@ -15,6 +15,7 @@ export default function Home() {
           height={256}
           className="rounded-full"
         />
+
         <div className="flex flex-col space-y-6">
           <div className="space-y-2">
             <span className="text-xl">Hello, I&apos;m</span>
@@ -56,19 +57,19 @@ export default function Home() {
                   <Image
                     src="/posts/clean-architecture/cover.png"
                     alt="Clean Architecture"
-                    layout="fill"
+                    fill={true}
                     className="object-cover rounded-md shadow-md border-2 border-gray-200"
                   />
                 </div>
 
                 <div className="flex flex-col space-y-2 justify-between w-[54rem] h-[14rem]">
                   <div className="flex items-center space-x-3 text-base">
-                    <div className="flex space-x-2 text-gray-400 items-center">
+                    <div className="flex space-x-2 text-gray-600 dark:text-gray-400 items-center">
                       <CalendarIcon className="w-4 h-4" />
                       <span>May 1, 2021</span>
                     </div>
-                    <div className="flex w-[0.175rem] h-[0.175rem] bg-gray-400 rounded-full" />
-                    <div className="flex space-x-2 text-gray-400 items-center">
+                    <div className="flex w-[0.175rem] h-[0.175rem] bg-gray-600 dark:bg-gray-400 rounded-full" />
+                    <div className="flex space-x-2 text-gray-600 dark:text-gray-400 items-center">
                       <ClockIcon className="w-4 h-4" />
                       <span>5 min read</span>
                     </div>

@@ -11,7 +11,7 @@ import {
   TooltipTrigger,
 } from "~/components/ui/tooltip";
 import {
-  NavigationMenu as NavigationMenuRoot,
+  NavigationMenu,
   NavigationMenuContent,
   NavigationMenuItem,
   NavigationMenuLink,
@@ -29,9 +29,9 @@ type NavigationMenuProps = {
   }[];
 };
 
-export function NavigationMenu({ projects }: NavigationMenuProps) {
+export function Menu({ projects }: NavigationMenuProps) {
   return (
-    <NavigationMenuRoot>
+    <NavigationMenu>
       <NavigationMenuList>
         <NavigationMenuItem>
           <Link href="/" legacyBehavior passHref>
@@ -41,7 +41,7 @@ export function NavigationMenu({ projects }: NavigationMenuProps) {
           </Link>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <NavigationMenuTrigger>My projects</NavigationMenuTrigger>
+          <NavigationMenuTrigger>Projects</NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
               {projects?.map((component) => (
@@ -57,7 +57,7 @@ export function NavigationMenu({ projects }: NavigationMenuProps) {
                     </TooltipTrigger>
                     <TooltipContent
                       className={cn(
-                        "max-w-[23rem] backdrop-blur-xl bg-slate-100/30 text-slate-900 dark:bg-slate-800/30 dark:text-slate-200 shadow-lg"
+                        "hidden max-w-[23rem] backdrop-blur-xl bg-slate-100/30 text-slate-900 dark:bg-slate-800/30 dark:text-slate-200 shadow-lg"
                       )}
                     >
                       <p>{component?.description}</p>
@@ -71,7 +71,7 @@ export function NavigationMenu({ projects }: NavigationMenuProps) {
         <NavigationMenuItem>
           <Link href="/about-me" legacyBehavior passHref>
             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              About me
+              About
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>
@@ -83,7 +83,7 @@ export function NavigationMenu({ projects }: NavigationMenuProps) {
           </Link>
         </NavigationMenuItem>
       </NavigationMenuList>
-    </NavigationMenuRoot>
+    </NavigationMenu>
   );
 }
 
