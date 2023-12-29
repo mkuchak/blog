@@ -1,0 +1,57 @@
+---
+title: Explaining about the Clean Architecture
+date: Apr 16, 2023
+---
+
+I've been tinkering with this website and the [Next.js 13 App Router](https://beta.nextjs.org) for a while now,
+and it's been a great experience, especially in the last few months. But I've seen some confusion around
+how to use the new features and React Server Components, so I wrote up an outline on building this website.
+
+```tsx
+export async function generateStaticParams() {
+  const posts = await getPosts();
+  // The params to pre-render the page with.
+  // Without this, the page will be rendered at runtime
+  return posts.map((post) => ({ slug: post.slug }));
+}
+```
+
+<img
+  src="/posts/clean-architecture/book.jpg"
+  alt={
+    "A screenshot of this blog with two code blocks stacked vertically. They look identical except that the bottom has a larger font size."
+  }
+  height={500}
+/>
+
+## Set up the project
+
+First, we'll need to create a new Next.js project. You can launch the setup wizard with `npx create-next-app`:
+
+```bash
+npx create-next-app --experimental-app
+```
+
+### Sitemap support (`sitemap.js`)
+
+See @leeerob's [announcement tweet](https://twitter.com/leeerob/status/1639639575843729409) for more details.
+
+```tsx
+// app/sitemap.ts
+import { getPosts } from "./lib/get-posts";
+
+export default async function sitemap() {
+  const posts = await getPosts();
+  const blogs = posts.map((post) => ({
+    url: `https://maxleiter.com/blog/${post.slug}`,
+    lastModified: new Date(post.lastModified).toISOString().split("T")[0],
+  }));
+
+  const routes = ["", "/about", "/blog", "/projects"].map((route) => ({
+    url: `https://maxleiter.com${route}`,
+    lastModified: new Date().toISOString().split("T")[0],
+  }));
+
+  return [...routes, ...blogs];
+}
+```
