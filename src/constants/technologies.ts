@@ -62,11 +62,11 @@ export const technologies = [
   //   name: "Hasura",
   //   image: "",
   // },
-  {
-    name: "Turborepo",
-    image:
-      "https://user-images.githubusercontent.com/4060187/196936104-5797972c-ab10-4834-bd61-0d1e5f442c9c.png",
-  },
+  // {
+  //   name: "Turborepo",
+  //   image:
+  //     "https://user-images.githubusercontent.com/4060187/196936104-5797972c-ab10-4834-bd61-0d1e5f442c9c.png",
+  // },
 
   // Frontend Frameworks
   {
@@ -80,20 +80,20 @@ export const technologies = [
       "https://user-images.githubusercontent.com/18753861/152808707-639c2582-a945-4f25-b289-74c7b3d0fc3b.png",
   },
   {
-    name: "Next.js",
-    image:
-      "https://github.com/marwin1991/profile-technology-icons/assets/136815194/5f8c622c-c217-4649-b0a9-7e0ee24bd704",
-  },
-  {
-    name: "Vue.js",
-    image:
-      "https://user-images.githubusercontent.com/25181517/117448124-a2da9800-af3e-11eb-85d2-bd1b69b65603.png",
-  },
-  {
     name: "Ionic",
     image:
       "https://icons.veryicon.com/png/o/business/vscode-program-item-icon/ionic-4.png",
   },
+  {
+    name: "Next.js",
+    image:
+      "https://github.com/marwin1991/profile-technology-icons/assets/136815194/5f8c622c-c217-4649-b0a9-7e0ee24bd704",
+  },
+  // {
+  //   name: "Vue.js",
+  //   image:
+  //     "https://user-images.githubusercontent.com/25181517/117448124-a2da9800-af3e-11eb-85d2-bd1b69b65603.png",
+  // },
   // {
   //   name: "Capacitor",
   //   image: "",
@@ -126,16 +126,16 @@ export const technologies = [
   //   image:
   //     "https://user-images.githubusercontent.com/68279555/200387386-276c709f-380b-46cc-81fd-f292985927a8.png",
   // },
-  {
-    name: "Playwright",
-    image:
-      "https://github.com/marwin1991/profile-technology-icons/assets/25181517/37cb517e-d059-4cc0-8124-1a72b663167c",
-  },
-  {
-    name: "Jest",
-    image:
-      "https://user-images.githubusercontent.com/25181517/187955005-f4ca6f1a-e727-497b-b81b-93fb9726268e.png",
-  },
+  // {
+  //   name: "Playwright",
+  //   image:
+  //     "https://github.com/marwin1991/profile-technology-icons/assets/25181517/37cb517e-d059-4cc0-8124-1a72b663167c",
+  // },
+  // {
+  //   name: "Jest",
+  //   image:
+  //     "https://user-images.githubusercontent.com/25181517/187955005-f4ca6f1a-e727-497b-b81b-93fb9726268e.png",
+  // },
   // {
   //   name: "Vitest",
   //   image:
@@ -158,11 +158,11 @@ export const technologies = [
   //   image:
   //     "https://github.com/marwin1991/profile-technology-icons/assets/136815194/3c698a4f-84e4-4849-a900-476b14311634",
   // },
-  {
-    name: "MySQL",
-    image:
-      "https://user-images.githubusercontent.com/25181517/183896128-ec99105a-ec1a-4d85-b08b-1aa1620b2046.png",
-  },
+  // {
+  //   name: "MySQL",
+  //   image:
+  //     "https://user-images.githubusercontent.com/25181517/183896128-ec99105a-ec1a-4d85-b08b-1aa1620b2046.png",
+  // },
   // {
   //   name: "SQLite",
   //   image:
@@ -200,11 +200,11 @@ export const technologies = [
     image:
       "https://user-images.githubusercontent.com/25181517/192107856-aa92c8b1-b615-47c3-9141-ed0d29a90239.png",
   },
-  {
-    name: "RESTful APIs",
-    image:
-      "https://user-images.githubusercontent.com/25181517/192107858-fe19f043-c502-4009-8c47-476fc89718ad.png",
-  },
+  // {
+  //   name: "RESTful APIs",
+  //   image:
+  //     "https://user-images.githubusercontent.com/25181517/192107858-fe19f043-c502-4009-8c47-476fc89718ad.png",
+  // },
   {
     name: "tRPC",
     image:
@@ -270,11 +270,11 @@ export const technologies = [
   // },
 
   // Tools and Other
-  {
-    name: "Figma",
-    image:
-      "https://user-images.githubusercontent.com/25181517/189715289-df3ee512-6eca-463f-a0f4-c10d94a06b2f.png",
-  },
+  // {
+  //   name: "Figma",
+  //   image:
+  //     "https://user-images.githubusercontent.com/25181517/189715289-df3ee512-6eca-463f-a0f4-c10d94a06b2f.png",
+  // },
   // {
   //   name: "Jira",
   //   image:

@@ -13,10 +13,20 @@ const config = {
   theme: {
     container: {
       center: true,
-      padding: "2rem",
+      padding: "1.25rem",
       screens: {
         "2xl": "1280px",
       },
+    },
+    // Desktop-first approach
+    screens: {
+      "2xl": { max: "1280px" },
+      xl: { max: "1280px" },
+      lg: { max: "1024px" },
+      md: { max: "768px" },
+      sm: { max: "640px" },
+      xs: { max: "412px" },
+      xxs: { max: "300px" },
     },
     extend: {
       fontFamily: {

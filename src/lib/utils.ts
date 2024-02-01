@@ -5,11 +5,31 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function findFirstImageInMarkdown(
-  markdownString: string
-): string | null {
-  const imageRegex = /!\[.*?\]\((.*?\.(?:jpg|jpeg|png|gif|bmp))\)/i;
-  const match = markdownString.match(imageRegex);
+export function extractMetadataFromMarkdown(
+  markdown: string
+): Record<string, string> {
+  const charactersBetweenGroupedHyphens = /^---([\s\S]*?)---/;
+  const metadataMatched = markdown.match(charactersBetweenGroupedHyphens);
 
-  return match ? match[1] : null;
+  if (!metadataMatched) {
+    return {};
+  }
+
+  const metadata = metadataMatched[1];
+
+  if (!metadata) {
+    return {};
+  }
+
+  const metadataLines = metadata.split("\n");
+  const metadataObject = metadataLines.reduce((accumulator, line) => {
+    const [key, ...value] = line.split(":").map((part) => part.trim());
+
+    if (key) {
+      accumulator[key] = value[1] ? value.join(":") : value.join("");
+    }
+    return accumulator;
+  }, {} as Record<string, string>);
+
+  return metadataObject;
 }

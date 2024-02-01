@@ -13,30 +13,32 @@ export const Footer = () => {
   return (
     <footer className="border-t border-[#eaeaea] dark:border-[#252629]">
       <div className="container flex flex-col py-10 px-4 space-y-8">
-        <div className="flex justify-between">
-          <Link href="/">
-            <div className="flex items-center space-x-3">
+        <div className="flex justify-between flex-wrap lg:space-y-4">
+          <div className="lg:w-full">
+            <Link href="/">
               <h1 className="text-[2rem] font-black">Kuchak</h1>
-            </div>
-          </Link>
-          <SocialBar />
-          <Button
-            variant="ghost"
-            className="rounded-full space-x-2 bg-[#f8f8f8] hover:bg-[#f3f1f3] dark:bg-[#1a1a1f] dark:hover:bg-[#17171b] py-3 px-5 group"
-            onClick={backToTop}
-          >
-            <MoveUpIcon
-              strokeWidth={3}
-              className="w-6 h-6 transition duration-300 group-hover:-translate-y-2"
-            />
-          </Button>
+            </Link>
+          </div>
+          <SocialBar className="-ml-1" />
+          <div className="flex items-center justify-end w-28 xs:hidden">
+            <Button
+              variant="ghost"
+              className="rounded-full space-x-2 bg-[#f8f8f8] hover:bg-[#f3f1f3] dark:bg-[#1a1a1f] dark:hover:bg-[#17171b] py-3 px-5 group"
+              onClick={backToTop}
+            >
+              <MoveUpIcon
+                strokeWidth={3}
+                className="w-6 h-6 transition duration-300 group-hover:-translate-y-2"
+              />
+            </Button>
+          </div>
         </div>
-        <div className="flex justify-center text-sm text-[#9e9e9e]">
+        <div className="flex lg:flex-wrap justify-center lg:justify-start text-sm text-[#9e9e9e] lg:text-left">
           © {new Date().getFullYear()}&nbsp;
           <Link href="/">
-            <span className="font-bold text-foreground">kuch.dev</span>
+            <span className="font-bold text-foreground">kuch.dev</span>.
           </Link>
-          . Explore, inspire, create.
+          Explore, inspire, create.
         </div>
       </div>
     </footer>

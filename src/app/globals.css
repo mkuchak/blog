@@ -73,6 +73,9 @@
   body {
     @apply bg-background text-foreground;
   }
+  .container {
+    @apply max-w-[1280px] xl:max-w-[1024px] lg:max-w-[768px] md:max-w-[640px];
+  }
 }
 
 html {
