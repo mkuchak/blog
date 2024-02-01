@@ -5,6 +5,15 @@ const nextConfig = {
       {
         hostname: "github.com",
       },
+      {
+        hostname: "user-images.githubusercontent.com",
+      },
+      {
+        hostname: "upload.wikimedia.org",
+      },
+      {
+        hostname: "icons.veryicon.com",
+      },
     ],
   },
 };

@@ -1,7 +1,7 @@
 import dynamic from "next/dynamic";
 import { ComponentProps } from "react";
 
-const Icon = {
+const DynamicIcon = {
   InstagramIcon: dynamic(() => import("./instagram")),
   XIcon: dynamic(() => import("./x")),
   GithubIcon: dynamic(() => import("./github")),
@@ -13,13 +13,13 @@ const Icon = {
   DiscordIcon: dynamic(() => import("./discord")),
 };
 
-type IconNames = keyof typeof Icon;
+type IconNames = keyof typeof DynamicIcon;
 
-type SocialIconProps = {
+type IconProps = {
   name: IconNames;
 } & ComponentProps<"svg">;
 
-export const SocialIcon: React.FC<SocialIconProps> = ({ name, ...props }) => {
-  const DynamicComponent = Icon[name];
+export const Icon: React.FC<IconProps> = ({ name, ...props }) => {
+  const DynamicComponent = DynamicIcon[name];
   return <DynamicComponent {...props} />;
 };
