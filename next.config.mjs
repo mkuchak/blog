@@ -16,6 +16,7 @@ const nextConfig = {
       },
     ],
   },
+  reactStrictMode: false, // TODO: enable this
 };
 
 export default nextConfig;

@@ -61,7 +61,8 @@ export default function Home() {
             alt={owner.name}
             width={320}
             height={320}
-            className="rounded-full w-80 lg:w-96 xs:w-64"
+            priority={true}
+            className="rounded-full w-80 lg:w-96 xs:w-72"
           />
         </div>
       </section>
@@ -170,7 +171,7 @@ export default function Home() {
           <MoveDownRightIcon strokeWidth={3} className="w-8 h-8" />
           <span>Some technologies I worked with</span>
         </h2>
-        <div className="flex items-center justify-center: lg:justify-start space-x-2 space-y-2 flex-wrap">
+        <div className="flex items-center justify-center lg:justify-start space-x-2 lg:space-x-0 space-y-2 flex-wrap">
           {technologies.map((technology) => (
             <Button
               variant="ghost"

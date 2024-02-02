@@ -20,12 +20,12 @@ const config = {
     },
     // Desktop-first approach
     screens: {
-      "2xl": { max: "1280px" },
-      xl: { max: "1280px" },
-      lg: { max: "1024px" },
-      md: { max: "768px" },
-      sm: { max: "640px" },
-      xs: { max: "412px" },
+      "2xl": { max: "1279px" },
+      xl: { max: "1279px" },
+      lg: { max: "1023px" },
+      md: { max: "767px" },
+      sm: { max: "639px" },
+      xs: { max: "411px" },
       xxs: { max: "300px" },
     },
     extend: {
