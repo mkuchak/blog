@@ -30,7 +30,7 @@ const notoSerif = Noto_Serif({
 export default function Home() {
   return (
     <PageContainer>
-      <section className="container flex lg:flex-col lg:space-y-10">
+      <section className="container flex lg:flex-col lg:space-y-10" id="home">
         <div className="flex flex-col w-3/5 lg:w-full">
           <span
             className={cn(
@@ -137,7 +137,7 @@ export default function Home() {
         </Link>
       </section>
 
-      <section className="container flex flex-col">
+      <section className="container flex flex-col" id="projects">
         <h2 className="font-bold text-[2.5rem] xl:text-4xl md:text-3xl mb-6">
           See my projects
         </h2>
@@ -171,7 +171,7 @@ export default function Home() {
           <MoveDownRightIcon strokeWidth={3} className="w-8 h-8" />
           <span>Some technologies I worked with</span>
         </h2>
-        <div className="flex items-center justify-center lg:justify-start space-x-2 lg:space-x-0 space-y-2 flex-wrap">
+        <div className="flex items-center justify-center lg:justify-start space-x-2 lg:space-x-0 lg:gap-x-2 gap-y-2 flex-wrap">
           {technologies.map((technology) => (
             <Button
               variant="ghost"
