@@ -15,7 +15,7 @@ export const Footer = () => {
       <div className="container flex flex-col py-10 px-4 space-y-8">
         <div className="flex justify-between flex-wrap lg:space-y-4">
           <div className="lg:w-full">
-            <Link href="/">
+            <Link href="/" className="inline-flex">
               <h1 className="text-[2rem] font-black">Kuchak</h1>
             </Link>
           </div>
@@ -35,7 +35,7 @@ export const Footer = () => {
         </div>
         <div className="flex lg:flex-wrap justify-center lg:justify-start text-sm text-[#9e9e9e] lg:text-left">
           © {new Date().getFullYear()}&nbsp;
-          <Link href="/">
+          <Link href="/" className="inline-flex">
             <span className="font-bold text-foreground">kuch.dev</span>.
           </Link>
           &nbsp;Explore, inspire, create.
