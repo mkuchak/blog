@@ -63,7 +63,7 @@ export const Header = () => {
                 Home
               </li>
             </Link>
-            <Link href="#projects" onClick={() => toggleMenu("close")}>
+            <Link href="/#projects" onClick={() => toggleMenu("close")}>
               <li className="py-3 text-base font-medium hover:text-[#fdbc16] transition lg:py-2">
                 Projects
               </li>

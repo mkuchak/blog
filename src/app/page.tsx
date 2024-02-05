@@ -1,26 +1,26 @@
-import { owner } from "@/constants/owner";
-import { hero } from "@/constants/hero";
-import { projects } from "@/constants/projects";
-import { PageContainer } from "@/features/layout/components/page-container";
-import Image from "next/image";
-import { Yellowtail, Noto_Serif } from "next/font/google";
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { articles } from "@/constants/articles";
-import Link from "next/link";
+import { hero } from "@/constants/hero";
+import { owner } from "@/constants/owner";
+import { projects } from "@/constants/projects";
+import { technologies } from "@/constants/technologies";
+import { SocialBar } from "@/features/layout/components/social-bar";
+import { cn } from "@/lib/utils";
 import {
   MoveDownRightIcon,
   MoveRightIcon,
   MoveUpRightIcon,
 } from "lucide-react";
-import { technologies } from "@/constants/technologies";
-import { SocialBar } from "@/features/layout/components/social-bar";
+import { Noto_Serif, Yellowtail } from "next/font/google";
+import Image from "next/image";
+import Link from "next/link";
 
 const yellowtail = Yellowtail({
   weight: "400",
   subsets: ["latin"],
   display: "swap",
 });
+
 const notoSerif = Noto_Serif({
   weight: "400",
   subsets: ["latin"],
@@ -29,7 +29,7 @@ const notoSerif = Noto_Serif({
 
 export default function Home() {
   return (
-    <PageContainer>
+    <>
       <section className="container flex lg:flex-col lg:space-y-10" id="home">
         <div className="flex flex-col w-3/5 lg:w-full">
           <span
@@ -166,7 +166,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="container flex flex-col pb-20">
+      <section className="container flex flex-col">
         <h2 className="flex items-center justify-center lg:justify-start font-bold text-[2.5rem] xl:text-4xl md:text-3xl xl:leading-relaxed mb-6 space-x-2">
           <MoveDownRightIcon strokeWidth={3} className="w-8 h-8" />
           <span>Some technologies I worked with</span>
@@ -175,7 +175,7 @@ export default function Home() {
           .fill(0)
           .map((_, index) => (
             <div
-              className="w-full inline-flex flex-nowrap overflow-hidden mx-auto max-w-[1024px] [mask-image:_linear-gradient(to_right,transparent_0,_black_32px,_black_calc(100%-50px),transparent_100%)]"
+              className="w-full inline-flex flex-nowrap overflow-hidden mx-auto max-w-[1024px] [mask-image:_linear-gradient(to_right,transparent_0,_black_16px,_black_calc(100%-25px),transparent_100%)]"
               key={`container-${index}`}
             >
               {Array(2)
@@ -215,6 +215,6 @@ export default function Home() {
             </div>
           ))}
       </section>
-    </PageContainer>
+    </>
   );
 }

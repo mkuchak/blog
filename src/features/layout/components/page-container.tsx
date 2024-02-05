@@ -6,7 +6,7 @@ export function PageContainer({ children }: PropsWithChildren) {
   return (
     <>
       <Header />
-      <main className="flex flex-col justify-between py-20 lg:py-2 space-y-32 lg:space-y-16">
+      <main className="flex flex-col justify-between py-20 lg:py-2 space-y-28 lg:space-y-14">
         {children}
       </main>
       <Footer />
