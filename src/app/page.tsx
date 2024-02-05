@@ -171,26 +171,49 @@ export default function Home() {
           <MoveDownRightIcon strokeWidth={3} className="w-8 h-8" />
           <span>Some technologies I worked with</span>
         </h2>
-        <div className="flex items-center justify-center lg:justify-start space-x-2 lg:space-x-0 lg:gap-x-2 gap-y-2 flex-wrap">
-          {technologies.map((technology) => (
-            <Button
-              variant="ghost"
-              className="font-medium text-sm text-[#1b202b] dark:text-[#f0f0f0] bg-background hover:bg-background border border-[#eaeaea] dark:border-[#252629] rounded-full py-2.5 px-5 hover:bg-[#f3f1f3] dark:hover:bg-[#1a1a1f] hover:scale-105 transition duration-300"
-              key={technology.name}
+        {Array(technologies.length)
+          .fill(0)
+          .map((_, index) => (
+            <div
+              className="w-full inline-flex flex-nowrap overflow-hidden mx-auto max-w-[1024px] [mask-image:_linear-gradient(to_right,transparent_0,_black_32px,_black_calc(100%-50px),transparent_100%)]"
+              key={`container-${index}`}
             >
-              {technology.image && (
-                <Image
-                  src={technology.image}
-                  alt={technology.name}
-                  width={20}
-                  height={20}
-                  className="w-4 h-4 mr-2"
-                />
-              )}
-              {technology.name}
-            </Button>
+              {Array(2)
+                .fill(0)
+                .map((_, i) => (
+                  <ul
+                    className={cn(
+                      "flex items-center justify-center md:justify-start [&_li]:mx-1 [&_img]:max-w-none py-1",
+                      index % 2
+                        ? "animate-infinite-scroll"
+                        : "animate-infinite-scroll-reverse"
+                    )}
+                    key={`list-${i}-${index}`}
+                  >
+                    {technologies[index].map((technology) => (
+                      <li
+                        key={technology.name}
+                        className="flex items-center justify-center space-x-3 py-[0.425rem] px-[1.125rem] font-medium text-sm text-[#1b202b] dark:text-[#f0f0f0] bg-background hover:bg-[#f3f1f3] border border-[#eaeaea] dark:border-[#252629] rounded-full dark:hover:bg-[#1a1a1f] cursor-default hover:scale-105 transition duration-300"
+                      >
+                        {technology.image && (
+                          <Image
+                            src={technology.image}
+                            alt={technology.name}
+                            width={20}
+                            height={20}
+                            className="w-[1.25rem] h-[1.25rem]"
+                            priority={true}
+                          />
+                        )}
+                        <span className="whitespace-nowrap">
+                          {technology.name}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                ))}
+            </div>
           ))}
-        </div>
       </section>
     </PageContainer>
   );

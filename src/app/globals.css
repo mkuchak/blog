@@ -84,3 +84,7 @@
 html {
   scroll-behavior: smooth;
 }
+
+.pause-animation:hover {
+  animation-play-state: paused;
+}
