@@ -38,7 +38,7 @@ export const Footer = () => {
           <Link href="/">
             <span className="font-bold text-foreground">kuch.dev</span>.
           </Link>
-          Explore, inspire, create.
+          &nbsp;Explore, inspire, create.
         </div>
       </div>
     </footer>
