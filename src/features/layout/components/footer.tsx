@@ -29,7 +29,7 @@ export const Footer = () => {
             "text-[#fdbc16] text-[2.5rem] xl:text-4xl -rotate-3 leading-tight xl:leading-relaxed mb-2 lg:mb-6 sm:mb-4 xs:mb-2 z-10 absolute lg:relative"
           )}
         >
-          The art of create
+          The art of creating
         </h3>
         <div className="grid justify-center grid-cols-6 lg:grid-cols-3 lg:gap-6 sm:gap-4 xs:gap-1 lg:px-1 xs:px-0">
           {footer.images.slice(0, 6).map((image, index) => (
