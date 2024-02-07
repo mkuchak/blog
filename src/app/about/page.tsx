@@ -7,11 +7,11 @@ const notoSerif = Noto_Serif({
   display: "swap",
 });
 
-export default function AboutMe() {
+export default function About() {
   return (
     <>
       <section className="flex lg:flex-col lg:space-y-10" id="home">
-        <div className="container max-w-[780px] flex flex-col w-full">
+        <div className="container max-w-[780px] md:max-w-[640px] flex flex-col w-full">
           <h1 className="mb-6 text-[3.25rem] md:text-4xl xs:text-3xl leading-tight font-bold">
             About Me
           </h1>
@@ -64,12 +64,6 @@ export default function AboutMe() {
           </div>
         </div>
       </section>
-      <div className="container flex justify-center items-center space-x-4">
-        <span className="bg-[#1b202b] dark:bg-[#f0f0f0] rounded-full w-1.5 h-1.5" />
-        <span className="bg-[#1b202b] dark:bg-[#f0f0f0] rounded-full w-1.5 h-1.5" />
-        <span className="bg-[#1b202b] dark:bg-[#f0f0f0] rounded-full w-1.5 h-1.5" />
-        <hr />
-      </div>
     </>
   );
 }

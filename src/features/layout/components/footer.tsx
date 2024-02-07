@@ -22,7 +22,14 @@ export const Footer = () => {
 
   return (
     <>
-      <section className="container flex flex-col pb-10 lg:pb-12 relative justify-center items-center lg:items-start mt-10 mb-20 lg:mt-6 lg:mb-8">
+      <div className="container flex justify-center items-center space-x-4 mt-10 lg:mt-14">
+        <span className="bg-[#1b202b] dark:bg-[#f0f0f0] rounded-full w-1.5 h-1.5" />
+        <span className="bg-[#1b202b] dark:bg-[#f0f0f0] rounded-full w-1.5 h-1.5" />
+        <span className="bg-[#1b202b] dark:bg-[#f0f0f0] rounded-full w-1.5 h-1.5" />
+        <hr />
+      </div>
+
+      <section className="container flex flex-col pb-10 lg:pb-12 relative justify-center items-center lg:items-start mt-28 mb-24 lg:mt-6 lg:mb-8">
         <h3
           className={cn(
             yellowtail.className,
@@ -32,13 +39,13 @@ export const Footer = () => {
           The art of creating
         </h3>
         <div className="grid justify-center grid-cols-6 lg:grid-cols-3 lg:gap-6 sm:gap-4 xs:gap-1 lg:px-1 xs:px-0">
-          {footer.images.slice(0, 6).map((image, index) => (
+          {footer.images.slice(0, 6).map((image) => (
             <div
               className={cn(
                 "w-full rounded-3xl lg:rounded-2xl overflow-hidden lg:rotate-0",
-                index % 2 ? "rotate-12" : "-rotate-12"
+                "even:rotate-12 odd:-rotate-12 even:lg:rotate-0 odd:lg:-rotate-0",
               )}
-              key={`footer-${index}`}
+              key={image}
             >
               <Image
                 src={image}

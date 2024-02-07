@@ -76,6 +76,9 @@
   .container {
     @apply max-w-[1280px] xl:max-w-[1024px] lg:max-w-[768px] md:max-w-[640px];
   }
+  .article {
+    @apply !mx-0 !max-w-[780px] lg:!max-w-[768px] md:!max-w-[640px] lg:px-5;
+  }
   input {
     @apply focus:ring-0 focus:ring-offset-0 focus:appearance-none focus:outline-none;
   }

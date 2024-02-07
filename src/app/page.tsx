@@ -1,10 +1,10 @@
 import { Button } from "@/components/ui/button";
-import { articles } from "@/constants/articles";
+import { github } from "@/constants/github";
 import { hero } from "@/constants/hero";
-import { owner } from "@/constants/owner";
 import { projects } from "@/constants/projects";
 import { technologies } from "@/constants/technologies";
 import { SocialBar } from "@/features/layout/components/social-bar";
+import { useGetPosts } from "@/features/post/hooks/use-get-posts";
 import { cn } from "@/lib/utils";
 import {
   MoveDownRightIcon,
@@ -27,7 +27,9 @@ const notoSerif = Noto_Serif({
   display: "swap",
 });
 
-export default function Home() {
+export default async function Home() {
+  const posts = await useGetPosts();
+
   return (
     <>
       <section className="container flex lg:flex-col lg:space-y-10" id="home">
@@ -57,12 +59,12 @@ export default function Home() {
         </div>
         <div className="flex w-2/5 lg:w-full items-center justify-center">
           <Image
-            src={`https://github.com/${owner.github}.png`}
-            alt={owner.name}
+            src={`https://github.com/${github.owner}.png`}
+            alt={github.name}
             width={320}
             height={320}
-            priority={true}
             className="rounded-full w-80 lg:w-96 xs:w-72"
+            priority={true}
           />
         </div>
       </section>
@@ -72,8 +74,8 @@ export default function Home() {
           Posts
         </h2>
         <div className="flex flex-col">
-          {articles.map((article) => (
-            <Link href={`/blog/${article.slug}`} key={article.slug}>
+          {posts.slice(0, 6).map((post) => (
+            <Link href={`/post/${post?.data.slug}`} key={post?.node_id}>
               <article className="hover:bg-[#f3f1f3] dark:hover:bg-[#1a1a1f] border-t border-[#eaeaea] dark:border-[#252629] py-12 transition duration-500">
                 <div className="container flex justify-between lg:flex-col-reverse">
                   <div className="flex flex-col w-1/2 lg:w-full max-w-[500px] justify-between lg:mt-8">
@@ -84,10 +86,10 @@ export default function Home() {
                           "text-[#51586a] dark:text-[#9e9e9e] text-3xl lg:text-[1.725rem] md:text-[1.5rem] leading-relaxed"
                         )}
                       >
-                        {article.topic}
+                        {post?.data.topic}
                       </span>
                       <h3 className="text-4xl lg:text-[2rem] md:text-[1.75rem] font-bold mt-2 mb-6">
-                        {article.title}
+                        {post?.data.title}
                       </h3>
                       <p
                         className={cn(
@@ -95,13 +97,13 @@ export default function Home() {
                           "text-[#51586a] dark:text-[#9e9e9e] text-lg md:text-base leading-relaxed"
                         )}
                       >
-                        {article.description}
+                        {post?.data.description}
                       </p>
                     </div>
 
                     <Button
                       variant="ghost"
-                      className="nline-flex items-center space-x-2 text-base bg-background hover:bg-background border border-[#eaeaea] dark:border-[#252629] rounded-full py-5 px-4 w-40 group lg:mt-6"
+                      className="inline-flex items-center space-x-2 text-base bg-background hover:bg-background border border-[#eaeaea] dark:border-[#252629] rounded-full py-5 px-4 w-40 group lg:mt-6"
                     >
                       <span>Read Post</span>
                       <MoveRightIcon
@@ -111,12 +113,13 @@ export default function Home() {
                     </Button>
                   </div>
                   <div className="flex flex-col w-1/2 lg:w-full overflow-hidden xl:ml-6 lg:ml-0">
-                    <img
-                      src={article.image}
-                      alt={article.title}
+                    <Image
+                      src={post?.data.cover || "https://placehold.co/800x400"}
+                      alt={post?.data.title || "Cover"}
                       width={800}
                       height={400}
                       className="rounded-3xl object-cover"
+                      priority={true}
                     />
                   </div>
                 </div>
@@ -124,7 +127,7 @@ export default function Home() {
             </Link>
           ))}
         </div>
-        <Link href="/blog">
+        <Link href="/posts">
           <div className="flex items-center justify-center group border-t border-b border-[#eaeaea] dark:border-[#252629] py-8 md:py-5 transition duration-500 hover:bg-[#f3f1f3] dark:hover:bg-[#1a1a1f]">
             <div className="flex items-center text-xl font-medium space-x-2">
               <span>View all</span>
