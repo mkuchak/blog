@@ -1,13 +1,14 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { footer } from "@/constants/footer";
-import { SocialBar } from "@/features/layout/components/social-bar";
-import { cn } from "@/lib/utils";
 import { MoveUpIcon } from "lucide-react";
 import { Yellowtail } from "next/font/google";
 import Image from "next/image";
 import Link from "next/link";
+
+import { Button } from "@/components/ui/button";
+import { footer } from "@/constants/footer";
+import { SocialBar } from "@/features/layout/components/social-bar";
+import { cn } from "@/lib/utils";
 
 const yellowtail = Yellowtail({
   weight: "400",
@@ -22,28 +23,28 @@ export const Footer = () => {
 
   return (
     <>
-      <div className="container flex justify-center items-center space-x-4 mt-10 lg:mt-14">
-        <span className="bg-[#1b202b] dark:bg-[#f0f0f0] rounded-full w-1.5 h-1.5" />
-        <span className="bg-[#1b202b] dark:bg-[#f0f0f0] rounded-full w-1.5 h-1.5" />
-        <span className="bg-[#1b202b] dark:bg-[#f0f0f0] rounded-full w-1.5 h-1.5" />
+      <div className="container mt-10 flex items-center justify-center space-x-4 lg:mt-14">
+        <span className="size-1.5 rounded-full bg-[#1b202b] dark:bg-[#f0f0f0]" />
+        <span className="size-1.5 rounded-full bg-[#1b202b] dark:bg-[#f0f0f0]" />
+        <span className="size-1.5 rounded-full bg-[#1b202b] dark:bg-[#f0f0f0]" />
         <hr />
       </div>
 
-      <section className="container flex flex-col pb-10 lg:pb-12 relative justify-center items-center lg:items-start mt-28 mb-24 lg:mt-6 lg:mb-8">
+      <section className="container relative mb-24 mt-28 flex flex-col items-center justify-center pb-10 lg:mb-8 lg:mt-6 lg:items-start lg:pb-12">
         <h3
           className={cn(
             yellowtail.className,
-            "text-[#fdbc16] text-[2.5rem] xl:text-4xl -rotate-3 leading-tight xl:leading-relaxed mb-2 lg:mb-6 sm:mb-4 xs:mb-2 z-10 absolute lg:relative"
+            "absolute z-10 mb-2 -rotate-3 text-[2.5rem] leading-tight text-[#fdbc16] xl:text-4xl xl:leading-relaxed lg:relative lg:mb-6 sm:mb-4 xs:mb-2"
           )}
         >
           The art of creating
         </h3>
-        <div className="grid justify-center grid-cols-6 lg:grid-cols-3 lg:gap-6 sm:gap-4 xs:gap-1 lg:px-1 xs:px-0">
+        <div className="grid grid-cols-6 justify-center lg:grid-cols-3 lg:gap-6 lg:px-1 sm:gap-4 xs:gap-1 xs:px-0">
           {footer.images.slice(0, 6).map((image) => (
             <div
               className={cn(
-                "w-full rounded-3xl lg:rounded-2xl overflow-hidden lg:rotate-0",
-                "even:rotate-12 odd:-rotate-12 even:lg:rotate-0 odd:lg:-rotate-0",
+                "w-full overflow-hidden rounded-3xl lg:rotate-0 lg:rounded-2xl",
+                "odd:-rotate-12 even:rotate-12 odd:lg:-rotate-0 even:lg:rotate-0",
               )}
               key={image}
             >
@@ -52,7 +53,7 @@ export const Footer = () => {
                 alt="programming"
                 width={400}
                 height={400}
-                className="object-cover aspect-square"
+                className="aspect-square object-cover"
                 priority={true}
               />
             </div>
@@ -61,28 +62,28 @@ export const Footer = () => {
       </section>
 
       <footer className="border-t border-[#eaeaea] dark:border-[#252629]">
-        <div className="container flex flex-col py-10 px-4 space-y-8">
-          <div className="flex justify-between flex-wrap lg:space-y-4">
+        <div className="container flex flex-col space-y-8 px-4 py-10">
+          <div className="flex flex-wrap justify-between lg:space-y-4">
             <div className="lg:w-full">
               <Link href="/" className="inline-flex">
                 <h1 className="text-[2rem] font-black">Kuchak</h1>
               </Link>
             </div>
             <SocialBar className="-ml-1" />
-            <div className="flex items-center justify-end w-28 xs:hidden">
+            <div className="flex w-28 items-center justify-end xs:hidden">
               <Button
                 variant="ghost"
-                className="rounded-full space-x-2 bg-[#f8f8f8] hover:bg-[#f3f1f3] dark:bg-[#1a1a1f] dark:hover:bg-[#17171b] py-3 px-5 group"
+                className="group space-x-2 rounded-full bg-[#f8f8f8] px-5 py-3 hover:bg-[#f3f1f3] dark:bg-[#1a1a1f] dark:hover:bg-[#17171b]"
                 onClick={backToTop}
               >
                 <MoveUpIcon
                   strokeWidth={3}
-                  className="w-6 h-6 transition duration-300 group-hover:-translate-y-2"
+                  className="size-6 transition duration-300 group-hover:-translate-y-2"
                 />
               </Button>
             </div>
           </div>
-          <div className="flex lg:flex-wrap justify-center lg:justify-start text-sm text-[#9e9e9e] lg:text-left">
+          <div className="flex justify-center text-sm text-[#9e9e9e] lg:flex-wrap lg:justify-start lg:text-left">
             © {new Date().getFullYear()}&nbsp;
             <Link href="/" className="inline-flex">
               <span className="font-bold text-foreground">kuch.dev</span>.

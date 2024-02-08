@@ -1,8 +1,10 @@
+import "./globals.css";
+
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { cn } from "@/lib/utils";
-import "./globals.css";
+
 import { PageContainer } from "@/features/layout/components/page-container";
+import { cn } from "@/lib/utils";
 import { RootProvider } from "@/providers/root-provider";
 
 const inter = Inter({

@@ -1,5 +1,6 @@
-import { cn } from "@/lib/utils";
 import { ComponentProps } from "react";
+
+import { cn } from "@/lib/utils";
 
 export function CodeMDX({
   children,
@@ -10,7 +11,7 @@ export function CodeMDX({
     <code
       {...props}
       className={cn(
-        "before:content-[''] after:content-[''] font-normal px-[0.4em] py-[0.2em] rounded-md",
+        "rounded-md px-[0.4em] py-[0.2em] font-normal before:content-[''] after:content-['']",
         "bg-slate-100 text-[#51586a] dark:bg-zinc-800 dark:text-[#ffffff]",
         className
       )}

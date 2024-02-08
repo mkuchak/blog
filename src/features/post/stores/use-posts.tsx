@@ -1,5 +1,6 @@
-import { Post } from "@/features/post/api/get-posts";
 import { create } from "zustand";
+
+import { Post } from "@/features/post/api/get-posts";
 
 const INITIAL_POST_DISPLAY_COUNT = 6;
 const LOAD_MORE_COUNT = 4;

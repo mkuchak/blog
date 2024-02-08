@@ -1,9 +1,10 @@
 "use client";
 
+import { PropsWithChildren, useEffect } from "react";
+
 import { useThemeAfterLoad } from "@/features/layout/hooks/use-theme-after-load";
 import { Post } from "@/features/post/api/get-posts";
 import { usePosts } from "@/features/post/stores/use-posts";
-import { PropsWithChildren, useEffect } from "react";
 
 type ClientProviderProps = {
   data: {

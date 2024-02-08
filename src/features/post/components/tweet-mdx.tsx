@@ -1,6 +1,7 @@
-import { cn } from "@/lib/utils";
 import { ClassValue } from "clsx";
 import { Tweet, TweetProps } from "react-tweet";
+
+import { cn } from "@/lib/utils";
 
 export function TweetMDX({
   className,

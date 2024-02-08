@@ -1,9 +1,9 @@
 "use client";
 
+import { MoonIcon, SunIcon } from "lucide-react";
 import { useTheme } from "next-themes";
 
 import { Button } from "@/components/ui/button";
-import { MoonIcon, SunIcon } from "lucide-react";
 
 export function ThemeToggle() {
   const { setTheme, resolvedTheme } = useTheme();
@@ -18,10 +18,10 @@ export function ThemeToggle() {
       variant="ghost"
       size="icon"
       onClick={toggleTheme}
-      className="flex items-center justify-center h-10 w-10 rounded-full bg-[#f3f1f3] dark:bg-[#1a1a1f] dark:lg:bg-[#252629] hover:bg-[#e7e7eb] dark:hover:bg-[#1f1f25]"
+      className="flex size-10 items-center justify-center rounded-full bg-[#f3f1f3] hover:bg-[#e7e7eb] dark:bg-[#1a1a1f] dark:hover:bg-[#1f1f25] dark:lg:bg-[#252629]"
     >
-      <SunIcon className="text-[#1a1a1f] h-6 w-6 block dark:hidden" />
-      <MoonIcon className="text-[#f3f1f2] h-6 w-6 hidden dark:block" />
+      <SunIcon className="block size-6 text-[#1a1a1f] dark:hidden" />
+      <MoonIcon className="hidden size-6 text-[#f3f1f2] dark:block" />
     </Button>
   );
 }

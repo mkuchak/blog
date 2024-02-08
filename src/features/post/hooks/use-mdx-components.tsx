@@ -1,9 +1,10 @@
+import { MDXComponents } from "mdx/types";
+import { ComponentProps, ComponentType } from "react";
+
 import { CodeMDX } from "@/features/post/components/code-mdx";
 import { ImageMDX } from "@/features/post/components/image-mdx";
 import { PreMDX } from "@/features/post/components/pre-mdx";
 import { TweetMDX } from "@/features/post/components/tweet-mdx";
-import { MDXComponents } from "mdx/types";
-import { ComponentProps, ComponentType } from "react";
 
 export function useMDXComponents(
   components?: Partial<MDXComponents>

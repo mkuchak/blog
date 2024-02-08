@@ -1,4 +1,4 @@
-import { PostMetadata, getPosts } from "@/features/post/api/get-posts";
+import { getPosts,PostMetadata } from "@/features/post/api/get-posts";
 import { parseMarkdown } from "@/lib/parse-markdown";
 
 export async function useGetPosts() {

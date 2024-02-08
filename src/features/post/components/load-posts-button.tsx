@@ -1,9 +1,10 @@
 "use client";
 
+import { ComponentProps } from "react";
+
 import { Button } from "@/components/ui/button";
 import { usePosts } from "@/features/post/stores/use-posts";
 import { cn } from "@/lib/utils";
-import { ComponentProps } from "react";
 
 export function LoadPostsButton({
   className,
@@ -15,8 +16,8 @@ export function LoadPostsButton({
     <Button
       variant="ghost"
       className={cn(
-        "flex items-center justify-center text-base font-medium h-[3.75rem] px-9 rounded-full space-x-2",
-        "text-[#ffffff] hover:text-[#ffffff] bg-[#1b202b] hover:bg-[#0056ff] dark:bg-[#6029ff] dark:hover:bg-[#4d21cb]",
+        "flex h-[3.75rem] items-center justify-center space-x-2 rounded-full px-9 text-base font-medium",
+        "bg-[#1b202b] text-[#ffffff] hover:bg-[#0056ff] hover:text-[#ffffff] dark:bg-[#6029ff] dark:hover:bg-[#4d21cb]",
         hasMore ? "visible" : "invisible",
         className
       )}
