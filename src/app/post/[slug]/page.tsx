@@ -43,27 +43,28 @@ export default async function Post({
             >
               {post.data.description}
             </p>
-            <div className="flex space-x-2">
+            <div className="flex gap-2 md:ml-0 sm:flex-wrap sm:items-center sm:justify-start">
               {post.data.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="flex cursor-default items-center justify-center space-x-3 rounded-full border border-[#eaeaea] bg-background px-[1.125rem] py-2 text-sm font-medium text-[#1b202b] transition duration-300 hover:scale-105 hover:bg-[#f3f1f3] dark:border-[#252629] dark:text-[#f0f0f0] dark:hover:bg-[#1a1a1f]"
+                  className="flex h-[2.375rem] cursor-default items-center justify-center whitespace-nowrap rounded-full border border-[#eaeaea] bg-background px-[1.125rem] py-2 text-sm font-medium text-[#1b202b] transition duration-300 hover:scale-105 hover:bg-[#f3f1f3] dark:border-[#252629] dark:text-[#f0f0f0] dark:hover:bg-[#1a1a1f]"
                 >
                   {tag}
                 </span>
               ))}
             </div>
           </div>
-          <div className="lg:article max-w-[1280px] px-4">
+          <div className="lg:article aspect-cinematic mx-4 flex items-center justify-center overflow-hidden rounded-3xl bg-cover lg:mx-0 lg:!px-0 md:!mx-4">
             <Image
-              src={post.data.cover}
-              alt={post.data.title}
-              className="rounded-3xl"
+              src={post.data.cover || "https://placehold.co/800x400"}
+              alt={post.data.title || "Cover"}
               width={1280}
               height={720}
+              className="object-fill"
               priority={true}
             />
           </div>
+
           <RenderMDX
             className={cn(
               "article mt-14 sm:mt-6",

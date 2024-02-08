@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import { motion } from "framer-motion";
 import { SearchIcon, XIcon } from "lucide-react";
 import Link from "next/link";
@@ -92,15 +93,11 @@ export function SearchBox({
                 className="w-full"
                 key={post.id}
               >
-                <div className="flex h-[80px] w-full flex-col items-start justify-center border-t border-[#eaeaea] p-6 hover:bg-[#f3f1f3] dark:border-[#252629] dark:hover:bg-[#1f1f25] xxs:py-12">
+                <div className="flex w-full flex-col items-start justify-center border-t border-[#eaeaea] p-6 hover:bg-[#f3f1f3] dark:border-[#252629] dark:hover:bg-[#1f1f25] xxs:py-12">
                   <time className="text-[0.8125rem] text-[#51586a] dark:text-[#9e9e9e]">
-                    {new Date().toLocaleDateString("en-US", {
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                    })}
+                    {format(post.data?.date || Date.now(), "d MMMM, yyyy")}
                   </time>
-                  <div className="text-[1.125rem] font-bold text-[#252629] dark:text-[#f0f0f0] xxs:text-[1rem]">
+                  <div className="line-clamp-2 text-[1.125rem] font-bold text-[#252629] dark:text-[#f0f0f0] xxs:text-[1rem]">
                     {post.data?.title}
                   </div>
                 </div>

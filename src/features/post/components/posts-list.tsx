@@ -43,11 +43,11 @@ export function PostsList() {
                       {post?.data?.title}
                     </h3>
                   </div>
-                  <div className="ml-7 flex space-x-2 md:ml-0">
+                  <div className="ml-7 flex gap-2 md:ml-0 sm:flex-wrap sm:items-center sm:justify-start">
                     {post?.data?.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="flex items-center justify-center space-x-3 rounded-full border border-[#eaeaea] bg-background px-[1.125rem] py-2 text-sm font-medium text-[#1b202b] transition duration-300 hover:scale-105 hover:bg-[#f3f1f3] dark:border-[#252629] dark:text-[#f0f0f0] dark:hover:bg-[#1a1a1f]"
+                        className="flex h-[2.375rem] items-center justify-center whitespace-nowrap rounded-full border border-[#eaeaea] bg-background px-[1.125rem] py-2 text-sm font-medium text-[#1b202b] transition duration-300 hover:scale-105 hover:bg-[#f3f1f3] dark:border-[#252629] dark:text-[#f0f0f0] dark:hover:bg-[#1a1a1f]"
                       >
                         {tag}
                       </span>

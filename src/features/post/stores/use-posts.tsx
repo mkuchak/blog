@@ -11,6 +11,12 @@ const filterPostsBySearch = (allPosts: Post[], searchQuery: string): Post[] => {
       post.data?.title
         .toLowerCase()
         .includes(searchQuery.toLocaleLowerCase()) ||
+      post.data?.description
+        .toLowerCase()
+        .includes(searchQuery.toLocaleLowerCase()) ||
+      post.data?.tags?.some((tag) =>
+        tag.toLowerCase().includes(searchQuery.toLocaleLowerCase())
+      ) ||
       post.content?.toLowerCase().includes(searchQuery.toLocaleLowerCase())
   );
 };

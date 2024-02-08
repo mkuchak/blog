@@ -79,6 +79,9 @@
   .article {
     @apply !mx-0 !max-w-[780px] lg:!max-w-[768px] md:!max-w-[640px] lg:px-5;
   }
+  .aspect-cinematic {
+    aspect-ratio: 16 / 10;
+  }
   input {
     @apply focus:ring-0 focus:ring-offset-0 focus:appearance-none focus:outline-none;
   }
@@ -86,8 +89,4 @@
 
 html {
   scroll-behavior: smooth;
-}
-
-.pause-animation:hover {
-  animation-play-state: paused;
 }

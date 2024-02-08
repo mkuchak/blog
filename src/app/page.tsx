@@ -80,8 +80,8 @@ export default async function Home() {
             <Link href={`/post/${post?.data.slug}`} key={post?.node_id}>
               <article className="border-t border-[#eaeaea] py-12 transition duration-500 hover:bg-[#f3f1f3] dark:border-[#252629] dark:hover:bg-[#1a1a1f]">
                 <div className="container flex justify-between lg:flex-col-reverse">
-                  <div className="flex w-1/2 max-w-[500px] flex-col justify-between lg:mt-8 lg:w-full">
-                    <div>
+                  <div className="flex w-1/2 max-w-[500px] flex-col justify-between lg:mt-8 lg:w-full lg:max-w-max md:mt-0">
+                    <div className="mb-6 lg:mb-0">
                       <span
                         className={cn(
                           notoSerif.className,
@@ -96,7 +96,7 @@ export default async function Home() {
                       <p
                         className={cn(
                           notoSerif.className,
-                          "text-lg leading-relaxed text-[#51586a] dark:text-[#9e9e9e] md:text-base"
+                          "line-clamp-4 text-lg leading-relaxed text-[#51586a] dark:text-[#9e9e9e] xl:line-clamp-3 lg:line-clamp-5 md:text-base"
                         )}
                       >
                         {post?.data.description}
@@ -114,15 +114,19 @@ export default async function Home() {
                       />
                     </Button>
                   </div>
-                  <div className="flex w-1/2 flex-col overflow-hidden xl:ml-6 lg:ml-0 lg:w-full">
-                    <Image
-                      src={post?.data.cover || "https://placehold.co/800x400"}
-                      alt={post?.data.title || "Cover"}
-                      width={800}
-                      height={400}
-                      className="rounded-3xl object-cover"
-                      priority={true}
-                    />
+                  <div className="flex w-1/2 items-center justify-center lg:w-full">
+                    <div className="aspect-cinematic flex w-full items-center justify-center overflow-hidden rounded-3xl bg-cover xl:ml-6 lg:ml-0 md:mb-6">
+                      <Image
+                        src={
+                          post?.data.cover || "https://placehold.co/1280x720"
+                        }
+                        alt={post?.data.title || "Cover"}
+                        width={1280}
+                        height={720}
+                        className="object-fill"
+                        priority={true}
+                      />
+                    </div>
                   </div>
                 </div>
               </article>
@@ -146,16 +150,18 @@ export default async function Home() {
         <h2 className="mb-6 text-[2.5rem] font-bold xl:text-4xl md:text-3xl">
           See my projects
         </h2>
-        <div className="grid grid-cols-3 justify-center gap-4 lg:grid-cols-2 md:grid-cols-1">
+        <div className="grid grid-cols-3 justify-center gap-8 lg:grid-cols-2 md:grid-cols-1 md:gap-4">
           {repositories.map((repository) => (
             <Link
               href={repository.html_url}
               target="_blank"
               key={repository.id}
             >
-              <div className="group flex h-full flex-col rounded-3xl border border-[#eaeaea] p-8 shadow-md transition duration-500 hover:bg-[#f3f1f3] dark:border-[#252629] dark:hover:bg-[#1a1a1f]">
+              <div className="group flex h-72 flex-col rounded-3xl border border-[#eaeaea] p-8 shadow-md transition duration-500 hover:bg-[#f3f1f3] dark:border-[#252629] dark:hover:bg-[#1a1a1f]">
                 <div className="flex items-center space-x-3 text-base">
-                  <h3 className="text-xl font-bold">{repository.name}</h3>
+                  <h3 className="line-clamp-1 text-lg font-bold">
+                    {repository.name}
+                  </h3>
                   <MoveRightIcon
                     strokeWidth={3}
                     className="size-6 transition duration-300 group-hover:translate-x-1"
@@ -164,7 +170,7 @@ export default async function Home() {
                 <p
                   className={cn(
                     notoSerif.className,
-                    "mt-2 text-base leading-relaxed text-[#51586a] dark:text-[#9e9e9e]"
+                    "mt-2 line-clamp-6 text-base leading-relaxed text-[#51586a] dark:text-[#9e9e9e]"
                   )}
                 >
                   {repository.description}
