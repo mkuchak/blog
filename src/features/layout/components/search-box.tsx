@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { SearchIcon, XIcon } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { usePosts } from "@/features/post/stores/use-posts";
@@ -15,6 +15,18 @@ export function SearchBox({
 }) {
   const [search, setSearch] = useState("");
   const { searchPosts, searchedPosts } = usePosts();
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.ctrlKey && e.key === "k") {
+        e.preventDefault();
+        toggleSearchBar();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [toggleSearchBar]);
 
   if (!isOpen) return null;
 
