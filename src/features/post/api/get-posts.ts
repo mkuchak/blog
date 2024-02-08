@@ -1,7 +1,5 @@
 import { github } from "@/constants/github";
 
-const { owner, repo } = github;
-
 export type QueryParameters = {
   state?: "open" | "closed" | "all";
   creator?: string;
@@ -64,7 +62,7 @@ export type Post = {
 export async function getPosts(queryParams?: QueryParameters): Promise<Post[]> {
   const defaultQueryParams = {
     state: "all",
-    creator: owner,
+    creator: github.owner,
     sort: "created",
     direction: "desc",
     per_page: 100,
@@ -72,7 +70,9 @@ export async function getPosts(queryParams?: QueryParameters): Promise<Post[]> {
     ...queryParams,
   } as unknown as Record<string, string>;
 
-  const url = new URL(`https://api.github.com/repos/${owner}/${repo}/issues`);
+  const url = new URL(
+    `https://api.github.com/repos/${github.owner}/${github.repo}/issues`
+  );
   url.search = new URLSearchParams(defaultQueryParams).toString();
 
   const response = await fetch(url.toString(), {
@@ -81,7 +81,7 @@ export async function getPosts(queryParams?: QueryParameters): Promise<Post[]> {
       "X-GitHub-Api-Version": "2022-11-28",
     },
     next: {
-      revalidate: 300,
+      revalidate: 60 * 5, // 5 minutes
     },
   });
 
@@ -89,5 +89,5 @@ export async function getPosts(queryParams?: QueryParameters): Promise<Post[]> {
     throw new Error("Network response was not ok");
   }
 
-  return response.json();
+  return await response.json();
 }

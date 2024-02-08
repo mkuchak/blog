@@ -1,22 +1,17 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Post } from "@/features/post/api/get-posts";
 import { SpinLoader } from "@/features/post/components/spin-loader";
-import { usePagination } from "@/features/post/stores/use-pagination";
+import { usePosts } from "@/features/post/stores/use-posts";
 import { format } from "date-fns";
 import { MoveRightIcon } from "lucide-react";
 import Link from "next/link";
 import { useEffect } from "react";
 
-type PostsListProps = {
-  posts: Post[];
-};
+export function PostsList() {
+  const { displayedPosts, resetDisplayedPosts } = usePosts();
 
-export function PostsList({ posts }: PostsListProps) {
-  const { updatePosts, displayedPosts } = usePagination();
-
-  useEffect(() => updatePosts(posts), []);
+  useEffect(() => resetDisplayedPosts(), []);
 
   if (displayedPosts.length === 0)
     return (

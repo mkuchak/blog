@@ -4,6 +4,7 @@ import { hero } from "@/constants/hero";
 import { projects } from "@/constants/projects";
 import { technologies } from "@/constants/technologies";
 import { SocialBar } from "@/features/layout/components/social-bar";
+import { useGetRepositories } from "@/features/layout/hooks/use-get-repositories";
 import { useGetPosts } from "@/features/post/hooks/use-get-posts";
 import { cn } from "@/lib/utils";
 import {
@@ -29,6 +30,7 @@ const notoSerif = Noto_Serif({
 
 export default async function Home() {
   const posts = await useGetPosts();
+  const repositories = await useGetRepositories();
 
   return (
     <>
@@ -145,11 +147,15 @@ export default async function Home() {
           See my projects
         </h2>
         <div className="grid grid-cols-3 lg:grid-cols-2 md:grid-cols-1 gap-4 justify-center">
-          {projects.map((project) => (
-            <Link href={project.html_url} target="_blank" key={project.id}>
+          {repositories.map((repository) => (
+            <Link
+              href={repository.html_url}
+              target="_blank"
+              key={repository.id}
+            >
               <div className="flex flex-col h-full shadow-md rounded-3xl p-8 border border-[#eaeaea] hover:bg-[#f3f1f3] dark:border-[#252629] dark:hover:bg-[#1a1a1f] group transition duration-500">
                 <div className="flex items-center space-x-3 text-base">
-                  <h3 className="font-bold text-xl">{project.name}</h3>
+                  <h3 className="font-bold text-xl">{repository.name}</h3>
                   <MoveRightIcon
                     strokeWidth={3}
                     className="w-6 h-6 transition duration-300 group-hover:translate-x-1"
@@ -161,7 +167,7 @@ export default async function Home() {
                     "text-[#51586a] dark:text-[#9e9e9e] text-base leading-relaxed mt-2"
                   )}
                 >
-                  {project.description}
+                  {repository.description}
                 </p>
               </div>
             </Link>

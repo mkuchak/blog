@@ -1,23 +1,24 @@
-"use client";
-
 import { Footer } from "@/features/layout/components/footer";
 import { Header } from "@/features/layout/components/header";
-import { useThemeAfterLoad } from "@/features/layout/hooks/use-theme-after-load";
-import { PropsWithChildren, useEffect, useState } from "react";
+import { useGetPosts } from "@/features/post/hooks/use-get-posts";
+import { ClientProvider } from "@/providers/client-provider";
+import { PropsWithChildren } from "react";
 
-export function PageContainer({ children }: PropsWithChildren) {
-  const theme = useThemeAfterLoad();
+export async function PageContainer({ children }: PropsWithChildren) {
+  const posts = await useGetPosts();
+  const data = {
+    posts,
+  };
 
   return (
     <>
-      <Header />
-      <main
-        className="flex flex-col justify-between py-16 lg:py-2 space-y-24 lg:space-y-10"
-        data-theme={theme}
-      >
-        {children}
-      </main>
-      <Footer />
+      <ClientProvider data={data}>
+        <Header />
+        <main className="flex flex-col justify-between py-16 lg:py-2 space-y-24 lg:space-y-10">
+          {children}
+        </main>
+        <Footer />
+      </ClientProvider>
     </>
   );
 }

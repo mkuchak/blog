@@ -58,7 +58,7 @@ export const Header = () => {
           )}
         >
           <ul className="flex items-center space-x-9 lg:space-x-0 lg:flex-col">
-            <Link href="/#home" onClick={() => toggleMenu("close")}>
+            <Link href="/" onClick={() => toggleMenu("close")}>
               <li className="py-3 text-base font-medium hover:text-[#fdbc16] transition lg:py-2">
                 Home
               </li>

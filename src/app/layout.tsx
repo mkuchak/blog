@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { ThemeProvider } from "@/components/theme/theme-provider";
 import { cn } from "@/lib/utils";
 import "./globals.css";
 import { PageContainer } from "@/features/layout/components/page-container";
+import { RootProvider } from "@/providers/root-provider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -28,14 +28,9 @@ export default function RootLayout({
           inter.variable
         )}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
+        <RootProvider>
           <PageContainer>{children}</PageContainer>
-        </ThemeProvider>
+        </RootProvider>
       </body>
     </html>
   );

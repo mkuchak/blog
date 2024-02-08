@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { usePagination } from "@/features/post/stores/use-pagination";
+import { usePosts } from "@/features/post/stores/use-posts";
 import { cn } from "@/lib/utils";
 import { ComponentProps } from "react";
 
@@ -9,7 +9,7 @@ export function LoadPostsButton({
   className,
   ...props
 }: ComponentProps<typeof Button>) {
-  const { loadMore, hasMore, posts } = usePagination();
+  const { loadMore, hasMore, posts } = usePosts();
 
   return (
     <Button
