@@ -73,6 +73,12 @@
   body {
     @apply bg-background text-foreground;
   }
+  input {
+    @apply focus:ring-0 focus:ring-offset-0 focus:appearance-none focus:outline-none;
+  }
+  td {
+    @apply whitespace-nowrap;
+  }
   .container {
     @apply max-w-[1280px] xl:max-w-[1024px] lg:max-w-[768px] md:max-w-[640px];
   }
@@ -82,9 +88,7 @@
   .aspect-cinematic {
     aspect-ratio: 16 / 10;
   }
-  input {
-    @apply focus:ring-0 focus:ring-offset-0 focus:appearance-none focus:outline-none;
-  }
+
 }
 
 html {

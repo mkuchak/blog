@@ -5,6 +5,7 @@ import { CodeMDX } from "@/features/post/components/code-mdx";
 import { HrMDX } from "@/features/post/components/hr-mdx";
 import { ImageMDX } from "@/features/post/components/image-mdx";
 import { PreMDX } from "@/features/post/components/pre-mdx";
+import { TableMDX } from "@/features/post/components/table-mdx";
 import { TweetMDX } from "@/features/post/components/tweet-mdx";
 
 export function useMDXComponents(
@@ -14,6 +15,7 @@ export function useMDXComponents(
     ...components,
     code: CodeMDX,
     hr: HrMDX,
+    table: TableMDX,
     pre: PreMDX as ComponentType<ComponentProps<"pre">>,
     img: ImageMDX as ComponentType<ComponentProps<"img">>,
     Code: PreMDX,
