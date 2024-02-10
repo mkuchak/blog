@@ -21,7 +21,7 @@ export default async function Post({
   const post = await useGetPost(slug);
 
   if (!post) {
-    redirect("/404");
+    redirect("/not-found");
   }
 
   return (
