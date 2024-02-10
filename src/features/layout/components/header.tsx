@@ -84,7 +84,7 @@ export const Header = () => {
               <SearchIcon strokeWidth={3} className="size-4" />
               <span className="py-3 text-base font-medium">Search</span>
             </Button>
-            <Link href="/contact" onClick={() => toggleMenu("close")}>
+            <Link href="mailto:hi@kuch.dev" onClick={() => toggleMenu("close")}>
               <li className="flex h-10 items-center justify-center space-x-2 rounded-full bg-[#1b202b] px-5 text-base font-medium text-[#ffffff] hover:bg-[#0056ff] hover:text-[#ffffff] dark:bg-[#6029ff] dark:hover:bg-[#4d21cb] lg:px-4">
                 Get in touch
               </li>
