@@ -11,6 +11,9 @@ export async function useGetPosts() {
 
     return { data, content, ...post };
   });
+  posts.sort(
+    (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+  );
 
   return posts;
 }
