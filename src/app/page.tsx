@@ -9,7 +9,6 @@ import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
 import { github } from "@/constants/github";
-import { hero } from "@/constants/hero";
 import { technologies } from "@/constants/technologies";
 import { SocialBar } from "@/features/layout/components/social-bar";
 import { useGetRepositories } from "@/features/layout/hooks/use-get-repositories";
@@ -42,10 +41,10 @@ export default async function Home() {
               "mb-2 -rotate-3 text-[2.5rem] leading-tight text-[#fdbc16] xl:text-4xl xl:leading-relaxed md:text-3xl"
             )}
           >
-            {hero.presentation}
+            Hey, I&apos;m Marcos
           </span>
           <h1 className="mb-6 text-[3.625rem] font-bold leading-tight xl:text-4xl">
-            {hero.title}
+            Crafting Digital Excellence in Web
           </h1>
           <p
             className={cn(
@@ -53,7 +52,10 @@ export default async function Home() {
               "text-xl leading-relaxed text-[#51586a] dark:text-[#9e9e9e] xl:text-lg"
             )}
           >
-            {hero.description}
+            Full-stack developer since &apos;09, with expertise extending far
+            beyond Node.js and React, I bring a wealth of knowledge to craft
+            digital masterpieces for a revolutionary cross-platform web
+            development journey.
           </p>
           <div className="mt-8">
             <SocialBar />
