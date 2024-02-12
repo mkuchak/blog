@@ -7,19 +7,21 @@ import { useEffect } from "react";
 
 import { Button } from "@/components/ui/button";
 import { usePosts } from "@/features/post/stores/use-posts";
-import { cn } from "@/lib/utils";
 
-export default function Posts() {
-  const { displayedPosts, resetDisplayedPosts, loadMore, hasMore, posts } =
-    usePosts();
+export default function Tag({ params: { tag } }: { params: { tag: string } }) {
+  const { filterPostsByTag, displayedPosts } = usePosts();
+  const decodedTag = decodeURIComponent(tag);
 
-  useEffect(() => resetDisplayedPosts(), []);
+  useEffect(() => filterPostsByTag(decodedTag), []);
 
   return (
     <>
       <section className="flex flex-col">
         <h2 className="container relative mb-6 text-[3.625rem] font-bold lg:text-[3rem] sm:text-3xl">
-          Posts
+          <span>{decodedTag}</span>
+          <span className="!absolute ml-1 size-6 rounded-full bg-[#f3f1f3] pt-1 text-center text-xs font-medium leading-4 text-[#1b202b] dark:bg-[#1a1a1f] dark:text-[#f0f0f0]">
+            {displayedPosts.length}
+          </span>
         </h2>
         <div className="flex flex-col">
           {displayedPosts.map((post, index) => {
@@ -73,21 +75,6 @@ export default function Posts() {
               </Link>
             );
           })}
-        </div>
-
-        <div className="container !mt-16 flex items-center justify-center lg:!mb-6">
-          <Button
-            variant="ghost"
-            className={cn(
-              "flex h-[3.75rem] items-center justify-center space-x-2 rounded-full px-9 text-base font-medium",
-              "bg-[#1b202b] text-[#ffffff] hover:bg-[#0056ff] hover:text-[#ffffff] dark:bg-[#6029ff] dark:hover:bg-[#4d21cb]",
-              hasMore ? "visible" : "invisible"
-            )}
-            onClick={() => loadMore()}
-            disabled={posts.length === 0 || !hasMore}
-          >
-            Load more posts
-          </Button>
         </div>
       </section>
     </>

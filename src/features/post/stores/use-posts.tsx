@@ -23,34 +23,37 @@ const filterPostsBySearch = (allPosts: Post[], searchQuery: string): Post[] => {
 
 type PostsStore = {
   posts: Post[];
-  searchedPosts: Post[];
-  displayedPosts: Post[];
-  hasMore: boolean;
   updatePosts: (posts: Post[]) => void;
+  searchedPosts: Post[];
   searchPosts: (query: string) => void;
-  resetSearchResults: () => void;
+  displayedPosts: Post[];
+  filterPostsByTag: (tag: string) => void;
   resetDisplayedPosts: () => void;
+  hasMore: boolean;
   loadMore: () => void;
 };
 
 export const usePosts = create<PostsStore>((set, get) => ({
   posts: [],
-  searchedPosts: [],
-  displayedPosts: [],
-  hasMore: true,
   updatePosts: (posts) => {
     set({
       posts,
       displayedPosts: posts.slice(0, INITIAL_POST_DISPLAY_COUNT),
     });
   },
+  searchedPosts: [],
   searchPosts: (query) => {
     const { posts } = get();
     const filteredPosts = filterPostsBySearch(posts, query);
     set({ searchedPosts: filteredPosts });
   },
-  resetSearchResults: () => {
-    set({ searchedPosts: [] });
+  displayedPosts: [],
+  filterPostsByTag: (tag) => {
+    const { posts } = get();
+    const filteredPosts = posts.filter((post) =>
+      post.data?.tags?.includes(tag)
+    );
+    set({ displayedPosts: filteredPosts });
   },
   resetDisplayedPosts: () => {
     const { posts } = get();
@@ -59,6 +62,7 @@ export const usePosts = create<PostsStore>((set, get) => ({
       hasMore: true,
     });
   },
+  hasMore: true,
   loadMore: () => {
     const { posts, displayedPosts, hasMore } = get();
     if (!hasMore) return;

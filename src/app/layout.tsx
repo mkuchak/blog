@@ -3,7 +3,9 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
+import { InitializeStores } from "@/features/layout/components/initialize-stores";
 import { PageContainer } from "@/features/layout/components/page-container";
+import { useGetPosts } from "@/features/post/hooks/use-get-posts";
 import { cn } from "@/lib/utils";
 import { RootProvider } from "@/providers/root-provider";
 
@@ -17,11 +19,16 @@ export const metadata: Metadata = {
   description: "Personal blog to share projects and ideas",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const posts = await useGetPosts();
+  const initialData = {
+    posts,
+  };
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body
@@ -30,6 +37,7 @@ export default function RootLayout({
           inter.variable
         )}
       >
+        <InitializeStores data={initialData} />
         <RootProvider>
           <PageContainer>{children}</PageContainer>
         </RootProvider>
