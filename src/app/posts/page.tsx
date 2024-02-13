@@ -48,25 +48,20 @@ export default function Posts() {
                       </div>
                       <div className="ml-7 flex flex-wrap gap-2 md:ml-0 sm:items-center sm:justify-start">
                         {post?.data?.tags.map((tag) => (
-                          <Link
-                            href={`/tags/${tag}`}
-                            key={tag}
-                            className="flex h-[2.375rem] items-center justify-center whitespace-nowrap rounded-full border border-[#eaeaea] bg-background px-[1.125rem] py-2 text-sm font-medium text-[#1b202b] transition duration-300 hover:scale-105 dark:border-[#252629] dark:text-[#f0f0f0]"
-                          >
-                            {tag}
-                          </Link>
+                          <Button variant="outline" key={tag} asChild>
+                            <Link href={`/tags/${tag}`}>{tag}</Link>
+                          </Button>
                         ))}
                       </div>
                     </div>
 
-                    <Button
-                      variant="ghost"
-                      className="inline-flex w-14 items-center space-x-2 rounded-full border border-[#eaeaea] bg-background px-3 py-4 text-base hover:bg-background dark:border-[#252629] lg:hidden md:mt-6"
-                    >
-                      <MoveRightIcon
-                        strokeWidth={3}
-                        className="size-4 transition duration-300 group-hover:translate-x-1"
-                      />
+                    <Button variant="rousing" asChild>
+                      <div>
+                        <MoveRightIcon
+                          strokeWidth={3}
+                          className="size-4 transition duration-300 group-hover:translate-x-1"
+                        />
+                      </div>
                     </Button>
                   </div>
                 </article>
@@ -77,13 +72,10 @@ export default function Posts() {
 
         <div className="container !mt-16 flex items-center justify-center lg:!mb-6">
           <Button
-            variant="ghost"
-            className={cn(
-              "flex h-[3.75rem] items-center justify-center space-x-2 rounded-full px-9 text-base font-medium",
-              "bg-[#1b202b] text-[#ffffff] hover:bg-[#0056ff] hover:text-[#ffffff] dark:bg-[#6029ff] dark:hover:bg-[#4d21cb]",
-              hasMore ? "visible" : "invisible"
-            )}
+            variant="secondary"
+            size="lg"
             onClick={() => loadMore()}
+            className={hasMore ? "visible" : "invisible"}
             disabled={posts.length === 0 || !hasMore}
           >
             Load more posts

@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
+import { Button } from "@/components/ui/button";
 import { RenderMDX } from "@/features/post/components/render-mdx";
 import { useGetPost } from "@/features/post/hooks/use-get-post";
 import { cn } from "@/lib/utils";
@@ -46,13 +47,14 @@ export default async function Post({
             </p>
             <div className="flex gap-2 md:ml-0 sm:flex-wrap sm:items-center sm:justify-start">
               {post.data.tags.map((tag) => (
-                <Link
-                  href={`/tags/${tag}`}
-                  key={tag}
-                  className="flex h-[2.375rem] items-center justify-center whitespace-nowrap rounded-full border border-[#eaeaea] bg-background px-[1.125rem] py-2 text-sm font-medium text-[#1b202b] transition duration-300 hover:scale-105 hover:bg-[#f3f1f3] dark:border-[#252629] dark:text-[#f0f0f0] dark:hover:bg-[#1a1a1f]"
-                >
-                  {tag}
-                </Link>
+                <Button variant="outline" key={tag} asChild>
+                  <Link
+                    href={`/tags/${tag}`}
+                    className="hover:bg-[#f3f1f3] dark:hover:bg-[#1a1a1f]"
+                  >
+                    {tag}
+                  </Link>
+                </Button>
               ))}
             </div>
           </div>

@@ -59,36 +59,49 @@ export const Header = () => {
           )}
         >
           <ul className="flex items-center space-x-9 lg:flex-col lg:space-x-0">
-            <Link href="/" onClick={() => toggleMenu("close")}>
-              <li className="py-3 text-base font-medium transition hover:text-[#fdbc16] lg:py-2">
-                Home
-              </li>
-            </Link>
-            <Link href="/#projects" onClick={() => toggleMenu("close")}>
-              <li className="py-3 text-base font-medium transition hover:text-[#fdbc16] lg:py-2">
-                Projects
-              </li>
-            </Link>
-            <Link href="/about" onClick={() => toggleMenu("close")}>
-              <li className="py-3 text-base font-medium transition hover:text-[#fdbc16] lg:py-2">
-                About
-              </li>
-            </Link>
+            <li>
+              <Button variant="link" asChild>
+                <Link href="/" onClick={() => toggleMenu("close")}>
+                  Home
+                </Link>
+              </Button>
+            </li>
+            <li>
+              <Button variant="link" asChild>
+                <Link href="/#projects" onClick={() => toggleMenu("close")}>
+                  Projects
+                </Link>
+              </Button>
+            </li>
+            <li>
+              <Button variant="link" asChild>
+                <Link href="/about" onClick={() => toggleMenu("close")}>
+                  About
+                </Link>
+              </Button>
+            </li>
           </ul>
           <ul className="flex items-center space-x-2 lg:flex-col lg:items-end lg:justify-end lg:space-x-0 lg:space-y-2.5">
-            <Button
-              variant="ghost"
-              className="flex h-10 items-center justify-center space-x-2 rounded-full bg-[#f3f1f3] px-5 hover:bg-[#e7e7eb] dark:bg-[#1a1a1f] dark:hover:bg-[#1f1f25] lg:px-4 dark:lg:bg-[#252629]"
-              onClick={() => toggleSearchBox()}
-            >
-              <SearchIcon strokeWidth={3} className="size-4" />
-              <span className="py-3 text-base font-medium">Search</span>
-            </Button>
-            <Link href="mailto:hi@kuch.dev" onClick={() => toggleMenu("close")}>
-              <li className="flex h-10 items-center justify-center space-x-2 rounded-full bg-[#1b202b] px-5 text-base font-medium text-[#ffffff] hover:bg-[#0056ff] hover:text-[#ffffff] dark:bg-[#6029ff] dark:hover:bg-[#4d21cb] lg:px-4">
-                Get in touch
-              </li>
-            </Link>
+            <li>
+              <Button
+                variant="primary"
+                className=""
+                onClick={() => toggleSearchBox()}
+              >
+                <SearchIcon strokeWidth={3} className="size-4" />
+                <span className="py-3 text-base font-medium">Search</span>
+              </Button>
+            </li>
+            <li>
+              <Button variant="secondary" asChild>
+                <Link
+                  href="mailto:hi@kuch.dev"
+                  onClick={() => toggleMenu("close")}
+                >
+                  Get in touch
+                </Link>
+              </Button>
+            </li>
             <ThemeToggle />
           </ul>
         </nav>

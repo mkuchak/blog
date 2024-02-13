@@ -105,15 +105,14 @@ export default async function Home() {
                       </p>
                     </div>
 
-                    <Button
-                      variant="ghost"
-                      className="group inline-flex w-40 items-center space-x-2 rounded-full border border-[#eaeaea] bg-background px-4 py-5 text-base hover:bg-background dark:border-[#252629] lg:mt-6"
-                    >
-                      <span>Read Post</span>
-                      <MoveRightIcon
-                        strokeWidth={3}
-                        className="size-4 transition duration-300 group-hover:translate-x-1"
-                      />
+                    <Button variant="rousing" className="w-[9.5rem]" asChild>
+                      <div>
+                        <span>Read Post</span>
+                        <MoveRightIcon
+                          strokeWidth={3}
+                          className="size-4 transition duration-300 group-hover:translate-x-1"
+                        />
+                      </div>
                     </Button>
                   </div>
                   <div className="flex w-1/2 items-center justify-center lg:w-full">
@@ -136,15 +135,19 @@ export default async function Home() {
           ))}
         </div>
         <Link href="/posts">
-          <div className="group flex items-center justify-center border-y border-[#eaeaea] py-8 transition duration-500 hover:bg-[#f3f1f3] dark:border-[#252629] dark:hover:bg-[#1a1a1f] md:py-5">
-            <div className="flex items-center space-x-2 text-xl font-medium">
+          <Button
+            variant="ghost"
+            className="h-24 border-y border-[#eaeaea] py-8 transition duration-500 hover:bg-[#f3f1f3] dark:border-[#252629] dark:hover:bg-[#1a1a1f] md:py-5"
+            asChild
+          >
+            <div>
               <span>View all</span>
               <MoveUpRightIcon
                 strokeWidth={3}
                 className="size-4 transition duration-300 group-hover:-translate-y-1 group-hover:translate-x-1"
               />
             </div>
-          </div>
+          </Button>
         </Link>
       </section>
 
@@ -208,23 +211,29 @@ export default async function Home() {
                     key={`list-${i}-${index}`}
                   >
                     {technologies[index].map((technology) => (
-                      <li
-                        key={technology.name}
-                        className="flex cursor-default items-center justify-center space-x-3 rounded-full border border-[#eaeaea] bg-background px-[1.125rem] py-[0.425rem] text-sm font-medium text-[#1b202b] transition duration-300 hover:scale-105 hover:bg-[#f3f1f3] dark:border-[#252629] dark:text-[#f0f0f0] dark:hover:bg-[#1a1a1f]"
-                      >
-                        {technology.image && (
-                          <Image
-                            src={technology.image}
-                            alt={technology.name}
-                            width={20}
-                            height={20}
-                            className="size-[1.25rem]"
-                            priority={true}
-                          />
-                        )}
-                        <span className="whitespace-nowrap">
-                          {technology.name}
-                        </span>
+                      <li key={technology.name}>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="cursor-default hover:bg-[#f3f1f3] dark:hover:bg-[#1a1a1f]"
+                          asChild
+                        >
+                          <div>
+                            {technology.image && (
+                              <Image
+                                src={technology.image}
+                                alt={technology.name}
+                                width={20}
+                                height={20}
+                                className="size-[1.25rem]"
+                                priority={true}
+                              />
+                            )}
+                            <span className="whitespace-nowrap">
+                              {technology.name}
+                            </span>
+                          </div>
+                        </Button>
                       </li>
                     ))}
                   </ul>

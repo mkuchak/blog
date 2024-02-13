@@ -9,26 +9,29 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default:
-          "bg-primary text-primary-foreground shadow hover:bg-primary/90",
-        destructive:
-          "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
-        outline:
-          "border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground",
+        primary:
+          "flex items-center justify-center gap-x-2 rounded-full bg-[#f3f1f3] hover:bg-[#e7e7eb] dark:bg-[#1a1a1f] dark:hover:bg-[#1f1f25] dark:lg:bg-[#252629]",
         secondary:
-          "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
-        ghost: "hover:bg-accent hover:text-accent-foreground",
-        link: "text-primary underline-offset-4 hover:underline",
+          "flex items-center justify-center gap-x-2 rounded-full bg-[#1b202b] text-base font-medium text-[#ffffff] hover:bg-[#0056ff] hover:text-[#ffffff] dark:bg-[#6029ff] dark:hover:bg-[#4d21cb]",
+        social:
+          "group flex !size-[3.125rem] items-center justify-center rounded-full bg-[#fff] shadow-md transition duration-300 hover:-translate-y-1 dark:bg-[#1a1a1f] xs:size-[2.5rem]",
+        outline:
+          "flex !h-[2.375rem] items-center justify-center gap-x-3 whitespace-nowrap rounded-full border border-[#eaeaea] bg-background px-[1.125rem] py-2 text-sm font-medium text-[#1b202b] transition duration-300 hover:scale-105 dark:border-[#252629] dark:text-[#f0f0f0]",
+        rousing:
+          "group flex items-center justify-center gap-x-2 rounded-full border border-[#eaeaea] bg-background px-4 py-5 text-base hover:bg-background dark:border-[#252629] lg:mt-6",
+        ghost:
+          "group flex items-center justify-center gap-x-2 text-xl font-medium",
+        link: "!px-0 text-base font-medium transition hover:text-[#fdbc16]",
       },
       size: {
-        default: "h-9 px-4 py-2",
-        sm: "h-8 rounded-md px-3 text-xs",
-        lg: "h-10 rounded-md px-8",
-        icon: "size-9",
+        default: "h-10 px-5 py-2 lg:px-4",
+        sm: "h-8 px-[1.125rem] py-[0.425rem] text-sm",
+        lg: "h-[3.75rem] px-8",
+        icon: "size-10 gap-x-0",
       },
     },
     defaultVariants: {
-      variant: "default",
+      variant: "primary",
       size: "default",
     },
   }

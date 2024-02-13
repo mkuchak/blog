@@ -14,12 +14,7 @@ export function ThemeToggle() {
   };
 
   return (
-    <Button
-      variant="ghost"
-      size="icon"
-      onClick={toggleTheme}
-      className="flex size-10 items-center justify-center rounded-full bg-[#f3f1f3] hover:bg-[#e7e7eb] dark:bg-[#1a1a1f] dark:hover:bg-[#1f1f25] dark:lg:bg-[#252629]"
-    >
+    <Button variant="primary" size="icon" onClick={toggleTheme}>
       <SunIcon className="block size-6 text-[#1a1a1f] dark:hidden" />
       <MoonIcon className="hidden size-6 text-[#f3f1f2] dark:block" />
     </Button>

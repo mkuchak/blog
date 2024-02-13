@@ -45,7 +45,7 @@ export default function About() {
               interfaces to ensure optimal performance. I thrive on the cutting
               edge, eagerly embracing modern technologies that not only
               streamline development processes but also yield exceptional
-              productivity gains
+              productivity gains.
             </p>
             <p
               className={cn(
