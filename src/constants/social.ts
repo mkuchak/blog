@@ -1,4 +1,19 @@
-export const social = [
+export type Social = {
+  name: string;
+  url: string;
+  icon:
+    | "InstagramIcon"
+    | "XIcon"
+    | "GithubIcon"
+    | "LinkedinIcon"
+    | "FacebookIcon"
+    | "YoutubeIcon"
+    | "TwitchIcon"
+    | "TiktokIcon"
+    | "DiscordIcon";
+}[];
+
+export const social: Social = [
   {
     name: "Instagram",
     url: "https://instagram.com/marcoskuchak",

@@ -1,4 +1,8 @@
-export const footer = {
+export type Footer = {
+  images: string[];
+};
+
+export const footer: Footer = {
   images: [
     "https://github.com/mkuchak/kuch.dev/assets/3791148/b116aaea-0215-4456-9bdf-8cbf4d938e65",
     "https://github.com/mkuchak/kuch.dev/assets/3791148/24bf9b4a-e69d-47b7-9382-427a6fa4ff97",

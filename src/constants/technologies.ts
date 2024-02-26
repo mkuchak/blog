@@ -1,5 +1,11 @@
 // More images https://github.com/marwin1991/profile-technology-icons
-export const technologies = [
+
+export type Technologies = {
+  name: string;
+  image: string;
+}[][];
+
+export const technologies: Technologies = [
   [
     // Programming Languages
     {
