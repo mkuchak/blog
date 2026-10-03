@@ -61,7 +61,10 @@ jobs:
 
   deploy:
     needs: [release, changes]
-    if: needs.release.outputs.published == 'true' || needs.changes.outputs.posts == 'true' || github.event_name == 'workflow_dispatch'
+    # !cancelled(): a failed release job must not block a deploy that new or edited posts require.
+    if: >-
+      !cancelled() && needs.changes.result == 'success' &&
+      (needs.release.outputs.published == 'true' || needs.changes.outputs.posts == 'true' || github.event_name == 'workflow_dispatch')
     runs-on: ubuntu-latest
     environment:
       name: production
