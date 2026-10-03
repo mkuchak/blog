@@ -33,6 +33,8 @@ jobs:
         run: node site/prerender.mjs
       - name: Check
         run: python3 site/check.py --strict
+      - name: Browser checks (theme and language preferences)
+        run: node site/e2e.mjs
 
   commits:
     if: github.event_name == 'pull_request'

@@ -87,6 +87,8 @@ jobs:
         run: node site/prerender.mjs
       - name: Check
         run: python3 site/check.py --strict
+      - name: Browser checks (theme and language preferences)
+        run: node site/e2e.mjs
       - name: Stamp version
         run: |
           VERSION="${{ needs.release.outputs.version }}"
