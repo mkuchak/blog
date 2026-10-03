@@ -24,7 +24,7 @@ Here are some key commands offered by the tool:
 2. **`sgit rollback`** (shortcut `sgit rb`): Roll back to the last commit.
 3. **`sgit edit`**: Correct mistakes in the last commit message.
 4. **`sgit amend`**: Add forgotten files to the last commit.
-5. **`sgit log`** or **`sgit log <search_query>`** (shortcut `sgit l`)`: View and find commits.
+5. **`sgit log`** or **`sgit log <search_query>`** (shortcut `sgit l`): View and find commits.
 6. **`sgit status`** (shortcut `sgit s`): View the staging area.
 7. **`sgit <type> <description>`**: Create a commit message according to the Conventional Commits specification, where `<type>` is the type of change (e.g., feat, fix, chore) and `<description>` is a brief description of the change.
 8. **`sgit --help`**: Browse the full documentation.
