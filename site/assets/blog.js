@@ -124,12 +124,14 @@
 
   function localize(e) {
     const tr = lang === "pt" && e.i18n && e.i18n.pt;
-    return Object.assign({}, e, tr || {}, { lang: tr ? "pt" : "en" });
+    // Translated metadata applies even without a translated body; the body is Portuguese only when it exists.
+    const body = lang === "pt" && (e.langs || []).includes("pt") ? "pt" : "en";
+    return Object.assign({}, e, tr || {}, { lang: body });
   }
 
   // ---------- Markdown ----------
-  const slugify = (s) =>
-    s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/<[^>]+>/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+  // GitHub-style heading ids (same as github-slugger): keeps letters, digits, "_" and "-", spaces become "-".
+  const slugify = (s) => s.toLowerCase().replace(/[^\p{L}\p{N}\s_-]/gu, "").trim().replace(/\s/g, "-");
   const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
   function render(md) {
