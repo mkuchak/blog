@@ -23,8 +23,10 @@
     set: (k, v) => { try { localStorage.setItem(k, v); } catch {} },
   };
 
-  const variantDefault = (window.KUCH_VARIANT && window.KUCH_VARIANT.defaultTheme) || "system";
-  let pref = [params.get("theme"), store.get(THEME_KEY), variantDefault].find((v) => PREFS.includes(v));
+  // Follow the operating system until the visitor picks light or dark. KUCH_VARIANT.defaultTheme is only
+  // used by the local prototypes (window.KUCH_SITE absent), where each variant opens in its designed theme.
+  const fallback = window.KUCH_SITE ? "system" : (window.KUCH_VARIANT && window.KUCH_VARIANT.defaultTheme) || "system";
+  let pref = [params.get("theme"), store.get(THEME_KEY), fallback].find((v) => PREFS.includes(v));
   const lang = (window.KUCH && window.KUCH.lang) || "en";
   // A language or theme given in the URL counts as a choice, so it survives navigation to pages without params.
   if (params.get("lang") === "en" || params.get("lang") === "pt") store.set(LANG_KEY, params.get("lang"));
