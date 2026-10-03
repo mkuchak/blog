@@ -12,7 +12,9 @@
   const params = new URLSearchParams(location.search);
   let saved = null;
   try { saved = localStorage.getItem("kuch:lang"); } catch {}
-  const lang = (params.get("lang") || saved) === "pt" ? "pt" : "en";
+  // On the deployed site the URL decides (/ = English, /pt-BR/ = Portuguese); build.py sets KUCH_SITE.lang.
+  const siteLang = window.KUCH_SITE && window.KUCH_SITE.lang;
+  const lang = (siteLang || params.get("lang") || saved) === "pt" ? "pt" : "en";
   document.documentElement.lang = lang === "pt" ? "pt-BR" : "en";
 
   const meta = {

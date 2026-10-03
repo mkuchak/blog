@@ -1,6 +1,8 @@
 {
   "official": "e",
+  "blogFallback": "e",
   "siteUrl": "https://kuch.dev",
+  "image": "https://github.com/mkuchak.png",
   "versions": {
     "a": { "name": "Agent runtime", "blog": false },
     "b": { "name": "Terminal OS", "blog": false },
@@ -9,7 +11,24 @@
     "e": { "name": "Editorial + runtime", "blog": true },
     "f": { "name": "Runtime + editorial", "blog": true }
   },
-  "title": "Marcos Kuchak · Senior Full-Stack Software Engineer, AI Agents & LLM Systems",
-  "description": "Full-stack engineer with 17 years in tech building AI agent platforms, MCP tooling and LLM systems that hold up in production.",
-  "image": "https://github.com/mkuchak.png"
+  "languages": {
+    "en": { "prefix": "", "hreflang": "en" },
+    "pt": { "prefix": "/pt-BR", "hreflang": "pt-BR" }
+  },
+  "meta": {
+    "en": {
+      "title": "Marcos Kuchak · Senior Full-Stack Software Engineer, AI Agents & LLM Systems",
+      "description": "Full-stack engineer with 17 years in tech building AI agent platforms, MCP tooling and LLM systems that hold up in production.",
+      "blogTitle": "Field notes · Marcos Kuchak",
+      "blogDescription": "Long-form notes on AI agents, LLM systems and full-stack engineering.",
+      "notFound": "Not found · Marcos Kuchak"
+    },
+    "pt": {
+      "title": "Marcos Kuchak · Senior Full-Stack Software Engineer, Agentes de IA e LLM",
+      "description": "Engenheiro full-stack com 17 anos em tecnologia, construindo plataformas de agentes de IA, ferramentas MCP e sistemas com LLM que aguentam produção.",
+      "blogTitle": "Notas de campo · Marcos Kuchak",
+      "blogDescription": "Textos longos sobre agentes de IA, sistemas com LLM e engenharia full-stack.",
+      "notFound": "Página não encontrada · Marcos Kuchak"
+    }
+  }
 }

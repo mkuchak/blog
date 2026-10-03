@@ -76,6 +76,15 @@
     if (next !== "en" && next !== "pt") return;
     store.set(LANG_KEY, next);
     if (next === lang) return;
+    // Deployed site: each language has its own URL; swap /pt-BR/ in or out of the path.
+    if (window.KUCH_SITE && window.KUCH_SITE.lang) {
+      const rest = location.pathname.replace(/^\/pt-BR(?=\/|$)/, "") || "/";
+      const p = new URLSearchParams(location.search);
+      p.delete("lang");
+      const qs = p.toString();
+      location.href = (next === "pt" ? "/pt-BR" + rest : rest) + (qs ? "?" + qs : "") + location.hash;
+      return;
+    }
     const p = new URLSearchParams(location.search);
     p.set("lang", next);
     location.href = location.pathname + "?" + p.toString() + location.hash;
