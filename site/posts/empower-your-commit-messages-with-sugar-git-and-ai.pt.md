@@ -24,7 +24,7 @@ Aqui estão alguns dos principais comandos oferecidos pela ferramenta:
 2. **`sgit rollback`** (atalho `sgit rb`): Volta para o último commit.
 3. **`sgit edit`**: Corrige erros na mensagem do último commit.
 4. **`sgit amend`**: Adiciona arquivos esquecidos ao último commit.
-5. **`sgit log`** ou **`sgit log <search_query>`** (atalho `sgit l`)`: Visualiza e encontra commits.
+5. **`sgit log`** ou **`sgit log <search_query>`** (atalho `sgit l`): Visualiza e encontra commits.
 6. **`sgit status`** (atalho `sgit s`): Visualiza a staging area.
 7. **`sgit <type> <description>`**: Cria uma mensagem de commit de acordo com a especificação Conventional Commits, onde `<type>` é o tipo de mudança (por exemplo, feat, fix, chore) e `<description>` é uma breve descrição da mudança.
 8. **`sgit --help`**: Navega pela documentação completa.
