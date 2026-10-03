@@ -39,7 +39,7 @@ jobs:
         with:
           semantic_version: 25
           extra_plugins: |
-            conventional-changelog-conventionalcommits@10
+            conventional-changelog-conventionalcommits@9
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
