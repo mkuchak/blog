@@ -1,10 +1,17 @@
 {
   "name": "kuch.dev",
-  "version": "2.0.0",
+  "version": "0.0.0-development",
   "private": true,
   "description": "Static personal site and blog. Source in site/, built to dist/, deployed on Cloudflare Pages.",
   "scripts": {
-    "build": "python3 site/build.py",
+    "build": "python3 site/build.py && node site/prerender.mjs",
+    "build:fast": "python3 site/build.py",
     "dev": "python3 site/dev.py"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "devDependencies": {
+    "playwright-core": "^1.63.0"
   }
 }
