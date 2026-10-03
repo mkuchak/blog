@@ -14,6 +14,7 @@ site/
   build.py           builds dist/
   dev.py             local preview with rebuild on change
   prerender.mjs      bakes rendered HTML into dist/ for SEO (headless Chrome)
+  check.py           validates dist/: both languages per post, canonical/hreflang, anchors, sitemap, feeds
 archive/
   v1-nextjs-2024/    the previous Next.js site, kept as it was
   prototypes-2026-10/ the six landing prototypes and blogs as first built (run: python3 archive/prototypes-2026-10/serve.py)
@@ -22,10 +23,11 @@ archive/
 ## Run it
 
 ```bash
-npm install          # once (playwright-core, used by the pre-render step)
+npm install          # once (Node 24, see .nvmrc; playwright-core for the pre-render step)
 npm run dev          # python3 site/dev.py → http://localhost:4321, rebuilds on change
-npm run build        # build + pre-render into dist/ (needs Chrome; set CHROME_PATH if not found)
+npm run build        # build + pre-render + check into dist/ (needs Chrome; set CHROME_PATH if not found)
 npm run build:fast   # build only, no pre-render
+npm run check        # python3 site/check.py --strict: validates dist/ (what CI runs)
 ```
 
 ## Versions and the feature flag
@@ -77,14 +79,22 @@ Markdown body (GitHub-flavored: tables, code fences with a language or a file na
 ```
 
 - `draft: true` lists the post under "Coming up" without publishing it (no body or date needed).
-- `site/posts/<slug>.pt.md` is the optional Portuguese version (same front matter, translated). Until it has a body,
-  `/pt-BR/blog/<slug>/` shows the English text with a short notice and points search engines to the English URL.
+- `site/posts/<slug>.pt.md` is the Portuguese version (same front matter, translated title, description, topic, tags;
+  `cover` and `date` stay the same). Every published post needs one: `check.py --strict` (CI) fails without it.
+  Drafts can stay title-only in both languages.
+- In-page links use GitHub-style heading ids (`## Creating the X` → `#creating-the-x`, accents kept);
+  the check fails when a `](#anchor)` has no matching heading.
 - The build generates `posts/index.json`, `feed.xml` (RSS) and `sitemap.xml`, and pre-renders every indexable page
   so crawlers and link previews get the full text without JavaScript.
 
 Old Next.js URLs (`/post/<slug>`, `/posts`, `/tags/<tag>`, `/about`) redirect to the new ones.
 
 ## Release and deploy
+
+All workflows run on Node 24 (`.nvmrc`) with the Node 24 releases of every action.
+
+`.github/workflows/ci.yml`, on pull requests and pushes to other branches: build, pre-render and
+`check.py --strict` exactly like a deploy, plus a Conventional Commits check on the PR's commits.
 
 `.github/workflows/release-deploy.yml`, on every push to `main`:
 
@@ -93,6 +103,8 @@ Old Next.js URLs (`/post/<slug>`, `/posts`, `/tags/<tag>`, `/about`) redirect to
    with notes. Other types (`chore`, `docs`, `style`, `refactor`, `ci`, `test`) don't release.
 2. **Deploy** when a release was cut, **or** when anything in `site/posts/` changed (any commit type),
    or when the workflow is run by hand (Actions → Release and deploy → Run workflow).
-   It builds, pre-renders, writes `dist/version.json` and pushes `dist/` to the `production` branch.
+   It builds, pre-renders, runs `check.py --strict`, writes `dist/version.json` and pushes `dist/` to the
+   `production` branch, then waits until `https://kuch.dev/version.json` reports the commit and smoke-tests
+   every page and post in both languages.
 3. Cloudflare Pages (project `kuch-dev`) serves the `production` branch as-is (no build step on Cloudflare).
    Roll back from the Cloudflare dashboard (Deployments → Rollback) or by reverting on `main`.
