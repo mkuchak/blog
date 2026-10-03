@@ -28,6 +28,7 @@ npm run dev          # python3 site/dev.py → http://localhost:4321, rebuilds o
 npm run build        # build + pre-render + check into dist/ (needs Chrome; set CHROME_PATH if not found)
 npm run build:fast   # build only, no pre-render
 npm run check        # python3 site/check.py --strict: validates dist/ (what CI runs)
+npm test             # node site/e2e.mjs: browser checks for theme and language preferences
 ```
 
 ## Versions and the feature flag
@@ -50,12 +51,18 @@ Every version stays reachable from any page:
 
 Only the official version is indexed by search engines; `/v/*` pages are `noindex`.
 
+## Theme
+
+Light, dark or system, from the switch in the header. Until the visitor picks one, every version follows
+the operating system (and switches live when the OS does). A pick is saved and wins from then on.
+
 ## Languages
 
 English lives at `/`, Portuguese at `/pt-BR/`, with the same paths underneath
 (`/pt-BR/blog/<slug>/`, `/pt-BR/?v=f`). Every page declares `hreflang` alternates (English is `x-default`).
 
-- On an English page, a visitor whose browser prefers Portuguese is redirected to the `/pt-BR/` equivalent.
+- On an English page, a visitor is redirected to the `/pt-BR/` equivalent when the first supported language in their
+  browser's list is Portuguese (`pt-BR`, `pt-PT`, `pt`). `es-ES, pt-BR` → Portuguese; `en-US, pt-BR` → English.
 - The EN/PT switch in the header moves to the same page in the other language and remembers the choice,
   which then wins over the browser language. `?lang=en` / `?lang=pt` force a language once and remember it.
 - A `/pt-BR/` link is never redirected, so shared links open as sent.
@@ -94,7 +101,8 @@ Old Next.js URLs (`/post/<slug>`, `/posts`, `/tags/<tag>`, `/about`) redirect to
 All workflows run on Node 24 (`.nvmrc`) with the Node 24 releases of every action.
 
 `.github/workflows/ci.yml`, on pull requests and pushes to other branches: build, pre-render and
-`check.py --strict` exactly like a deploy, plus a Conventional Commits check on the PR's commits.
+`check.py --strict` and the browser preference checks exactly like a deploy, plus a Conventional Commits
+check on the PR's commits.
 
 `.github/workflows/release-deploy.yml`, on every push to `main`:
 
