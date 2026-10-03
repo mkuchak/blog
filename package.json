@@ -4,12 +4,13 @@
   "private": true,
   "description": "Static personal site and blog. Source in site/, built to dist/, deployed on Cloudflare Pages.",
   "scripts": {
-    "build": "python3 site/build.py && node site/prerender.mjs",
+    "build": "python3 site/build.py && node site/prerender.mjs && python3 site/check.py",
     "build:fast": "python3 site/build.py",
+    "check": "python3 site/check.py --strict",
     "dev": "python3 site/dev.py"
   },
   "engines": {
-    "node": ">=22"
+    "node": ">=24"
   },
   "devDependencies": {
     "playwright-core": "^1.63.0"

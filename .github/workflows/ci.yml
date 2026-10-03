@@ -1,0 +1,52 @@
+name: CI
+
+# Pull requests and branches other than main/production: build, pre-render and check the site
+# exactly like a deploy would, and make sure commits follow Conventional Commits (the release
+# workflow derives versions from them). Nothing is published from here.
+
+on:
+  pull_request:
+  push:
+    branches-ignore: [main, production]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - name: Build
+        run: python3 site/build.py
+      - name: Pre-render for SEO
+        run: node site/prerender.mjs
+      - name: Check
+        run: python3 site/check.py --strict
+
+  commits:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - name: Conventional Commits
+        run: |
+          bad="$(git log --format=%s "origin/${{ github.base_ref }}..${{ github.event.pull_request.head.sha }}" \
+            | grep -vE '^(feat|fix|perf|revert|docs|style|refactor|test|build|ci|chore)(\([^)]+\))?!?: .+' \
+            | grep -vE '^Merge ' || true)"
+          if [ -n "$bad" ]; then
+            echo "::error::These commits don't follow Conventional Commits (type(scope): description):"
+            echo "$bad"; exit 1
+          fi
