@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /v/
+Disallow: /pt-BR/v/
+Sitemap: https://kuch.dev/sitemap.xml

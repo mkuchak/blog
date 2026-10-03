@@ -1,0 +1,1029 @@
+<!doctype html>
+<!--
+  PROTOTYPE, throwaway. Blog for variant F, "Runtime + editorial".
+  Same design language as /pt-BR/v/f/: A's dark technical frame (runtime windows, dot grid,
+  calm aurora) with C's editorial reading soul (chapter heads, serif body, marker highlights).
+  Light mode is a day edition.
+
+  Posts are static markdown files in posts/<slug>.md, indexed by build_posts.py into
+  posts/index.json and rendered client side by blog.js.
+    /pt-BR/v/f/blog/              index: latest post, search (Ctrl/Cmd+K), tag filter (?tag=), archive, coming up
+    /pt-BR/v/f/blog/?post=<slug>  article with sticky TOC, reading progress, share, prev/next, author card
+-->
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <script>
+(function () {
+  var cfg = {"official": "e", "versions": {"a": 1, "b": 1, "c": 1, "d": 1, "e": 1, "f": 1}, "langs": {"en": "", "pt": "/pt-BR"}}, page = {"kind": "blog", "slug": null, "version": "f", "lang": "pt"};
+  var q = new URLSearchParams(location.search), store = {};
+  try { store.lang = localStorage.getItem("kuch:lang"); } catch (e) {}
+  // Version: ?v=f, ?version=F, ?version=version-f
+  var v = (q.get("v") || q.get("version") || "").toLowerCase().replace(/^version[\s_-]*/, "");
+  if (!cfg.versions[v]) v = page.version;
+  // Language: the URL decides, except on English pages for visitors whose browser (or saved choice) is Portuguese.
+  var lang = page.lang, asked = q.get("lang");
+  if (asked === "pt" || asked === "en") { lang = asked; try { localStorage.setItem("kuch:lang", asked); } catch (e) {} }
+  else if (page.lang === "en") {
+    var nav = (navigator.languages && navigator.languages[0]) || navigator.language || "";
+    if (store.lang === "pt" || (!store.lang && /^pt\b/i.test(nav))) lang = "pt";
+  }
+  if (v === page.version && lang === page.lang && !q.has("v") && !q.has("version") && !asked) return;
+  var base = cfg.langs[lang] + (v === cfg.official ? "/" : "/v/" + v + "/");
+  var path = base;
+  if (page.kind === "blog" || page.kind === "post") path = base + "blog/" + (page.slug ? page.slug + "/" : "");
+  ["v", "version", "lang"].forEach(function (k) { q.delete(k); });
+  if (path === location.pathname && !location.search) return;
+  var qs = q.toString();
+  location.replace(path + (qs ? "?" + qs : "") + location.hash);
+})();
+</script>
+    <link rel="canonical" href="https://kuch.dev/pt-BR/blog/" />
+    <meta name="description" content="Textos longos sobre agentes de IA, sistemas com LLM e engenharia full-stack." />
+    <meta property="og:site_name" content="kuch.dev" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Notas de campo · Marcos Kuchak" />
+    <meta property="og:description" content="Textos longos sobre agentes de IA, sistemas com LLM e engenharia full-stack." />
+    <meta property="og:url" content="https://kuch.dev/pt-BR/blog/" />
+    <meta property="og:image" content="https://github.com/mkuchak.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:creator" content="@marcoskuchak" />
+    <link rel="alternate" type="application/rss+xml" title="Marcos Kuchak · Field notes" href="https://kuch.dev/feed.xml" />
+    <meta name="robots" content="noindex" />
+    <script>window.KUCH_SITE = {"root": "/", "pretty": true, "production": true, "version": "f", "official": "e", "lang": "pt"};</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Notas de campo · Marcos Kuchak</title>
+    <script src="/assets/content.js?v=265ddf43c2"></script>
+    <script>window.KUCH_DRAFTS_ALL = {"en": [{"slug": "confidence-gates-letting-agents-act-alone-without-losing-sleep", "title": "Confidence gates: letting agents act alone without losing sleep", "topic": "AI Agents", "tags": ["Agents"], "published": false}, {"slug": "cutting-llm-cost-80-without-changing-the-model", "title": "Cutting LLM cost 80% without changing the model", "topic": "LLM Cost", "tags": ["Cost"], "published": false}, {"slug": "designing-mcp-tools-agents-can-actually-call", "title": "Designing MCP tools agents can actually call", "topic": "Model Context Protocol", "tags": ["MCP"], "published": false}, {"slug": "your-agent-doesnt-need-the-password", "title": "Your agent doesn't need the password", "topic": "Security", "tags": ["Security"], "published": false}], "pt": [{"slug": "confidence-gates-letting-agents-act-alone-without-losing-sleep", "title": "Confidence gates: deixando agentes agirem sozinhos sem perder o sono", "topic": "Agentes de IA", "tags": ["Agentes"], "published": false}, {"slug": "cutting-llm-cost-80-without-changing-the-model", "title": "Cortando 80% do custo de LLM sem trocar de modelo", "topic": "Custo de LLM", "tags": ["Custo"], "published": false}, {"slug": "designing-mcp-tools-agents-can-actually-call", "title": "Desenhando ferramentas MCP que agentes conseguem chamar", "topic": "Model Context Protocol", "tags": ["MCP"], "published": false}, {"slug": "your-agent-doesnt-need-the-password", "title": "Seu agente não precisa da senha", "topic": "Segurança", "tags": ["Segurança"], "published": false}]}; window.KUCH_DRAFTS = window.KUCH_DRAFTS_ALL[(window.KUCH && KUCH.lang) || "en"];</script>
+    <script>window.KUCH_VARIANT = { key: "F", name: "Blog · Runtime + editorial", defaultTheme: "dark", page: "blog", blogPage: "/pt-BR/v/f/blog/" };</script>
+    <script src="/assets/prefs.js?v=265ddf43c2"></script>
+    <script src="/assets/switcher.js?v=265ddf43c2"></script>
+    <script>document.documentElement.classList.add("js");</script>
+    <script src="https://cdn.jsdelivr.net/npm/marked@18.0.14/lib/marked.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.4.16/dist/purify.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets@11.12.0/highlight.min.js"></script>
+    <script src="/assets/blog.js?v=265ddf43c2"></script>
+    <link rel="alternate" type="application/rss+xml" title="Marcos Kuchak · Field notes" href="feed.xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400..900&family=JetBrains+Mono:wght@400;500;600&family=Noto+Serif:ital,wght@0,400;0,500;0,600;1,400&family=Yellowtail&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #ffffff;
+        --bg-soft: #f8f7fa;
+        --card: #ffffff;
+        --card-2: #f3f1f3;
+        --line: #eaeaea;
+        --line-2: #dcdce3;
+        --text: #1b202b;
+        --prose: #2b303b;
+        --muted: #51586a;
+        --faint: #7d8290;
+        --yellow: #fdbc16;
+        --yellow-ink: #9a6900;
+        --blue: #0056ff;
+        --purple: #6029ff;
+        --purple-deep: #4d21cb;
+        --accent-text: #4d21cb;
+        --hot: #6029ff;
+        --dot: rgba(27, 32, 43, 0.12);
+        --glass: rgba(255, 255, 255, 0.78);
+        --shadow: 0 30px 60px -30px rgba(27, 32, 43, 0.22);
+        --btn-bg: #1b202b;
+        --btn-hover: #0056ff;
+        --aurora: 0.08;
+        --hl: rgba(253, 188, 22, 0.5);
+        --code-bg: #faf9f6;
+        --code-bar: #f3f1ec;
+        /* syntax, day edition */
+        --sx-kw: #6029ff;
+        --sx-str: #8a5d00;
+        --sx-fn: #0050e6;
+        --sx-type: #0a7f73;
+        --sx-num: #b4500a;
+        --sx-com: #8a8f9c;
+        --sx-attr: #4d21cb;
+        --sx-meta: #7d8290;
+        --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+        --sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+        --serif: "Noto Serif", Georgia, serif;
+        --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+        --script: "Yellowtail", cursive;
+        --measure: 68ch;
+      }
+      .dark {
+        --bg: #0f0e14;
+        --bg-soft: #121118;
+        --card: #141319;
+        --card-2: #1a1a1f;
+        --line: #252629;
+        --line-2: #303138;
+        --text: #f0f0f0;
+        --prose: #d7d7dc;
+        --muted: #9e9e9e;
+        --faint: #74747e;
+        --yellow-ink: #fdbc16;
+        --accent-text: #a990ff;
+        --hot: #8d6bff;
+        --dot: rgba(240, 240, 240, 0.085);
+        --glass: rgba(15, 14, 20, 0.74);
+        --shadow: 0 40px 80px -40px rgba(0, 0, 0, 0.8);
+        --btn-bg: #6029ff;
+        --btn-hover: #4d21cb;
+        --aurora: 0.3;
+        --hl: rgba(253, 188, 22, 0.28);
+        --code-bg: #121118;
+        --code-bar: #17161d;
+        /* syntax, night edition */
+        --sx-kw: #b39bff;
+        --sx-str: #fdc94a;
+        --sx-fn: #7aa7ff;
+        --sx-type: #6fd6c5;
+        --sx-num: #ff9f6b;
+        --sx-com: #6c6c78;
+        --sx-attr: #c9b8ff;
+        --sx-meta: #8a8a96;
+      }
+
+      *,
+      *::before,
+      *::after { box-sizing: border-box; }
+      html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; scroll-padding-top: 92px; }
+      body {
+        margin: 0; background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 16px; line-height: 1.5;
+        -webkit-font-smoothing: antialiased; padding-bottom: 88px; overflow-x: clip; transition: background-color 0.3s, color 0.3s;
+      }
+      body::after { content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 70; opacity: 0.045;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+      .dark body::after { opacity: 0.06; }
+      a { color: inherit; text-decoration: none; }
+      button { font: inherit; color: inherit; }
+      :focus-visible { outline: 2px solid var(--yellow); outline-offset: 3px; border-radius: 6px; }
+      ::selection { background: var(--yellow); color: #1b202b; }
+      .wrap { width: min(1240px, 100% - 48px); margin-inline: auto; }
+      .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+      .skip { position: fixed; left: 12px; top: -60px; z-index: 100; background: var(--yellow); color: #1b202b; padding: 10px 14px; border-radius: 10px; font-weight: 600; }
+      .skip:focus { top: 12px; }
+
+      /* header (same as variant F) */
+      header.top { position: sticky; top: 0; z-index: 50; background: var(--glass); backdrop-filter: blur(14px) saturate(1.4);
+        -webkit-backdrop-filter: blur(14px) saturate(1.4); border-bottom: 1px solid transparent; transition: border-color 0.3s; }
+      header.top.scrolled { border-bottom-color: var(--line); }
+      .top .wrap { display: flex; align-items: center; justify-content: space-between; height: 68px; gap: 24px; }
+      .logo { font-weight: 900; font-size: 1.6rem; letter-spacing: -0.03em; display: flex; align-items: baseline; gap: 2px; }
+      .logo i { width: 7px; height: 7px; border-radius: 50%; background: var(--yellow); display: inline-block; }
+      .top nav { display: flex; gap: 4px; }
+      .top nav a { font-size: 0.92rem; font-weight: 500; color: var(--muted); padding: 8px 12px; border-radius: 999px; transition: color 0.2s, background 0.2s; }
+      .top nav a:hover { color: var(--text); background: var(--card-2); }
+      .top nav a.on { color: var(--text); background: var(--card-2); box-shadow: inset 0 -2px 0 var(--yellow); }
+      .pill { display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 18px; border-radius: 999px; font-weight: 600; font-size: 0.92rem;
+        border: 1px solid var(--line); background: var(--card); transition: border-color 0.2s, transform 0.2s; white-space: nowrap; }
+      .pill:hover { border-color: var(--faint); }
+      .pill svg { width: 14px; height: 14px; }
+      .hdr-right { display: flex; align-items: center; gap: 10px; flex: none; }
+      #prefs { --kc-h: 40px; --kc-pad: 4px; --kc-bg: var(--card); --kc-border: var(--line); --kc-fg: var(--text); --kc-muted: var(--faint);
+        --kc-active-bg: var(--yellow); --kc-active-fg: #1b202b; color: var(--text); }
+      #prefs button[aria-checked="true"] { box-shadow: 0 4px 14px -6px color-mix(in srgb, var(--yellow) 80%, transparent); }
+
+      /* reading progress (article only, JS driven so it works everywhere) */
+      .rprog { position: fixed; inset: 0 0 auto 0; height: 2px; z-index: 60; transform-origin: 0 50%; transform: scaleX(0);
+        background: linear-gradient(90deg, var(--purple), var(--blue) 60%, var(--yellow)); pointer-events: none; }
+
+      /* atmosphere */
+      .atmo { position: absolute; inset: 0 0 auto; height: 760px; z-index: -1; pointer-events: none; overflow: hidden; -webkit-mask-image: linear-gradient(#000 55%, transparent); mask-image: linear-gradient(#000 55%, transparent); }
+      .aurora { position: absolute; inset: -20% 0 auto; height: 120%; opacity: var(--aurora); }
+      .aurora b { position: absolute; border-radius: 50%; }
+      .aurora b:nth-child(1) { width: 44vw; height: 44vw; left: 52%; top: 6%; background: radial-gradient(circle, #6029ff, transparent 65%); animation: drift1 24s ease-in-out infinite alternate; }
+      .aurora b:nth-child(2) { width: 34vw; height: 34vw; left: 70%; top: 22%; background: radial-gradient(circle, #0056ff, transparent 65%); animation: drift2 28s ease-in-out infinite alternate; }
+      .aurora b:nth-child(3) { width: 20vw; height: 20vw; left: 2%; top: 26%; background: radial-gradient(circle, #fdbc16, transparent 65%); opacity: 0.35; animation: drift3 30s ease-in-out infinite alternate; }
+      @keyframes drift1 { to { transform: translate(-8vw, 6vh) scale(1.1); } }
+      @keyframes drift2 { to { transform: translate(-10vw, -6vh) scale(0.9); } }
+      @keyframes drift3 { to { transform: translate(6vw, 8vh) scale(1.2); } }
+      .dots { position: absolute; inset: 0; background-image: radial-gradient(var(--dot) 1.1px, transparent 1.2px); background-size: 24px 24px;
+        -webkit-mask-image: radial-gradient(ellipse 70% 70% at 50% 0%, #000 15%, transparent 72%); mask-image: radial-gradient(ellipse 70% 70% at 50% 0%, #000 15%, transparent 72%); }
+      main { position: relative; isolation: isolate; min-height: 70vh; }
+
+      /* shared bits */
+      .kicker { font-family: var(--mono); font-size: 0.76rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--yellow-ink);
+        display: inline-flex; align-items: center; gap: 10px; }
+      .kicker::before { content: ""; width: 18px; height: 1px; background: currentColor; }
+      .ch-head { display: grid; grid-template-columns: 220px 1fr; gap: 40px; align-items: start; }
+      .ch-num { font: 600 0.74rem/1.6 var(--mono); letter-spacing: 0.16em; text-transform: uppercase; color: var(--faint); border-top: 2px solid var(--text); padding-top: 12px; }
+      .ch-num b { display: block; font: 400 2.1rem/1.15 var(--script); color: var(--yellow); letter-spacing: 0; text-transform: none; margin-top: 8px; transform: rotate(-3deg); transform-origin: 0 50%; }
+      .h1 { font-size: clamp(2.6rem, 6vw, 4.6rem); line-height: 1; letter-spacing: -0.045em; font-weight: 850; margin: 0; text-wrap: balance; }
+      .lede { font-family: var(--serif); color: var(--muted); font-size: 1.2rem; line-height: 1.65; max-width: 640px; margin: 20px 0 0; text-wrap: pretty; }
+      .mk { background: linear-gradient(transparent 62%, var(--hl) 62%, var(--hl) 92%, transparent 92%) no-repeat 0 0 / 100% 100%; }
+      .tag { display: inline-flex; align-items: center; height: 28px; padding: 0 11px; border-radius: 999px; border: 1px solid var(--line); background: var(--card);
+        font: 500 0.74rem var(--mono); color: var(--muted); white-space: nowrap; transition: border-color 0.2s, color 0.2s, transform 0.2s; }
+      a.tag:hover { border-color: var(--hot); color: var(--text); transform: translateY(-1px); }
+      .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+      .meta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; font: 500 0.78rem var(--mono); color: var(--faint); }
+      .meta .sep { width: 3px; height: 3px; border-radius: 50%; background: currentColor; opacity: 0.6; }
+      .btn { position: relative; display: inline-flex; align-items: center; gap: 10px; height: 50px; padding: 0 24px; border-radius: 999px; font-weight: 600; font-size: 0.98rem;
+        border: 0; cursor: pointer; white-space: nowrap; transition: background-color 0.25s, border-color 0.25s, transform 0.35s var(--ease); }
+      .btn svg { width: 16px; height: 16px; transition: transform 0.3s var(--ease); }
+      .btn:hover svg { transform: translateX(3px); }
+      .btn-primary { background: var(--btn-bg); color: #fff; box-shadow: 0 10px 30px -10px color-mix(in srgb, var(--btn-bg) 70%, transparent); }
+      .btn-primary:hover { background: var(--btn-hover); }
+      .btn-ghost { background: transparent; border: 1px solid var(--line-2); color: var(--text); }
+      .btn-ghost:hover { border-color: var(--faint); }
+      .win-bar { display: flex; align-items: center; gap: 7px; height: 38px; padding: 0 14px; border-bottom: 1px solid var(--line); background: var(--code-bar);
+        font: 500 0.72rem var(--mono); color: var(--faint); }
+      .win-bar i { width: 8px; height: 8px; border-radius: 50%; background: var(--line-2); flex: none; }
+      .win-bar span { margin-left: 6px; min-width: 0; overflow-wrap: anywhere; }
+      .fade-in { animation: fin 0.6s var(--ease) both; }
+      @keyframes fin { from { opacity: 0; transform: translateY(14px); } }
+
+      /* ---------- index ---------- */
+      .mast { padding: 72px 0 56px; }
+      .mast .ch-head { gap: 40px; }
+      .mast .row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; margin-top: 26px; }
+      .rss { display: inline-flex; align-items: center; gap: 8px; font: 600 0.76rem var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--text);
+        border-bottom: 2px solid var(--yellow); padding-bottom: 3px; }
+      .rss svg { width: 13px; height: 13px; }
+      .rss:hover { color: var(--yellow-ink); }
+
+      .feat { display: grid; grid-template-columns: 1.12fr 1fr; border: 1px solid var(--line); border-radius: 28px; overflow: hidden; background: var(--card);
+        box-shadow: var(--shadow); position: relative; isolation: isolate; transition: border-color 0.3s; }
+      .feat::before { content: ""; position: absolute; inset: -1px; border-radius: inherit; padding: 1px; z-index: 2; pointer-events: none;
+        background: conic-gradient(from var(--ang, 0deg), transparent 0 70%, color-mix(in srgb, var(--purple) 80%, transparent), color-mix(in srgb, var(--yellow) 70%, transparent), transparent 92%);
+        -webkit-mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0); mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+        opacity: 0.55; animation: spin 14s linear infinite; }
+      @property --ang { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
+      @keyframes spin { to { --ang: 360deg; } }
+      .feat .shot { border-right: 1px solid var(--line); background: var(--card-2); display: flex; flex-direction: column; min-width: 0; }
+      .feat .shot .img { flex: 1; min-height: 300px; position: relative; overflow: hidden; }
+      .feat .shot img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.9s var(--ease); }
+      .feat:hover .shot img { transform: scale(1.03); }
+      .feat .txt { padding: 44px 44px 40px; display: flex; flex-direction: column; gap: 18px; min-width: 0; }
+      .feat .lab { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+      .feat .live { font: 600 0.7rem var(--mono); letter-spacing: 0.14em; text-transform: uppercase; color: var(--yellow-ink); display: inline-flex; align-items: center; gap: 8px; }
+      .feat .live i { width: 7px; height: 7px; border-radius: 50%; background: var(--yellow); box-shadow: 0 0 0 4px color-mix(in srgb, var(--yellow) 22%, transparent); }
+      .feat h2 { margin: 0; font-size: clamp(1.8rem, 3vw, 2.6rem); line-height: 1.06; letter-spacing: -0.035em; font-weight: 800; text-wrap: balance; }
+      .feat h2 a:hover { color: var(--accent-text); }
+      .feat .dek { margin: 0; font-family: var(--serif); color: var(--muted); font-size: 1.08rem; line-height: 1.65; }
+      .feat .go { margin-top: auto; align-self: flex-start; }
+
+      .browse { padding: 96px 0 40px; }
+      .browse .ch-head { margin-bottom: 36px; }
+      .browse .h1 { font-size: clamp(2.2rem, 4.4vw, 3.4rem); letter-spacing: -0.04em; }
+      .bar { position: relative; display: flex; align-items: center; gap: 12px; height: 58px; padding: 0 10px 0 18px; border: 1px solid var(--line); border-radius: 18px;
+        background: var(--card); transition: border-color 0.2s, box-shadow 0.2s; }
+      .bar:focus-within { border-color: var(--hot); box-shadow: 0 0 0 4px color-mix(in srgb, var(--hot) 16%, transparent); }
+      .bar svg { width: 18px; height: 18px; color: var(--faint); flex: none; }
+      .bar input { all: unset; flex: 1; min-width: 0; font: 500 1rem var(--sans); color: var(--text); }
+      .bar input::placeholder { color: var(--faint); }
+      .bar .count { font: 500 0.74rem var(--mono); color: var(--faint); white-space: nowrap; }
+      .bar kbd { font: 600 0.7rem var(--mono); color: var(--muted); border: 1px solid var(--line-2); border-bottom-width: 2px; border-radius: 7px; padding: 4px 7px; background: var(--bg-soft); }
+      .bar .clear { all: unset; cursor: pointer; font: 600 0.72rem var(--mono); color: var(--muted); padding: 6px 10px; border-radius: 9px; display: none; }
+      .bar .clear:hover { background: var(--card-2); color: var(--text); }
+      .bar.has .clear { display: inline-block; }
+      .bar.has kbd { display: none; }
+      .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 8px; }
+      .chip { all: unset; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; height: 34px; padding: 0 14px; border-radius: 999px; border: 1px solid var(--line);
+        background: var(--card); font: 500 0.8rem var(--sans); color: var(--muted); transition: border-color 0.2s, color 0.2s, background 0.2s; }
+      .chip b { font: 500 0.7rem var(--mono); color: var(--faint); }
+      .chip:hover { border-color: var(--faint); color: var(--text); }
+      .chip[aria-pressed="true"] { background: var(--text); color: var(--bg); border-color: var(--text); }
+      .chip[aria-pressed="true"] b { color: inherit; opacity: 0.7; }
+      .chip:focus-visible { outline: 2px solid var(--yellow); outline-offset: 2px; }
+      .chip.extra { display: none; }
+      .chips.all .chip.extra, .chip.extra[aria-pressed="true"] { display: inline-flex; }
+      .chip.more { border-style: dashed; color: var(--faint); font-family: var(--mono); font-size: 0.74rem; }
+
+      .plist { list-style: none; margin: 18px 0 0; padding: 0; border-top: 1px solid var(--line); }
+      .plist a { display: grid; grid-template-columns: 112px 148px minmax(0, 1fr) 132px 28px; gap: 28px; align-items: center; padding: 26px 12px; border-bottom: 1px solid var(--line);
+        transition: background-color 0.3s, padding 0.4s var(--ease); }
+      .plist a:hover { background: var(--card-2); padding-left: 20px; }
+      .plist .d { font: 500 0.76rem var(--mono); color: var(--faint); }
+      .plist .th { aspect-ratio: 16 / 10; border-radius: 12px; overflow: hidden; border: 1px solid var(--line); background: var(--card-2); }
+      .plist .th img { width: 100%; height: 100%; object-fit: cover; display: block; }
+      .plist .tt { font-size: 1.32rem; font-weight: 750; letter-spacing: -0.02em; line-height: 1.22; text-wrap: balance; }
+      .plist a:hover .tt span { box-shadow: inset 0 -0.34em 0 var(--hl); }
+      .plist .ds { display: block; font-family: var(--serif); color: var(--muted); font-size: 0.98rem; line-height: 1.6; margin-top: 8px; text-wrap: pretty; }
+      .plist .tags { margin-top: 12px; }
+      .plist .rt { font: 500 0.76rem var(--mono); color: var(--faint); text-align: right; line-height: 1.6; }
+      .plist .rt b { display: block; color: var(--muted); font-weight: 500; }
+      .plist .go { font-size: 1.2rem; justify-self: end; transition: transform 0.35s var(--ease), color 0.3s; }
+      .plist a:hover .go { transform: translate(4px, -4px); color: var(--yellow); }
+      .empty { padding: 56px 0; text-align: center; color: var(--muted); font-family: var(--serif); font-size: 1.1rem; border-bottom: 1px solid var(--line); }
+      .empty b { display: block; font: 400 2rem var(--script); color: var(--yellow); margin-bottom: 8px; }
+
+      .soon { padding: 72px 0 40px; }
+      .soon .grid { display: grid; grid-template-columns: 220px 1fr; gap: 40px; }
+      .soon ol { list-style: none; margin: 0; padding: 0; }
+      .soon li { display: flex; align-items: baseline; gap: 14px; padding: 16px 0; border-bottom: 1px solid var(--line); }
+      .soon .t { font-family: var(--serif); font-size: 1.12rem; line-height: 1.45; color: var(--muted); }
+      .soon .lead { flex: 1; border-bottom: 2px dotted var(--line-2); transform: translateY(-5px); min-width: 20px; }
+      .soon .pg { font: 500 0.74rem var(--mono); color: var(--yellow-ink); white-space: nowrap; }
+      .soon .draft { font: 600 0.62rem var(--mono); letter-spacing: 0.12em; text-transform: uppercase; color: var(--faint); border: 1px dashed var(--line-2); border-radius: 6px; padding: 3px 6px; }
+
+      .state { padding: 120px 0; }
+      .state .box { max-width: 640px; }
+      .state h1 { font-size: clamp(2.4rem, 6vw, 4rem); letter-spacing: -0.04em; line-height: 1.02; margin: 18px 0 0; }
+      .state p { font-family: var(--serif); color: var(--muted); font-size: 1.15rem; line-height: 1.65; margin: 18px 0 30px; }
+      .state code { font: 500 0.92rem var(--mono); background: var(--card-2); border: 1px solid var(--line); border-radius: 8px; padding: 3px 8px; color: var(--text); }
+
+      /* ---------- article ---------- */
+      .ph { padding: 64px 0 40px; }
+      .crumbs { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font: 500 0.78rem var(--mono); color: var(--faint); margin-bottom: 34px; }
+      .crumbs a:hover { color: var(--text); }
+      .crumbs .s { opacity: 0.5; }
+      .ph-in { max-width: 980px; }
+      .ph h1 { font-size: clamp(2.4rem, 5.4vw, 4.4rem); line-height: 1.02; letter-spacing: -0.045em; font-weight: 850; margin: 18px 0 0; text-wrap: balance; }
+      .ph .dek { font-family: var(--serif); font-size: clamp(1.15rem, 1.8vw, 1.36rem); line-height: 1.6; color: var(--muted); margin: 24px 0 0; max-width: 760px; text-wrap: pretty; }
+      .by { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 22px; margin-top: 34px; padding-top: 22px; border-top: 1px solid var(--line); }
+      .by .who { display: flex; align-items: center; gap: 12px; }
+      .by .who img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--yellow); }
+      .by .who .w b { display: block; font: 650 0.95rem var(--sans); color: var(--text); }
+      .by .who .w span { font: 500 0.72rem var(--mono); color: var(--faint); }
+      .by .tags { margin-left: auto; }
+      .notice { display: flex; align-items: center; gap: 12px; margin-top: 26px; padding: 12px 16px; border: 1px dashed var(--line-2); border-radius: 14px;
+        font: 500 0.84rem var(--sans); color: var(--muted); background: color-mix(in srgb, var(--yellow) 7%, transparent); }
+      .notice i { font-style: normal; font: 600 0.66rem var(--mono); letter-spacing: 0.12em; color: #1b202b; background: var(--yellow); border-radius: 6px; padding: 3px 7px; }
+
+      .cover { margin: 8px auto 0; max-width: 1240px; border: 1px solid var(--line); border-radius: 22px; overflow: hidden; background: var(--card); box-shadow: var(--shadow); }
+      .cover .img { aspect-ratio: 16 / 9; background: var(--card-2); }
+      .cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+      .layout { display: grid; grid-template-columns: 230px minmax(0, var(--measure)) 1fr; gap: 56px; margin-top: 64px; align-items: start; }
+      .side { position: sticky; top: 96px; max-height: calc(100vh - 120px); overflow: auto; scrollbar-width: none; padding-bottom: 20px; }
+      .side::-webkit-scrollbar { display: none; }
+      .side h4, .mtoc summary { font: 600 0.7rem var(--mono); letter-spacing: 0.16em; text-transform: uppercase; color: var(--faint); margin: 0 0 14px; }
+      .side h4 { border-top: 2px solid var(--text); padding-top: 12px; }
+      .toc { list-style: none; margin: 0; padding: 0; position: relative; }
+      .toc::before { content: ""; position: absolute; left: 7px; top: 8px; bottom: 8px; width: 1px; background: var(--line-2); }
+      .toc li { position: relative; }
+      .toc a { display: block; position: relative; padding: 6px 0 6px 26px; font-size: 0.86rem; line-height: 1.4; color: var(--muted); transition: color 0.2s; }
+      .toc a::before { content: ""; position: absolute; left: 3px; top: 0.82em; width: 9px; height: 9px; border-radius: 50%; border: 1.5px solid var(--line-2); background: var(--bg);
+        transition: border-color 0.3s, background 0.3s, box-shadow 0.3s; }
+      .toc li.l3 a { padding-left: 40px; font-size: 0.8rem; }
+      .toc li.l3 a::before { left: 5px; width: 5px; height: 5px; top: 0.98em; }
+      .toc a:hover { color: var(--text); }
+      .toc li.done a::before { border-color: var(--hot); background: var(--hot); }
+      .toc li.on a { color: var(--text); font-weight: 600; }
+      .toc li.on a::before { border-color: var(--yellow); background: var(--yellow); box-shadow: 0 0 0 4px color-mix(in srgb, var(--yellow) 22%, transparent); }
+      .side .pct { margin-top: 18px; font: 500 0.72rem var(--mono); color: var(--faint); display: flex; justify-content: space-between; }
+      .side .meter { height: 3px; border-radius: 3px; background: var(--line); margin-top: 8px; overflow: hidden; }
+      .side .meter b { display: block; height: 100%; width: 100%; transform-origin: 0 50%; transform: scaleX(0); background: linear-gradient(90deg, var(--purple), var(--yellow)); }
+      .mtoc { display: none; border: 1px solid var(--line); border-radius: 16px; background: var(--card); margin-bottom: 30px; }
+      .mtoc summary { list-style: none; cursor: pointer; margin: 0; padding: 14px 18px; display: flex; justify-content: space-between; align-items: center; }
+      .mtoc summary::-webkit-details-marker { display: none; }
+      .mtoc summary::after { content: "+"; font-size: 1.1rem; color: var(--text); transition: transform 0.3s; }
+      .mtoc[open] summary::after { transform: rotate(45deg); }
+      .mtoc .toc { padding: 0 18px 14px; }
+      .mtoc .toc::before { left: 25px; }
+
+      .rail { position: sticky; top: 96px; display: flex; flex-direction: column; gap: 8px; align-items: flex-start; }
+      .rail .lbl { font: 600 0.66rem var(--mono); letter-spacing: 0.16em; text-transform: uppercase; color: var(--faint); margin-bottom: 4px; }
+      .ibtn { all: unset; cursor: pointer; width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center; border: 1px solid var(--line); background: var(--card);
+        transition: transform 0.3s var(--ease), border-color 0.2s, color 0.2s; color: var(--muted); }
+      .ibtn:hover { transform: translateY(-2px); border-color: var(--faint); color: var(--text); }
+      .ibtn:focus-visible { outline: 2px solid var(--yellow); outline-offset: 2px; }
+      .ibtn svg { width: 16px; height: 16px; }
+      .ibtn.ok { border-color: var(--yellow); color: var(--yellow-ink); }
+
+      /* prose */
+      .prose { font-family: var(--serif); font-size: 1.15rem; line-height: 1.78; color: var(--prose); min-width: 0; overflow-wrap: break-word; }
+      .prose > :first-child { margin-top: 0; }
+      .prose p { margin: 0 0 1.3em; text-wrap: pretty; }
+      .prose h2, .prose h3, .prose h4 { position: relative; font-family: var(--sans); color: var(--text); letter-spacing: -0.025em; line-height: 1.2; text-wrap: balance; }
+      .prose h2 { font-size: 1.85rem; font-weight: 800; margin: 2.3em 0 0.75em; padding-top: 0.9em; border-top: 1px solid var(--line); }
+      .prose h3 { font-size: 1.32rem; font-weight: 750; margin: 1.9em 0 0.6em; }
+      .prose h4 { font-size: 1.08rem; font-weight: 700; margin: 1.6em 0 0.5em; }
+      .prose > h2:first-child, .prose > h3:first-child { border-top: 0; padding-top: 0; margin-top: 0; }
+      .prose .anchor { position: absolute; left: -1.15em; top: auto; width: 1em; text-align: center; color: var(--yellow); opacity: 0; font-weight: 600; transition: opacity 0.2s; text-decoration: none; }
+      .prose h2 .anchor { top: calc(0.9em + 0px); }
+      .prose h2:hover .anchor, .prose h3:hover .anchor, .prose h4:hover .anchor, .prose .anchor:focus { opacity: 1; }
+      .prose a:not(.anchor) { color: var(--text); text-decoration: underline; text-decoration-color: var(--yellow); text-decoration-thickness: 2px; text-underline-offset: 3px; transition: color 0.2s, text-decoration-color 0.2s; }
+      .dark .prose a:not(.anchor) { color: #fff; }
+      .prose a:not(.anchor):hover { color: var(--accent-text); text-decoration-color: var(--accent-text); }
+      .prose strong { color: var(--text); font-weight: 600; }
+      .prose em { font-style: italic; }
+      .prose ul, .prose ol { margin: 0 0 1.4em; padding-left: 1.4em; }
+      .prose li { margin: 0.4em 0; padding-left: 0.2em; }
+      .prose li > p { margin: 0 0 0.6em; }
+      .prose ul li::marker { color: var(--yellow-ink); }
+      .prose ol li::marker { color: var(--faint); font: 600 0.85em var(--mono); }
+      .prose blockquote { margin: 1.8em 0; padding: 0.2em 0 0.2em 1.2em; border-left: 3px solid var(--yellow); color: var(--muted); font-style: italic; font-size: 1.2rem; }
+      .prose blockquote p:last-child { margin-bottom: 0; }
+      .prose hr { border: 0; margin: 2.6em auto; height: 14px; width: 120px; background: radial-gradient(circle, var(--faint) 2px, transparent 2.5px) 0 50% / 40px 14px repeat-x; opacity: 0.8; }
+      .prose :not(pre) > code { font: 500 0.82em var(--mono); background: var(--card-2); border: 1px solid var(--line); border-radius: 6px; padding: 0.12em 0.4em; color: var(--text); overflow-wrap: anywhere; }
+      .prose h2 code, .prose h3 code { font-size: 0.78em; }
+      .prose img { max-width: 100%; height: auto; }
+      .prose figure.img { margin: 2em 0; }
+      .prose figure.img img { display: block; width: 100%; border-radius: 16px; border: 1px solid var(--line); }
+      .prose figure.img figcaption { font: italic 0.88rem var(--serif); color: var(--faint); text-align: center; margin-top: 10px; }
+
+      /* code windows */
+      .prose figure.code { margin: 1.8em 0; border: 1px solid var(--line); border-radius: 14px; background: var(--code-bg); overflow: hidden; }
+      .prose figure.code figcaption { display: flex; align-items: center; gap: 7px; height: 40px; padding: 0 8px 0 14px; border-bottom: 1px solid var(--line); background: var(--code-bar);
+        font: 500 0.74rem var(--mono); color: var(--faint); }
+      .prose figure.code figcaption::before { content: ""; width: 8px; height: 8px; border-radius: 50%; flex: none; background: var(--line-2);
+        box-shadow: 14px 0 0 var(--line-2), 28px 0 0 var(--line-2); margin-right: 32px; }
+      .prose figure.code figcaption span { min-width: 0; overflow-wrap: anywhere; line-height: 1.2; }
+      .prose figure.code.file figcaption span { color: var(--text); }
+      .prose figure.code:not(.file) figcaption span { text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.66rem; }
+      .prose figure.code .copy { all: unset; cursor: pointer; margin-left: auto; flex: none; font: 600 0.68rem var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted);
+        padding: 6px 10px; border-radius: 8px; border: 1px solid transparent; transition: background 0.2s, color 0.2s, border-color 0.2s; }
+      .prose figure.code .copy:hover { background: var(--card-2); color: var(--text); border-color: var(--line); }
+      .prose figure.code .copy:focus-visible { outline: 2px solid var(--yellow); outline-offset: 1px; }
+      .prose figure.code .copy.ok { color: var(--yellow-ink); border-color: color-mix(in srgb, var(--yellow) 50%, transparent); }
+      .prose pre { margin: 0; padding: 18px 20px 20px; overflow-x: auto; font: 400 0.85rem/1.7 var(--mono); tab-size: 2; color: var(--text); scrollbar-width: thin; scrollbar-color: var(--line-2) transparent; }
+      .prose pre code { font: inherit; white-space: pre; display: block; min-width: max-content; font-variant-ligatures: none; }
+      .hljs-keyword, .hljs-selector-tag, .hljs-literal, .hljs-built_in.hljs-keyword { color: var(--sx-kw); }
+      .hljs-string, .hljs-regexp, .hljs-template-string, .hljs-symbol { color: var(--sx-str); }
+      .hljs-title, .hljs-title.function_, .hljs-section { color: var(--sx-fn); }
+      .hljs-title.class_, .hljs-type, .hljs-built_in, .hljs-class .hljs-title { color: var(--sx-type); }
+      .hljs-number, .hljs-variable.constant_ { color: var(--sx-num); }
+      .hljs-comment, .hljs-quote { color: var(--sx-com); font-style: italic; }
+      .hljs-attr, .hljs-property, .hljs-attribute, .hljs-name, .hljs-selector-attr { color: var(--sx-attr); }
+      .hljs-meta, .hljs-meta .hljs-keyword, .hljs-doctag { color: var(--sx-meta); }
+      .hljs-params, .hljs-subst { color: var(--text); }
+      .hljs-variable, .hljs-template-variable { color: var(--sx-num); }
+      .hljs-emphasis { font-style: italic; }
+      .hljs-strong { font-weight: 700; }
+      .hljs-addition { color: var(--sx-type); }
+      .hljs-deletion { color: var(--sx-num); }
+
+      /* tables */
+      .prose .table-wrap { margin: 1.8em 0; overflow-x: auto; border: 1px solid var(--line); border-radius: 14px; background: var(--card); scrollbar-width: thin; }
+      .prose table { border-collapse: collapse; width: 100%; font: 400 0.92rem/1.5 var(--sans); }
+      .prose th { text-align: left; font: 600 0.68rem var(--mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--faint); background: var(--code-bar); padding: 12px 16px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+      .prose td { padding: 12px 16px; border-bottom: 1px solid var(--line); vertical-align: top; color: var(--prose); min-width: 120px; }
+      .prose tr:last-child td { border-bottom: 0; }
+      .prose tbody tr:nth-child(even) td { background: color-mix(in srgb, var(--card-2) 55%, transparent); }
+
+      /* details */
+      .prose details { margin: 1.6em 0; border: 1px solid var(--line); border-radius: 14px; background: var(--card); overflow: hidden; transition: border-color 0.2s; }
+      .prose details[open] { border-color: var(--line-2); }
+      .prose summary { cursor: pointer; list-style: none; display: flex; align-items: center; gap: 12px; padding: 14px 18px; font: 600 0.84rem var(--mono); color: var(--text); }
+      .prose summary::-webkit-details-marker { display: none; }
+      .prose summary::before { content: ""; width: 8px; height: 8px; border-right: 2px solid var(--yellow-ink); border-bottom: 2px solid var(--yellow-ink); transform: rotate(-45deg); transition: transform 0.25s var(--ease); flex: none; }
+      .prose details[open] summary::before { transform: rotate(45deg); }
+      .prose summary:hover { background: var(--card-2); }
+      .prose details > :not(summary) { margin-left: 18px; margin-right: 18px; }
+      .prose details figure.code { margin: 0; border: 0; border-top: 1px solid var(--line); border-radius: 0; }
+      .prose details > figure.code:last-child { margin-bottom: 0; }
+      .prose details > :last-child { margin-bottom: 18px; }
+
+      /* end of article */
+      .endbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; margin-top: 56px; padding: 20px 0; border-top: 2px solid var(--text); border-bottom: 1px solid var(--line); }
+      .endbar .acts { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+      .edit { display: inline-flex; align-items: center; gap: 8px; font: 600 0.78rem var(--mono); color: var(--muted); border-bottom: 2px solid var(--yellow); padding-bottom: 3px; }
+      .edit:hover { color: var(--text); }
+      .edit svg { width: 15px; height: 15px; }
+
+      .author { display: grid; grid-template-columns: auto 1fr; gap: 28px; align-items: center; margin-top: 48px; padding: 30px; border: 1px solid var(--line); border-radius: 24px; position: relative;
+        background: radial-gradient(320px circle at 100% 0%, color-mix(in srgb, var(--purple) calc(var(--aurora) * 70%), transparent), transparent 70%), var(--card); }
+      .ring { position: relative; width: 92px; aspect-ratio: 1; margin: 0; flex: none; }
+      .ring img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; display: block; background: var(--card-2); }
+      .ring svg { position: absolute; inset: -16%; width: 132%; height: 132%; overflow: visible; pointer-events: none; }
+      .ring path { fill: none; stroke: var(--yellow); stroke-width: 10; stroke-linecap: round; stroke-linejoin: round; }
+      html.js .ring.draw path { stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw 1.6s var(--ease) 0.2s forwards; }
+      html.js .ring.draw path.star { animation-delay: 1.4s; animation-duration: 0.6s; }
+      @keyframes draw { to { stroke-dashoffset: 0; } }
+      .dark .ring svg { filter: drop-shadow(0 0 10px rgba(96, 41, 255, 0.45)); }
+      .author .hello { font: 400 1.7rem/1.1 var(--script); color: var(--yellow); display: inline-block; transform: rotate(-3deg); }
+      .author .role { font: 600 0.72rem var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--text); margin: 10px 0 0; }
+      .author .role span { color: var(--faint); font-weight: 500; }
+      .author p { font-family: var(--serif); color: var(--muted); margin: 10px 0 0; line-height: 1.6; font-size: 1rem; }
+      .author .links { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; margin-top: 16px; position: relative; z-index: 1; }
+      .author .home { font: 600 0.78rem var(--mono); color: var(--text); border-bottom: 2px solid var(--yellow); padding-bottom: 3px; }
+      .author .home:hover { color: var(--yellow-ink); }
+      .author .soc { display: flex; gap: 8px; }
+      .author .soc a { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; border: 1px solid var(--line); background: var(--bg); transition: transform 0.3s var(--ease); }
+      .author .soc a:hover { transform: translateY(-2px); }
+      .author .soc svg { width: 14px; height: 14px; fill: currentColor; }
+
+      .pn { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 28px; }
+      .pn a { display: flex; flex-direction: column; gap: 8px; padding: 22px 24px; border: 1px solid var(--line); border-radius: 20px; background: var(--card); transition: border-color 0.25s, transform 0.35s var(--ease); min-width: 0; }
+      .pn a:hover { border-color: var(--hot); transform: translateY(-2px); }
+      .pn .k { font: 600 0.68rem var(--mono); letter-spacing: 0.14em; text-transform: uppercase; color: var(--faint); }
+      .pn .t { font-weight: 750; letter-spacing: -0.015em; line-height: 1.3; font-size: 1.05rem; }
+      .pn .n { text-align: right; align-items: flex-end; }
+      .pn .ph-empty { border-style: dashed; color: var(--faint); justify-content: center; font: 500 0.82rem var(--mono); }
+      .backall { display: flex; justify-content: center; margin-top: 44px; }
+
+      /* footer */
+      footer { border-top: 1px solid var(--line); margin-top: 96px; }
+      footer .wrap { display: flex; justify-content: space-between; align-items: center; gap: 20px; padding: 28px 0; font-size: 0.86rem; color: var(--faint); flex-wrap: wrap; }
+      footer .logo { font-size: 1.3rem; color: var(--text); }
+      footer b { color: var(--text); }
+      .totop { border: 1px solid var(--line); background: var(--card); width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center; cursor: pointer; transition: transform 0.3s var(--ease); color: var(--text); }
+      .totop:hover { transform: translateY(-3px); }
+      .totop svg { width: 16px; height: 16px; }
+
+      /* responsive */
+      @media (max-width: 1240px) {
+        .layout { grid-template-columns: 210px minmax(0, var(--measure)) 56px; gap: 44px; }
+        .rail .lbl { display: none; }
+      }
+      @media (max-width: 1100px) {
+        .top nav { display: none; }
+        .layout { grid-template-columns: minmax(0, 1fr); max-width: var(--measure); margin-inline: auto; margin-top: 44px; }
+        .side, .rail { display: none; }
+        .mtoc { display: block; }
+        .plist a { grid-template-columns: 96px minmax(0, 1fr) 110px 24px; gap: 22px; }
+        .plist .th { display: none; }
+      }
+      @media (max-width: 900px) {
+        .ch-head, .soon .grid { grid-template-columns: 1fr; gap: 18px; }
+        .ch-num { max-width: 220px; }
+        .feat { grid-template-columns: 1fr; }
+        .feat .shot { border-right: 0; border-bottom: 1px solid var(--line); }
+        .feat .shot .img { min-height: 0; aspect-ratio: 16 / 9; flex: none; }
+        .feat .txt { padding: 30px 28px 30px; }
+        .by .tags { margin-left: 0; }
+        .browse { padding-top: 72px; }
+      }
+      @media (max-width: 640px) {
+        .wrap { width: min(1240px, 100% - 36px); }
+        .top .wrap { gap: 10px; height: 62px; }
+        .logo { font-size: 1.4rem; }
+        .hdr-right { gap: 8px; }
+        #prefs { --kc-h: 34px; --kc-pad: 3px; gap: 5px; }
+        #prefs button { padding: 0 7px; }
+        #prefs .kc-theme button { padding: 0; }
+        .pill.resume span { display: none; }
+        .pill.resume { width: 34px; height: 34px; padding: 0; justify-content: center; }
+        .mast { padding: 48px 0 40px; }
+        .ch-num b { font-size: 1.8rem; }
+        .plist a { grid-template-columns: minmax(0, 1fr) 24px; gap: 10px 14px; padding: 22px 4px; }
+        .plist a:hover { padding-left: 8px; }
+        .plist .d { grid-column: 1; grid-row: 1; }
+        .plist .tx { grid-column: 1; }
+        .plist .rt { grid-column: 1; text-align: left; }
+        .plist .rt b { display: inline; margin-right: 8px; }
+        .plist .go { grid-column: 2; grid-row: 1; }
+        .plist .tt { font-size: 1.18rem; }
+        .bar { height: 54px; padding-left: 14px; }
+        .bar kbd { display: none; }
+        .ph { padding: 40px 0 28px; }
+        .crumbs { margin-bottom: 24px; }
+        .cover { border-radius: 16px; }
+        .layout { margin-top: 32px; }
+        .prose { font-size: 1.08rem; line-height: 1.74; }
+        .prose h2 { font-size: 1.5rem; }
+        .prose h3 { font-size: 1.2rem; }
+        .prose pre { font-size: 0.8rem; padding: 16px 16px 18px; }
+        .prose figure.code, .prose .table-wrap { margin-left: -6px; margin-right: -6px; }
+        .prose th, .prose td { padding: 10px 12px; min-width: 0; }
+        .prose td { overflow-wrap: break-word; }
+        .prose td:last-child { overflow-wrap: anywhere; }
+        .prose table { font-size: 0.86rem; }
+        .prose .anchor { display: none; }
+        .author { grid-template-columns: 1fr; gap: 18px; padding: 24px; }
+        .ring { width: 76px; margin-left: 8px; }
+        .pn { grid-template-columns: 1fr; }
+        .pn .n { text-align: left; align-items: flex-start; }
+        .soon li { flex-wrap: wrap; gap: 6px 12px; }
+        .soon .lead { display: none; }
+        .endbar { flex-direction: column; align-items: flex-start; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+        .aurora b { animation: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <div class="rprog" id="rprog" aria-hidden="true"></div>
+
+    <header class="top">
+      <div class="wrap">
+        <a class="logo" href="/pt-BR/v/f/" aria-label="Kuchak, home">Kuchak<i></i></a>
+        <nav id="nav" aria-label="Sections"></nav>
+        <div class="hdr-right">
+          <div id="prefs"></div>
+          <a class="pill resume" id="resumeTop" target="_blank" rel="noreferrer"></a>
+        </div>
+      </div>
+    </header>
+
+    <main id="main">
+      <div class="atmo" aria-hidden="true"><div class="aurora"><b></b><b></b><b></b></div><div class="dots"></div></div>
+      <div id="view"></div>
+    </main>
+
+    <footer>
+      <div class="wrap">
+        <a class="logo" href="/pt-BR/v/f/">Kuchak<i></i></a>
+        <span id="foot"></span>
+        <button class="totop" id="totop" type="button"></button>
+      </div>
+    </footer>
+
+    <script>
+      (function () {
+        const C = KUCH.content();
+        const M = KUCH.meta;
+        const L = KUCH.lang;
+        const B = KUCH_BLOG;
+        const BT = B.t;
+        const $ = (s, r = document) => r.querySelector(s);
+        const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+        const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, (ch) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[ch]);
+        const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+        const fold = (s) => String(s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+        const isMac = /Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent);
+        const T = {
+          en: { skip: "Skip to content", archive: "Archive", archiveSub: "Every note so far, newest first.", posts: (n) => `${n} ${n === 1 ? "post" : "posts"}`, clear: "Clear", filter: "Filter by tag", draft: "draft", soonSub: "Drafts on the bench. Real lessons from production, not hot takes.", writtenBy: "Written by", backHome: "Back to kuch.dev", readNow: "Read the post", lostTitle: "Wrong turn.", read: "read", by: "by", steps: "Steps", progress: "Read", rssLabel: "Subscribe via RSS", shareX: "Share on X", shareIn: "Share on LinkedIn", more: "more", less: "Show fewer", nf: "post not found", searchFor: "Search for", home: "kuch.dev" },
+          pt: { skip: "Pular para o conteúdo", archive: "Arquivo", archiveSub: "Todas as notas até aqui, das mais novas para as mais antigas.", posts: (n) => `${n} ${n === 1 ? "post" : "posts"}`, clear: "Limpar", filter: "Filtrar por tag", draft: "rascunho", soonSub: "Rascunhos na bancada. Lições reais de produção, não opiniões rápidas.", writtenBy: "Escrito por", backHome: "Voltar para kuch.dev", readNow: "Ler o post", lostTitle: "Caminho errado.", read: "lido", by: "por", steps: "Etapas", progress: "Lido", rssLabel: "Assinar via RSS", shareX: "Compartilhar no X", shareIn: "Compartilhar no LinkedIn", more: "mais", less: "Mostrar menos", nf: "post não encontrado", searchFor: "Buscar por", home: "kuch.dev" },
+        }[L];
+        const I = {
+          arrow: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>',
+          back: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>',
+          up: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg>',
+          search: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>',
+          rss: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11a9 9 0 0 1 9 9M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1.4" fill="currentColor"/></svg>',
+          link: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/></svg>',
+          check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg>',
+          doc: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg>',
+          github: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5C5.73.5.5 5.73.5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.87-1.37-3.87-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.03 1.76 2.69 1.25 3.35.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.68 0-1.25.45-2.28 1.18-3.08-.12-.29-.51-1.46.11-3.04 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.62 1.58.23 2.75.11 3.04.74.8 1.18 1.83 1.18 3.08 0 4.41-2.69 5.39-5.25 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.73 18.27.5 12 .5Z"/></svg>',
+          linkedin: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13ZM7.12 20.45H3.56V9h3.56v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0Z"/></svg>',
+          x: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.4l-5.8-7.58-6.63 7.58H.48l8.6-9.83L0 1.15h7.59l5.24 6.93 6.07-6.93Zm-1.29 19.5h2.04L6.48 3.24H4.3l13.31 17.41Z"/></svg>',
+        };
+        const ringSvg = `<svg viewBox="0 0 400 400" aria-hidden="true"><path pathLength="1" d="M214 30 C120 18 42 78 36 186 C30 296 122 372 220 366 C322 360 376 282 368 184 C360 88 292 26 192 38 C146 44 112 60 88 80" /><path class="star" pathLength="1" d="M352 64 L362 86 M372 58 L356 92 M346 78 L378 72" /></svg>`;
+
+        /* ---------- chrome ---------- */
+        $(".skip").textContent = T.skip;
+        const navItems = [
+          ["principles", C.nav.principles],
+          ["work", C.nav.work],
+          ["journey", C.nav.journey],
+          ["oss", C.nav.oss],
+          ["writing", C.nav.writing],
+          ["contact", C.nav.contact],
+        ];
+        $("#nav").innerHTML = navItems
+          .map(([id, l]) => (id === "writing" ? `<a href="${B.indexUrl()}" class="on" aria-current="page">${esc(l)}</a>` : `<a href="/pt-BR/v/f/#${id}">${esc(l)}</a>`))
+          .join("");
+        const rt = $("#resumeTop");
+        rt.href = M.links.resume;
+        rt.innerHTML = `${I.doc}<span>${esc(C.nav.resume)}</span>`;
+        rt.setAttribute("aria-label", C.nav.resume);
+        KUCH_PREFS.mount($("#prefs"));
+        $("#foot").innerHTML = `© ${new Date().getFullYear()} <b>${esc(M.domain)}</b>. ${esc(C.contact.footer)}`;
+        const tt = $("#totop");
+        tt.innerHTML = I.up;
+        tt.setAttribute("aria-label", C.ui.backToTop);
+        tt.addEventListener("click", () => scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" }));
+        const header = $("header.top");
+        let ticking = false;
+        let onScrollExtra = null;
+        addEventListener(
+          "scroll",
+          () => {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(() => {
+              ticking = false;
+              header.classList.toggle("scrolled", scrollY > 8);
+              if (onScrollExtra) onScrollExtra();
+            });
+          },
+          { passive: true }
+        );
+
+        const setMeta = (title, desc) => {
+          document.title = title;
+          let m = document.querySelector('meta[name="description"]');
+          if (!m) {
+            m = document.createElement("meta");
+            m.name = "description";
+            document.head.appendChild(m);
+          }
+          m.content = desc;
+        };
+        const chHead = (num, kicker, titleHtml, sub, tag = "h2", cls = "") =>
+          `<div class="ch-head ${cls}"><div class="ch-num">${num}<b>${esc(kicker)}</b></div><div><${tag} class="h1">${titleHtml}</${tag}>${sub ? `<p class="lede">${esc(sub)}</p>` : ""}</div></div>`;
+        const tagsHtml = (tags) => `<div class="tags">${tags.map((t) => `<a class="tag" href="${B.tagUrl(t)}">${esc(t)}</a>`).join("")}</div>`;
+        const minRead = (e) => `${e.readingMinutes} ${BT.minRead}`;
+
+        /* ---------- states ---------- */
+        function renderState(kind) {
+          const offline = kind === "offline";
+          setMeta(`${offline ? BT.blog : "404"} · Marcos Kuchak`, BT.blogSub);
+          $("#view").innerHTML = `<section class="state fade-in"><div class="wrap"><div class="box">
+            <span class="kicker">${offline ? "offline" : `404 · ${esc(T.nf)}`}</span>
+            <h1>${esc(T.lostTitle)}</h1>
+            <p>${offline ? esc(BT.offline).replace("pnpm prototype:landing", "<code>pnpm prototype:landing</code>") : esc(BT.notFound)}</p>
+            <a class="btn btn-primary" href="${B.indexUrl()}">${I.back}<span>${esc(BT.allPosts)}</span></a>
+          </div></div></section>`;
+        }
+
+        /* ---------- index ---------- */
+        let entries = [];
+        const state = { q: "", tag: B.params.get("tag") || "" };
+
+        const TAG_LIMIT = 9;
+        function renderIndex() {
+          setMeta(`${BT.blog} · Marcos Kuchak`, BT.blogSub);
+          const latest = entries[0];
+          const tagCounts = {};
+          entries.forEach((e) => e.tags.forEach((t) => (tagCounts[t] = (tagCounts[t] || 0) + 1)));
+          const tags = Object.keys(tagCounts).sort((a, b) => tagCounts[b] - tagCounts[a] || a.localeCompare(b));
+          const soon = (window.KUCH_DRAFTS || C.writing.filter((w) => !w.published));
+
+          $("#view").innerHTML = `
+            <section class="mast fade-in"><div class="wrap">
+              ${chHead("kuch.dev / blog", C.writingIntro.kicker, `<span class="mk">${esc(BT.blog)}</span>`, BT.blogSub, "h1")}
+              <div class="ch-head" style="margin-top:0"><div></div><div class="row">
+                <span class="meta"><span>${esc(T.posts(entries.length))}</span><span class="sep"></span><span>${esc(B.formatDate(latest ? latest.date : ""))}</span></span>
+                <a class="rss" href="${B.feedUrl}" aria-label="${esc(T.rssLabel)}">${I.rss}<span>${esc(BT.rss)}</span></a>
+              </div></div>
+            </div></section>
+            ${latest ? `<section id="featWrap"><div class="wrap">
+              <article class="feat fade-in">
+                <a class="shot" href="${B.postUrl(latest.slug)}" tabindex="-1" aria-hidden="true">
+                  <div class="win-bar"><i></i><i></i><i></i><span>posts/${esc(latest.slug)}.md</span></div>
+                  <div class="img">${latest.cover ? `<img src="${esc(latest.cover)}" alt="" fetchpriority="high">` : ""}</div>
+                </a>
+                <div class="txt">
+                  <div class="lab"><span class="live"><i></i>${esc(BT.latest)}</span><span class="kicker">${esc(latest.topic)}</span></div>
+                  <h2><a href="${B.postUrl(latest.slug)}">${esc(latest.title)}</a></h2>
+                  <p class="dek">${esc(latest.description)}</p>
+                  <span class="meta"><span>${esc(B.formatDate(latest.date))}</span><span class="sep"></span><span>${esc(minRead(latest))}</span></span>
+                  ${tagsHtml(latest.tags)}
+                  <a class="btn btn-primary go" href="${B.postUrl(latest.slug)}"><span>${esc(T.readNow)}</span>${I.arrow}</a>
+                </div>
+              </article>
+            </div></section>` : ""}
+            <section class="browse" id="archive"><div class="wrap">
+              ${chHead(`${esc(T.archive)} · ${String(entries.length).padStart(2, "0")}`, BT.allPosts, esc(T.archive), T.archiveSub)}
+              <div class="bar" id="bar" role="search">
+                ${I.search}
+                <label class="sr" for="q">${esc(BT.search)}</label>
+                <input id="q" type="search" autocomplete="off" spellcheck="false" placeholder="${esc(BT.search)}…" />
+                <span class="count" id="count" aria-live="polite"></span>
+                <button class="clear" id="clear" type="button">${esc(T.clear)}</button>
+                <kbd>${isMac ? "⌘" : "Ctrl"} K</kbd>
+              </div>
+              <div class="chips" id="chips" role="group" aria-label="${esc(T.filter)}">
+                <button class="chip" type="button" data-tag="" aria-pressed="false">${esc(BT.all)} <b>${entries.length}</b></button>
+                ${tags.map((t, i) => `<button class="chip${i >= TAG_LIMIT ? " extra" : ""}" type="button" data-tag="${esc(t)}" aria-pressed="false">${esc(t)} <b>${tagCounts[t]}</b></button>`).join("")}
+                ${tags.length > TAG_LIMIT ? `<button class="chip more" type="button" id="moreTags" aria-expanded="false">+${tags.length - TAG_LIMIT} ${esc(T.more)}</button>` : ""}
+              </div>
+              <ol class="plist" id="plist"></ol>
+            </div></section>
+            ${soon.length ? `<section class="soon"><div class="wrap grid">
+              <div class="ch-num">Queue · ${String(soon.length).padStart(2, "0")}<b>${esc(BT.comingUp)}</b></div>
+              <div><p class="lede" style="margin:0 0 18px">${esc(T.soonSub)}</p><ol>${soon
+                .map((w) => `<li><span class="draft">${esc(T.draft)}</span><span class="t">${esc(w.title)}</span><span class="lead"></span><span class="pg">${esc(w.tags.join(" · "))}</span></li>`)
+                .join("")}</ol></div>
+            </div></section>` : ""}`;
+
+          const q = $("#q");
+          q.value = state.q;
+          q.addEventListener("input", () => {
+            state.q = q.value;
+            applyFilter();
+          });
+          q.addEventListener("keydown", (e) => {
+            if (e.key === "Escape") {
+              q.value = "";
+              state.q = "";
+              applyFilter();
+              q.blur();
+            }
+          });
+          $("#clear").addEventListener("click", () => {
+            q.value = "";
+            state.q = "";
+            applyFilter();
+            q.focus();
+          });
+          $("#chips").addEventListener("click", (e) => {
+            const c = e.target.closest(".chip");
+            if (!c) return;
+            if (c.id === "moreTags") {
+              const open = $("#chips").classList.toggle("all");
+              c.setAttribute("aria-expanded", String(open));
+              c.textContent = open ? T.less : `+${tags.length - TAG_LIMIT} ${T.more}`;
+              return;
+            }
+            const next = c.dataset.tag === state.tag ? "" : c.dataset.tag;
+            setTag(next, true);
+          });
+          applyFilter();
+          if (state.tag) requestAnimationFrame(() => $("#archive").scrollIntoView({ behavior: "auto", block: "start" }));
+        }
+
+        function setTag(tag, push) {
+          state.tag = tag;
+          const url = tag ? B.tagUrl(tag) : B.indexUrl();
+          if (push) history.pushState({ tag }, "", url + location.hash.replace(/^#archive$/, ""));
+          applyFilter();
+        }
+
+        function applyFilter() {
+          const q = fold(state.q.trim());
+          const filtering = !!(q || state.tag);
+          const list = entries.filter((e) => {
+            if (state.tag && !e.tags.includes(state.tag)) return false;
+            if (!q) return true;
+            return fold([e.title, e.description, e.topic, e.tags.join(" ")].join(" ")).includes(q);
+          });
+          // Latest post is already featured above, so the unfiltered archive starts from the second one.
+          const shown = filtering ? list : list.slice(1);
+          const feat = $("#featWrap");
+          if (feat) feat.hidden = filtering;
+          $$("#chips .chip").forEach((c) => c.setAttribute("aria-pressed", String(c.dataset.tag === state.tag)));
+          $("#bar").classList.toggle("has", !!state.q);
+          $("#count").textContent = T.posts(list.length);
+          $("#plist").innerHTML = shown.length
+            ? shown
+                .map(
+                  (e) => `<li><a href="${B.postUrl(e.slug)}">
+                    <span class="d">${esc(B.formatDate(e.date))}</span>
+                    <span class="th">${e.cover ? `<img src="${esc(e.cover)}" alt="" loading="lazy">` : ""}</span>
+                    <span class="tx"><span class="tt"><span>${esc(e.title)}</span></span><span class="ds">${esc(e.description)}</span></span>
+                    <span class="rt"><b>${esc(e.topic)}</b>${esc(minRead(e))}</span>
+                    <span class="go" aria-hidden="true">↗</span>
+                  </a></li>`
+                )
+                .join("")
+            : list.length
+              ? ""
+              : `<li class="empty"><b>${esc(T.searchFor)} "${esc(state.q || state.tag)}"</b>${esc(BT.noResults)}</li>`;
+        }
+
+        addEventListener("keydown", (e) => {
+          if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+            const q = $("#q");
+            if (!q) return;
+            e.preventDefault();
+            q.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "center" });
+            q.focus({ preventScroll: true });
+          }
+        });
+
+        /* ---------- post ---------- */
+        async function renderPost(slug) {
+          const p = await B.get(slug);
+          if (!p) return renderState("404");
+          setMeta(`${p.title} · Marcos Kuchak`, p.description);
+          const shareUrl = location.href.split("#")[0];
+          // Read heading text from the rendered DOM so inline code like ClassProps<T, U> keeps its characters.
+          const tpl = document.createElement("template");
+          tpl.innerHTML = p.html;
+          p.toc.forEach((h) => {
+            const el = tpl.content.getElementById(h.id);
+            if (el) h.text = [...el.childNodes].filter((n) => !(n.classList && n.classList.contains("anchor"))).map((n) => n.textContent).join("").trim();
+          });
+          const tocItems = p.toc.map((h) => `<li class="l${h.level}" data-id="${esc(h.id)}"><a href="#${esc(h.id)}">${esc(h.text)}</a></li>`).join("");
+          const [roleTitle, roleSpec = ""] = C.hero.role.split(" · ");
+          $("#view").innerHTML = `
+            <article class="post">
+              <header class="ph fade-in"><div class="wrap"><div class="ph-in">
+                <nav class="crumbs" aria-label="Breadcrumb"><a href="/pt-BR/v/f/">${esc(T.home)}</a><span class="s">/</span><a href="${B.indexUrl()}">${esc(BT.blog)}</a><span class="s">/</span><span>${esc(p.topic)}</span></nav>
+                <span class="kicker">${esc(p.topic)}</span>
+                <h1>${esc(p.title)}</h1>
+                <p class="dek">${esc(p.description)}</p>
+                <div class="by">
+                  <span class="who"><img src="${esc(M.avatar)}" alt="" width="40" height="40"><span class="w"><b>${esc(M.name)}</b><span>${esc(B.formatDate(p.date))} · ${esc(minRead(p))}</span></span></span>
+                  ${tagsHtml(p.tags)}
+                </div>
+                ${p.untranslated ? `<div class="notice"><i>EN</i><span>${esc(BT.onlyEnglish)}</span></div>` : ""}
+              </div></div></header>
+              ${p.cover ? `<div class="wrap"><figure class="cover fade-in"><div class="win-bar"><i></i><i></i><i></i><span>posts/${esc(p.slug)}.md</span></div><div class="img"><img src="${esc(p.cover)}" alt="" fetchpriority="high"></div></figure></div>` : ""}
+              <div class="wrap">
+                <div class="layout">
+                  <aside class="side" aria-label="${esc(BT.onThisPage)}">
+                    ${p.toc.length ? `<h4>${esc(BT.onThisPage)}</h4><ol class="toc" id="toc">${tocItems}</ol>` : ""}
+                    <div class="pct"><span>${esc(T.progress)}</span><span id="pctV">0%</span></div>
+                    <div class="meter"><b id="pctB"></b></div>
+                  </aside>
+                  <div style="min-width:0">
+                    ${p.toc.length ? `<details class="mtoc"><summary>${esc(BT.onThisPage)}</summary><ol class="toc">${tocItems}</ol></details>` : ""}
+                    <div class="prose" id="prose" ${p.untranslated ? 'lang="en"' : ""}>${p.html}</div>
+                    <div class="endbar">
+                      ${tagsHtml(p.tags)}
+                      <div class="acts">
+                        <button class="ibtn" type="button" data-share="copy" aria-label="${esc(BT.copyLink)}" title="${esc(BT.copyLink)}">${I.link}</button>
+                        <a class="ibtn" href="https://x.com/intent/post?text=${encodeURIComponent(p.title)}&url=${encodeURIComponent(shareUrl)}" target="_blank" rel="noopener noreferrer" aria-label="${esc(T.shareX)}" title="${esc(T.shareX)}">${I.x.replace("<svg", '<svg fill="currentColor"')}</a>
+                        <a class="ibtn" href="https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}" target="_blank" rel="noopener noreferrer" aria-label="${esc(T.shareIn)}" title="${esc(T.shareIn)}">${I.linkedin.replace("<svg", '<svg fill="currentColor"')}</a>
+                        <a class="edit" href="${B.editUrl(p.slug)}" target="_blank" rel="noopener noreferrer">${I.github.replace("<svg", '<svg fill="currentColor"')}<span>${esc(BT.edit)}</span></a>
+                      </div>
+                    </div>
+                    <section class="author" aria-label="${esc(T.writtenBy)}">
+                      <figure class="ring draw" id="ring"><img src="${esc(M.avatar)}" alt="${esc(M.fullName)}" width="92" height="92">${ringSvg}</figure>
+                      <div>
+                        <span class="hello">${esc(C.hero.hello)}</span>
+                        <p class="role">${esc(roleTitle)}${roleSpec ? ` <span>· ${esc(roleSpec)}</span>` : ""}</p>
+                        <p>${esc(C.contact.sub)}</p>
+                        <div class="links">
+                          <a class="home" href="/pt-BR/v/f/">${esc(T.backHome)} →</a>
+                          <span class="soc">
+                            <a href="${M.links.github}" target="_blank" rel="noreferrer" aria-label="GitHub">${I.github}</a>
+                            <a href="${M.links.linkedin}" target="_blank" rel="noreferrer" aria-label="LinkedIn">${I.linkedin}</a>
+                            <a href="${M.links.x}" target="_blank" rel="noreferrer" aria-label="X">${I.x}</a>
+                          </span>
+                        </div>
+                      </div>
+                    </section>
+                    <nav class="pn" aria-label="${esc(BT.prev)} / ${esc(BT.next)}">
+                      ${p.prev ? `<a href="${B.postUrl(p.prev.slug)}"><span class="k">← ${esc(BT.prev)}</span><span class="t">${esc(p.prev.title)}</span><span class="meta">${esc(B.formatDate(p.prev.date))}</span></a>` : `<span class="ph-empty pnx"></span>`}
+                      ${p.next ? `<a class="n" href="${B.postUrl(p.next.slug)}"><span class="k">${esc(BT.next)} →</span><span class="t">${esc(p.next.title)}</span><span class="meta">${esc(B.formatDate(p.next.date))}</span></a>` : `<span class="ph-empty pnx"></span>`}
+                    </nav>
+                    <div class="backall"><a class="btn btn-ghost" href="${B.indexUrl()}">${I.back}<span>${esc(BT.back)}</span></a></div>
+                  </div>
+                  <div class="rail" aria-label="${esc(BT.share)}">
+                    <span class="lbl">${esc(BT.share)}</span>
+                    <button class="ibtn" type="button" data-share="copy" aria-label="${esc(BT.copyLink)}" title="${esc(BT.copyLink)}">${I.link}</button>
+                    <a class="ibtn" href="https://x.com/intent/post?text=${encodeURIComponent(p.title)}&url=${encodeURIComponent(shareUrl)}" target="_blank" rel="noopener noreferrer" aria-label="${esc(T.shareX)}" title="${esc(T.shareX)}">${I.x.replace("<svg", '<svg fill="currentColor"')}</a>
+                    <a class="ibtn" href="https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}" target="_blank" rel="noopener noreferrer" aria-label="${esc(T.shareIn)}" title="${esc(T.shareIn)}">${I.linkedin.replace("<svg", '<svg fill="currentColor"')}</a>
+                  </div>
+                </div>
+              </div>
+            </article>`;
+
+          B.enhance($("#prose"));
+          $$(".pnx").forEach((el) => (el.style.display = "none"));
+          if (!p.prev || !p.next) $(".pn").style.gridTemplateColumns = window.innerWidth > 640 ? "1fr 1fr" : "1fr";
+
+          $$("[data-share=copy]").forEach((b) =>
+            b.addEventListener("click", async () => {
+              try {
+                await navigator.clipboard.writeText(shareUrl);
+              } catch (e) {}
+              const old = b.innerHTML;
+              b.innerHTML = I.check;
+              b.classList.add("ok");
+              b.setAttribute("aria-label", BT.copied);
+              setTimeout(() => {
+                b.innerHTML = old;
+                b.classList.remove("ok");
+                b.setAttribute("aria-label", BT.copyLink);
+              }, 1500);
+            })
+          );
+          $$(".mtoc a").forEach((a) => a.addEventListener("click", () => a.closest("details").removeAttribute("open")));
+
+          // Reading progress + scroll spy.
+          const prose = $("#prose");
+          const bar = $("#rprog");
+          const pctV = $("#pctV");
+          const pctB = $("#pctB");
+          const heads = p.toc.map((h) => document.getElementById(h.id)).filter(Boolean);
+          const items = $$("#toc li");
+          const mItems = $$(".mtoc li");
+          onScrollExtra = () => {
+            const r = prose.getBoundingClientRect();
+            const total = r.height - innerHeight * 0.6;
+            const f = Math.min(1, Math.max(0, (-r.top + innerHeight * 0.25) / Math.max(1, total)));
+            bar.style.transform = `scaleX(${f})`;
+            if (pctB) pctB.style.transform = `scaleX(${f})`;
+            if (pctV) pctV.textContent = `${Math.round(f * 100)}%`;
+            let active = -1;
+            heads.forEach((h, i) => {
+              if (h.getBoundingClientRect().top < 140) active = i;
+            });
+            [items, mItems].forEach((list) =>
+              list.forEach((li, i) => {
+                li.classList.toggle("on", i === active);
+                li.classList.toggle("done", i < active);
+              })
+            );
+          };
+          onScrollExtra();
+          if (location.hash) {
+            const t = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+            if (t) requestAnimationFrame(() => t.scrollIntoView());
+          }
+        }
+
+        /* ---------- route ---------- */
+        async function route() {
+          const params = B.query();
+          const slug = params.get("post");
+          onScrollExtra = null;
+          $("#rprog").style.transform = "scaleX(0)";
+          try {
+            entries = await B.list();
+          } catch (e) {
+            return renderState("offline");
+          }
+          if (slug) return renderPost(slug);
+          state.tag = params.get("tag") || "";
+          if (state.tag && !entries.some((e) => e.tags.includes(state.tag))) state.tag = state.tag; // unknown tag shows the empty state
+          renderIndex();
+        }
+        addEventListener("popstate", () => {
+          const params = B.query();
+          if (!params.get("post") && $("#plist")) {
+            state.tag = params.get("tag") || "";
+            applyFilter();
+          } else route();
+        });
+        route();
+      })();
+    </script>
+  </body>
+</html>

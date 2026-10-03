@@ -1,0 +1,7 @@
+# Old Next.js URLs
+/posts /blog/ 301
+/posts/ /blog/ 301
+/post/:slug /blog/:slug/ 301
+/tags/:tag /blog/?tag=:tag 301
+/about / 301
+/about/ / 301
