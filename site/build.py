@@ -169,8 +169,11 @@ ROUTER = """<script>
   var lang = page.lang, asked = q.get("lang");
   if (asked === "pt" || asked === "en") { lang = asked; try { localStorage.setItem("kuch:lang", asked); } catch (e) {} }
   else if (page.lang === "en") {
-    var nav = (navigator.languages && navigator.languages[0]) || navigator.language || "";
-    if (store.lang === "pt" || (!store.lang && /^pt\\b/i.test(nav))) lang = "pt";
+    // First language in the browser's list that the site supports (pt-BR, pt-PT, pt → Portuguese; en-* → English).
+    var list = (navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || ""]);
+    var nav = "";
+    for (var i = 0; i < list.length && !nav; i++) { var m = /^(pt|en)\\b/i.exec(list[i] || ""); if (m) nav = m[1].toLowerCase(); }
+    if (store.lang === "pt" || (!store.lang && nav === "pt")) lang = "pt";
   }
   if (v === page.version && lang === page.lang && !q.has("v") && !q.has("version") && !asked) return;
   var base = cfg.langs[lang] + (v === cfg.official ? "/" : "/v/" + v + "/");
