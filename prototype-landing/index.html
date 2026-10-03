@@ -1,0 +1,20 @@
+<!doctype html>
+<!--
+  PROTOTYPE, throwaway. Six different landing variants for kuch.dev,
+  switchable via ?variant=A|B|C|D|E|F (plus ?lang=en|pt and ?theme=dark|light).
+  This file only redirects to the chosen variant.
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>kuch.dev landing prototype</title>
+    <script>
+      const p = new URLSearchParams(location.search);
+      const v = (p.get("variant") || "A").toLowerCase();
+      const file = ["a", "b", "c", "d", "e", "f"].includes(v) ? `variant-${v}.html` : "variant-a.html";
+      p.set("variant", v.toUpperCase());
+      location.replace(file + "?" + p.toString() + location.hash);
+    </script>
+  </head>
+  <body></body>
+</html>

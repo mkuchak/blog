@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "prototype:landing": "echo 'http://localhost:4321/?variant=A' && python3 prototype-landing/serve.py 4321"
   },
   "dependencies": {
     "@fec/remark-a11y-emoji": "^4.0.2",
