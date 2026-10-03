@@ -1,0 +1,99 @@
+name: Release and deploy
+
+# Every push to main:
+#   1. semantic-release reads the Conventional Commits since the last tag. feat, fix, perf and revert
+#      (and any BREAKING CHANGE) cut a versioned GitHub release; other types (chore, docs, style, ci…) don't.
+#   2. The site deploys when a release was cut OR anything under site/posts/ changed (any commit type),
+#      or when the workflow is run by hand.
+# Deploying = build (site/build.py) + pre-render (site/prerender.mjs) + push dist/ to the `production`
+# branch, which Cloudflare Pages (project kuch-dev) serves as-is.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-deploy
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    outputs:
+      published: ${{ steps.semrel.outputs.new_release_published }}
+      version: ${{ steps.semrel.outputs.new_release_version }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - id: semrel
+        uses: cycjimmy/semantic-release-action@v4
+        with:
+          semantic_version: 24
+          extra_plugins: |
+            conventional-changelog-conventionalcommits@8
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      posts: ${{ steps.filter.outputs.posts }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - id: filter
+        uses: dorny/paths-filter@v3
+        with:
+          base: ${{ github.event.before }}
+          filters: |
+            posts:
+              - 'site/posts/**'
+
+  deploy:
+    needs: [release, changes]
+    if: needs.release.outputs.published == 'true' || needs.changes.outputs.posts == 'true' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: https://kuch.dev
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Build
+        run: python3 site/build.py
+      - name: Pre-render for SEO
+        run: node site/prerender.mjs
+      - name: Stamp version
+        run: |
+          VERSION="${{ needs.release.outputs.version }}"
+          [ -z "$VERSION" ] && VERSION="$(git describe --tags --abbrev=0 2>/dev/null | sed 's/^v//')"
+          printf '{"version":"%s","commit":"%s","builtAt":"%s"}\n' "${VERSION:-0.0.0}" "$GITHUB_SHA" "$(date -u +%FT%TZ)" > dist/version.json
+          echo "VERSION=${VERSION:-0.0.0}" >> "$GITHUB_ENV"
+      - name: Publish to the production branch (Cloudflare Pages deploys it)
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: production
+          publish_dir: ./dist
+          force_orphan: false
+          user_name: github-actions[bot]
+          user_email: 41898282+github-actions[bot]@users.noreply.github.com
+          full_commit_message: "deploy: v${{ env.VERSION }} (${{ github.sha }})"
