@@ -17,9 +17,25 @@
     ],
     "readingMinutes": 6,
     "langs": [
-      "en"
+      "en",
+      "pt"
     ],
-    "i18n": {}
+    "i18n": {
+      "pt": {
+        "title": "Turbine suas mensagens de commit com Sugar Git e IA",
+        "description": "Descubra como esta ferramenta muda a forma como você trabalha com commits no Git. Conheça os benefícios de adotar conventional commits, a automação de mensagens de commit com IA e a simplificação dos fluxos de trabalho. Aumente sua produtividade e mantenha seus repositórios organizados com esta ferramenta poderosa.",
+        "topic": "Conventional Commits",
+        "tags": [
+          "Git",
+          "Conventional Commits",
+          "Sugar Git",
+          "IA",
+          "Workflow",
+          "Produtividade"
+        ],
+        "readingMinutes": 6
+      }
+    }
   },
   {
     "slug": "effortless-entity-management-type-aliases-for-creation-and-restoration",
@@ -37,9 +53,23 @@
     ],
     "readingMinutes": 8,
     "langs": [
-      "en"
+      "en",
+      "pt"
     ],
-    "i18n": {}
+    "i18n": {
+      "pt": {
+        "title": "Gerenciamento de entidades sem esforço: type aliases para criação e restauração",
+        "description": "Veja como os type aliases do TypeScript simplificam a criação e a restauração de entidades no Domain-Driven Design (DDD), com um padrão de constructor mais limpo do que os tradicionais static factory methods. Descubra a elegância e a facilidade de manutenção que essa abordagem traz para o seu código.",
+        "topic": "Domain-Driven Design",
+        "tags": [
+          "Domain-Driven Design",
+          "TypeScript",
+          "Padrões de Projeto",
+          "Type Aliases"
+        ],
+        "readingMinutes": 8
+      }
+    }
   },
   {
     "slug": "usend-send-emails-for-free-with-javascript",
@@ -57,8 +87,22 @@
     ],
     "readingMinutes": 3,
     "langs": [
-      "en"
+      "en",
+      "pt"
     ],
-    "i18n": {}
+    "i18n": {
+      "pt": {
+        "title": "Usend: envie emails de graça com JavaScript",
+        "description": "Conheça um serviço gratuito que oferece uma integração simples para enviar emails em aplicações Node.js. Com integração descomplicada, flexibilidade, segurança com DKIM e suporte a diferentes vendors, o Usend é uma solução de baixo custo para desenvolvedores. Veja como começar e melhore a comunicação por email sem esforço.",
+        "topic": "Email transacional",
+        "tags": [
+          "Email",
+          "Node.js",
+          "Usend",
+          "Biblioteca"
+        ],
+        "readingMinutes": 3
+      }
+    }
   }
 ]
