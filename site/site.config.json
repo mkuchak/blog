@@ -1,0 +1,15 @@
+{
+  "official": "e",
+  "siteUrl": "https://kuch.dev",
+  "versions": {
+    "a": { "name": "Agent runtime", "blog": false },
+    "b": { "name": "Terminal OS", "blog": false },
+    "c": { "name": "Editorial", "blog": false },
+    "d": { "name": "Observability", "blog": false },
+    "e": { "name": "Editorial + runtime", "blog": true },
+    "f": { "name": "Runtime + editorial", "blog": true }
+  },
+  "title": "Marcos Kuchak · Senior Full-Stack Software Engineer, AI Agents & LLM Systems",
+  "description": "Full-stack engineer with 17 years in tech building AI agent platforms, MCP tooling and LLM systems that hold up in production.",
+  "image": "https://github.com/mkuchak.png"
+}
