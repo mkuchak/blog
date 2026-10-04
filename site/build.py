@@ -9,6 +9,7 @@ Source layout (site/):
     site.config.json     feature flag: "official" picks the version served at "/" (a-f, default e)
     versions/            variant-<x>.html landing pages, blog-<x>.html blog pages (E and F)
     assets/              shared JS (content, prefs, switcher, blog engine)
+    icons/               favicon.svg (source) and the rasters node site/icons/render.mjs makes from it
     posts/<slug>.md      posts with front matter; "draft: true" = announced as coming up, not published
     posts/<slug>.pt.md   optional Portuguese version
 
@@ -18,6 +19,7 @@ Output (dist/), for each language prefix ("" = English, "/pt-BR" = Portuguese):
     <lang>/v/<x>/              every version (also reachable with ?v=<x> or ?version=<x> on any page)
     <lang>/404.html
     /posts/*  /assets/*  feed.xml  sitemap.xml  robots.txt  _redirects  _headers
+    /favicon.svg  /favicon.ico  /apple-touch-icon.png  /icon-*.png  /site.webmanifest
 """
 
 import hashlib
@@ -41,6 +43,7 @@ BLOG_FALLBACK = CONFIG.get("blogFallback", "e")
 SITE_URL = CONFIG["siteUrl"].rstrip("/")
 LANGS = CONFIG["languages"]  # {"en": {"prefix": "", "hreflang": "en"}, "pt": {...}}
 ASSETS = ["content.js", "prefs.js", "switcher.js", "blog.js"]
+ICONS = ["favicon.svg", "favicon.ico", "apple-touch-icon.png", "icon-192.png", "icon-512.png", "icon-maskable-512.png"]
 
 if OFFICIAL not in VERSIONS:
     sys.exit(f'site.config.json: "official" must be one of {", ".join(VERSIONS)}')
@@ -201,6 +204,10 @@ def head_meta(meta, kind, indexable, lang, alternates, slug=None):
         '<meta name="twitter:card" content="summary_large_image" />',
         '<meta name="twitter:creator" content="@marcoskuchak" />',
         f'<link rel="alternate" type="application/rss+xml" title="Marcos Kuchak · Field notes" href="{SITE_URL}/feed.xml" />',
+        '<link rel="icon" href="/favicon.ico" sizes="32x32" />',
+        '<link rel="icon" href="/favicon.svg" type="image/svg+xml" />',
+        '<link rel="apple-touch-icon" href="/apple-touch-icon.png" />',
+        '<link rel="manifest" href="/site.webmanifest" />',
     ]
     for hl, href in alternates:
         tags.append(f'<link rel="alternate" hreflang="{hl}" href="{html.escape(href)}" />')
@@ -300,6 +307,8 @@ HEADERS = """/assets/*
   Cache-Control: public, max-age=300
 /*.md
   Content-Type: text/markdown; charset=utf-8
+/site.webmanifest
+  Content-Type: application/manifest+json
 """
 
 
@@ -323,6 +332,21 @@ def build():
     write("robots.txt", f"User-agent: *\nAllow: /\nDisallow: /v/\nDisallow: /pt-BR/v/\nSitemap: {SITE_URL}/sitemap.xml\n")
     write("_redirects", REDIRECTS)
     write("_headers", HEADERS)
+    for name in ICONS:
+        shutil.copy(os.path.join(SITE, "icons", name), os.path.join(DIST, name))
+    write("site.webmanifest", json.dumps({
+        "name": "Marcos Kuchak",
+        "short_name": "Kuchak.",
+        "start_url": "/",
+        "display": "browser",
+        "background_color": "#ffffff",
+        "theme_color": "#1b202b",
+        "icons": [
+            {"src": "/icon-192.png", "sizes": "192x192", "type": "image/png"},
+            {"src": "/icon-512.png", "sizes": "512x512", "type": "image/png"},
+            {"src": "/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"},
+        ],
+    }, indent=2) + "\n")
 
     def read(name):
         return open(os.path.join(SITE, "versions", name), encoding="utf-8").read()

@@ -5,7 +5,7 @@ Validates dist/ after `site/build.py` (and, when present, `site/prerender.mjs`).
     python3 site/check.py --strict   # those warnings fail the check (CI)
 
 Checks: every published post exists in every language with the right <html lang>, canonical,
-hreflang alternates and post meta; pre-rendered snapshots carry the localized title and real text;
+hreflang alternates and post meta; every page links the favicon; pre-rendered snapshots carry the localized title and real text;
 every version exists in every language; drafts have no pages; index.json, feed.xml and sitemap.xml
 parse and agree with the posts; the files Cloudflare Pages needs are there.
 """
@@ -51,8 +51,17 @@ published, drafts = build.load_posts()
 prerendered = False
 
 # Shared files
-for rel in ["index.html", "404.html", "pt-BR/404.html", "_redirects", "_headers", "robots.txt", "feed.xml", "sitemap.xml", "posts/index.json"]:
+for rel in ["index.html", "404.html", "pt-BR/404.html", "_redirects", "_headers", "robots.txt", "feed.xml", "sitemap.xml", "posts/index.json", "site.webmanifest"]:
     read(rel)
+for name in build.ICONS:
+    if not os.path.exists(os.path.join(DIST, name)):
+        fail(f"missing /{name}")
+
+# Every page links the favicon
+for root, _, files in os.walk(DIST):
+    for f in files:
+        if f.endswith(".html") and 'href="/favicon.svg"' not in open(os.path.join(root, f), encoding="utf-8").read():
+            fail(f"{os.path.relpath(os.path.join(root, f), DIST)}: missing favicon links")
 
 # index.json agrees with the markdown
 index = read("posts/index.json")
