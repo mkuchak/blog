@@ -1,0 +1,286 @@
+<!doctype html>
+<!-- PROTOTYPE, throwaway: favicon proposals for kuch.dev. Not part of the site build. -->
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Kuchak. · favicon</title>
+    <link rel="icon" id="live-icon" href="data:," />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+    <script src="glyphs.js"></script>
+    <style>
+      :root {
+        --bg: #ffffff; --fg: #1b202b; --muted: #51586a; --soft: #687083; --line: #eaeaea; --mist: #f3f1f3;
+        --y: #fdbc16; --link: #0056ff;
+        --sans: "Inter", system-ui, sans-serif; --mono: "JetBrains Mono", ui-monospace, monospace;
+      }
+      * { box-sizing: border-box; }
+      body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--sans); -webkit-font-smoothing: antialiased; }
+      .wrap { max-width: 1240px; margin: 0 auto; padding: 48px 28px 96px; }
+      header { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 20px; border-bottom: 1px solid var(--fg); padding-bottom: 22px; }
+      h1 { margin: 0; font-weight: 900; font-size: clamp(2rem, 5vw, 3.2rem); letter-spacing: -0.035em; line-height: 1; }
+      h1 i { font-style: normal; color: var(--y); }
+      .lede { margin: 12px 0 0; color: var(--muted); max-width: 62ch; line-height: 1.55; }
+      .kbd { font: 600 0.72rem var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--soft); }
+      kbd { font: 600 0.75rem var(--mono); border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 5px; padding: 1px 6px; color: var(--fg); }
+
+      /* Comparison strip: every proposal at real tab size */
+      .strip { margin: 34px 0 10px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+      .chrome { border-radius: 12px; padding: 10px 10px 0; overflow: hidden; }
+      .chrome.light { background: #dfe3e8; }
+      .chrome.dark { background: #1f2023; }
+      .chrome .lbl { font: 600 0.66rem var(--mono); letter-spacing: 0.1em; text-transform: uppercase; margin: 0 4px 8px; }
+      .chrome.light .lbl { color: #5f6368; }
+      .chrome.dark .lbl { color: #9aa0a6; }
+      .tabs { display: flex; gap: 2px; overflow: hidden; }
+      .tab { flex: 1 1 0; min-width: 0; display: flex; align-items: center; gap: 8px; padding: 9px 10px; border-radius: 9px 9px 0 0; font-size: 12px; cursor: pointer; border: 0; background: none; font-family: inherit; text-align: left; }
+      .tab img { width: 16px; height: 16px; flex: none; }
+      .tab span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .chrome.light .tab { color: #3c4043; }
+      .chrome.dark .tab { color: #c4c7c5; }
+      .chrome.light .tab.on { background: #fff; color: #1f1f1f; }
+      .chrome.dark .tab.on { background: #35363a; color: #e3e3e3; }
+      .chrome.light .tab:not(.on):hover { background: #eef0f3; }
+      .chrome.dark .tab:not(.on):hover { background: #2a2b2f; }
+      .addr { display: flex; align-items: center; gap: 10px; padding: 8px 12px 10px; }
+      .chrome.light .addr { background: #fff; }
+      .chrome.dark .addr { background: #35363a; }
+      .addr .url { flex: 1; border-radius: 999px; padding: 7px 14px; font-size: 12.5px; display: flex; gap: 8px; align-items: center; }
+      .chrome.light .url { background: #eef0f3; color: #1f1f1f; }
+      .chrome.dark .url { background: #202124; color: #e3e3e3; }
+      .url img { width: 16px; height: 16px; }
+
+      .hint { display: flex; flex-wrap: wrap; gap: 8px 22px; align-items: center; color: var(--muted); font-size: 0.88rem; margin: 14px 0 0; }
+
+      /* Cards */
+      .grid { margin-top: 38px; display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 22px; }
+      .card { border: 1px solid var(--line); border-radius: 18px; overflow: hidden; display: flex; flex-direction: column; transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s; }
+      .card:hover { transform: translateY(-2px); box-shadow: 0 18px 40px -24px rgba(27, 32, 43, 0.35); }
+      .card.on { border-color: var(--fg); box-shadow: 0 0 0 1px var(--fg), 0 18px 40px -24px rgba(27, 32, 43, 0.35); }
+      .stage { display: grid; grid-template-columns: 1fr 1fr; }
+      .stage > div { aspect-ratio: 1.15; display: grid; place-items: center; position: relative; }
+      .stage .l { background: #ffffff; background-image: radial-gradient(#e9e9ee 1px, transparent 1px); background-size: 14px 14px; }
+      .stage .d { background: #0f0e14; background-image: radial-gradient(#1e1d26 1px, transparent 1px); background-size: 14px 14px; }
+      .stage img { width: 112px; height: 112px; }
+      .stage .tag { position: absolute; left: 12px; top: 10px; font: 600 0.6rem var(--mono); letter-spacing: 0.12em; text-transform: uppercase; }
+      .stage .l .tag { color: #a3a8b5; }
+      .stage .d .tag { color: #5d5c68; }
+      .sizes { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--line); }
+      .sizes > div { display: flex; align-items: end; justify-content: center; gap: 18px; padding: 14px 10px; }
+      .sizes .l { background: #fff; }
+      .sizes .d { background: #0f0e14; }
+      .sizes figure { margin: 0; display: grid; justify-items: center; gap: 6px; }
+      .sizes figcaption { font: 500 0.6rem var(--mono); color: #9aa0a6; }
+      .meta { padding: 18px 20px 20px; border-top: 1px solid var(--line); display: grid; gap: 8px; flex: 1; }
+      .meta h2 { margin: 0; font-size: 1.12rem; font-weight: 800; letter-spacing: -0.015em; display: flex; align-items: baseline; gap: 10px; }
+      .meta h2 b { font: 600 0.7rem var(--mono); color: var(--soft); letter-spacing: 0.08em; }
+      .meta p { margin: 0; color: var(--muted); font-size: 0.9rem; line-height: 1.5; }
+      .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 2px; }
+      .chip { font: 600 0.62rem var(--mono); letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 8px; border-radius: 999px; background: var(--mist); color: var(--muted); }
+      .chip.y { background: rgba(253, 188, 22, 0.22); color: #8f6800; }
+      .actions { display: flex; gap: 8px; margin-top: 8px; }
+      .btn { font: 600 0.8rem var(--sans); border-radius: 999px; padding: 8px 14px; border: 1px solid var(--line); background: #fff; color: var(--fg); cursor: pointer; text-decoration: none; }
+      .btn:hover { border-color: var(--fg); }
+      .btn.primary { background: var(--fg); color: #fff; border-color: var(--fg); }
+      .btn.primary:hover { background: var(--link); border-color: var(--link); }
+      .card.on .btn.primary { background: var(--y); border-color: var(--y); color: var(--fg); }
+
+      /* Home screen preview */
+      .home { margin-top: 56px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 22px; }
+      .phone { border-radius: 28px; padding: 26px 22px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 18px 10px; }
+      .phone.l { background: linear-gradient(160deg, #f6e7c1, #dfe6f5); }
+      .phone.d { background: linear-gradient(160deg, #1d1b2b, #0f0e14 70%); }
+      .app { display: grid; justify-items: center; gap: 6px; font-size: 10.5px; text-align: center; cursor: pointer; }
+      .app img { width: 56px; height: 56px; border-radius: 14px; box-shadow: 0 4px 12px -6px rgba(0, 0, 0, 0.45); }
+      .phone.l .app { color: #1b202b; }
+      .phone.d .app { color: #e3e3e3; }
+      .app.on img { outline: 2px solid var(--y); outline-offset: 3px; }
+      h3 { margin: 56px 0 0; font-size: 0.72rem; font-family: var(--mono); letter-spacing: 0.12em; text-transform: uppercase; color: var(--soft); border-top: 1px solid var(--line); padding-top: 16px; }
+      @media (max-width: 720px) { .strip { grid-template-columns: 1fr; } .grid { grid-template-columns: 1fr; } }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header>
+        <div>
+          <div class="kbd">kuch.dev · protótipo de favicon</div>
+          <h1 style="margin-top: 10px">Favicon<i>.</i></h1>
+          <p class="lede">
+            Dez propostas com a paleta do site (tinta <code>#1b202b</code>, amarelo <code>#fdbc16</code>, azul <code>#0056ff</code>, roxo <code>#6029ff</code>) e as fontes reais
+            convertidas em vetor, então nada depende de fonte carregada. As marcadas como <b>adaptativo</b> trocam de cor sozinhas quando o navegador está em modo escuro.
+          </p>
+        </div>
+        <div class="hint" style="margin: 0">
+          <span><kbd>←</kbd> <kbd>→</kbd> trocam o favicon desta aba</span>
+        </div>
+      </header>
+
+      <div class="strip" id="strip"></div>
+      <p class="hint">
+        <span>Clique numa aba ou em <b>Usar nesta aba</b> pra ver o favicon na aba real do seu navegador.</span>
+        <span id="current"></span>
+      </p>
+
+      <div class="grid" id="grid"></div>
+
+      <h3>Tela inicial (apple-touch-icon, 180×180, sempre com fundo)</h3>
+      <div class="home" id="home"></div>
+    </div>
+
+    <script>
+      const G = window.G;
+      const INK = "#1b202b", Y = "#fdbc16", BLUE = "#0056ff", PURPLE = "#6029ff", VIOLET = "#8b6bff", NIGHT = "#0f0e14", PAPER = "#f0f0f0";
+      const R = 14; // corner radius on the 64 grid
+
+      // K. baseline helpers (dot sits on the K baseline, right after the K)
+      const dotAfter = (g, r = 5.6, gap = 3) => `<circle cx="${(g.box[2] + gap + r).toFixed(2)}" cy="${(g.baseline - r).toFixed(2)}" r="${r}" class="y"/>`;
+
+      // Each proposal: palette per scheme (classes bg/fg/y/a), body drawn on a 64×64 grid.
+      // touch: what the 180px home-screen icon uses as background when the favicon itself is transparent.
+      const P = [
+        {
+          id: "k-ink", name: "K. tinta", chips: ["wordmark", "recomendado"],
+          note: "O \"Kuchak.\" do header reduzido à inicial e ao ponto amarelo. Quadrado tinta funciona igual em aba clara e escura.",
+          pal: { light: { bg: INK, fg: "#fff", y: Y } },
+          body: () => `<rect width="64" height="64" rx="${R}" class="bg"/><path d="${G.K.d}" class="fg"/>${dotAfter(G.K)}`,
+        },
+        {
+          id: "k-yellow", name: "K. amarelo", chips: ["wordmark", "alto contraste"],
+          note: "Inverso: o amarelo vira o fundo. É o que mais salta numa fileira de abas, mas o ponto deixa de ser o detalhe amarelo.",
+          pal: { light: { bg: Y, fg: INK, y: INK } },
+          body: () => `<rect width="64" height="64" rx="${R}" class="bg"/><path d="${G.K.d}" class="fg"/>${dotAfter(G.K)}`,
+        },
+        {
+          id: "k-bare", name: "K. sem fundo", chips: ["wordmark", "adaptativo"],
+          note: "Só a letra e o ponto, sem caixa. Tinta na aba clara, quase branco na escura. É o mais fiel ao wordmark, e o mais leve.",
+          pal: { light: { fg: INK, y: Y }, dark: { fg: PAPER, y: Y } },
+          touch: { light: "#fff", dark: NIGHT },
+          body: () => `<g transform="translate(-5 -6) scale(1.12)"><path d="${G.K.d}" class="fg"/>${dotAfter(G.K)}</g>`,
+        },
+        {
+          id: "period", name: "O ponto", chips: ["minimalista"],
+          note: "Só o ponto final amarelo, no canto onde ele termina a frase. Discreto e muito reconhecível depois que a pessoa já conhece o site.",
+          pal: { light: { bg: INK, y: Y } },
+          body: () => `<rect width="64" height="64" rx="${R}" class="bg"/><circle cx="41" cy="41" r="11" class="y"/>`,
+        },
+        {
+          id: "highlight", name: "Marca-texto", chips: ["adaptativo", "editorial"],
+          note: "O K com a faixa de marca-texto que o site usa nos destaques do hero. Liga a marca ao efeito mais característico da versão E.",
+          pal: { light: { fg: INK, y: Y, hl: "rgba(253,188,22,.85)" }, dark: { fg: PAPER, y: Y, hl: "rgba(253,188,22,.55)" } },
+          touch: { light: "#fff", dark: NIGHT },
+          body: () => `<path d="M5 33.5 L59 31 L60 52 L4 54 Z" class="hl"/><path d="${G.Kc.d}" class="fg" transform="translate(-0.5 -4)"/>`,
+        },
+        {
+          id: "script", name: "k cursivo", chips: ["editorial", "personalidade"],
+          note: "O k na Yellowtail, a fonte cursiva amarela dos números de capítulo. Mais pessoal e menos \"produto\", lembra assinatura.",
+          pal: { light: { bg: INK, y: Y } },
+          body: () => `<rect width="64" height="64" rx="${R}" class="bg"/><path d="${G.kscript.d}" class="y" transform="translate(-1.5 0)"/>`,
+        },
+        {
+          id: "prompt", name: "Prompt", chips: ["runtime", "agentes"],
+          note: "Um prompt de terminal com o cursor amarelo. Conversa com a versão F (runtime) e com o tema de agentes rodando.",
+          pal: { light: { bg: INK, fg: "#fff", y: Y } },
+          body: () => `<rect width="64" height="64" rx="${R}" class="bg"/><path d="M15 20 L28 32 L15 44" fill="none" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" class="fgs"/><rect x="33" y="40" width="17" height="6.5" rx="2" class="y"/>`,
+        },
+        {
+          id: "graph", name: "Grafo de agentes", chips: ["agentes", "IA"],
+          note: "Um orquestrador (amarelo) ligado a dois agentes. Diz \"sistemas de agentes\" sem texto, mas é o mais abstrato da lista.",
+          pal: { light: { bg: INK, fg: "#fff", y: Y } },
+          body: () => `<rect width="64" height="64" rx="${R}" class="bg"/><path d="M20 20 L42 42 M20 44 L42 42" stroke-width="4.5" stroke-linecap="round" class="fgs" opacity=".55"/><circle cx="19" cy="19" r="7" class="fg"/><circle cx="19" cy="45" r="7" class="fg"/><circle cx="43" cy="40" r="10" class="y"/>`,
+        },
+        {
+          id: "brackets", name: "‹•›", chips: ["adaptativo", "evolução do antigo"],
+          note: "Evolução do logo antigo (&lt;/&gt;): os colchetes angulares no azul do site (violeta no escuro) com o ponto amarelo no meio.",
+          pal: { light: { a: BLUE, y: Y }, dark: { a: VIOLET, y: Y } },
+          touch: { light: "#fff", dark: NIGHT },
+          body: () => `<path d="M21 14 L5 32 L21 50 M43 14 L59 32 L43 50" fill="none" stroke-width="8.5" stroke-linecap="round" stroke-linejoin="round" class="as"/><circle cx="32" cy="32" r="7.5" class="y"/>`,
+        },
+        {
+          id: "gradient", name: "K. gradiente", chips: ["wordmark", "IA"],
+          note: "O K. sobre o degradê azul→roxo que são os acentos claro/escuro do site. Cara mais \"AI product\", menos editorial.",
+          pal: { light: { fg: "#fff", y: Y } },
+          defs: `<linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${BLUE}"/><stop offset="1" stop-color="${PURPLE}"/></linearGradient>`,
+          body: () => `<rect width="64" height="64" rx="${R}" fill="url(#g)"/><path d="${G.K.d}" class="fg"/>${dotAfter(G.K)}`,
+        },
+      ];
+
+      const rules = (p) => Object.entries(p).map(([k, v]) => {
+        const fill = `.${k}{fill:${v}}`;
+        return k === "fg" ? `${fill}.fgs{stroke:${v}}` : k === "a" ? `.as{stroke:${v}}` : fill;
+      }).join("");
+
+      // mode: "light" | "dark" forces a palette (previews); "auto" emits the real adaptive file.
+      function svg(p, mode = "auto", { touchBg = false } = {}) {
+        const light = p.pal.light, dark = p.pal.dark || p.pal.light;
+        let css;
+        if (mode === "auto") css = rules(light) + (p.pal.dark ? `@media (prefers-color-scheme:dark){${rules(dark)}}` : "");
+        else css = rules(mode === "dark" ? dark : light);
+        const bg = touchBg && p.touch ? `<rect width="64" height="64" fill="${p.touch[mode === "dark" ? "dark" : "light"]}"/>` : "";
+        // Home-screen icons get no rounded corners of their own; the OS masks them.
+        let body = p.body();
+        if (touchBg) body = body.replace(`rx="${R}"`, 'rx="0"');
+        const inner = touchBg && p.touch ? `<g transform="translate(9.6 9.6) scale(.7)">${body}</g>` : body;
+        return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">${p.defs ? `<defs>${p.defs}</defs>` : ""}<style>${css}</style>${bg}${inner}</svg>`;
+      }
+      const uri = (s) => "data:image/svg+xml," + encodeURIComponent(s);
+      const img = (p, mode, size, opts) => `<img src="${uri(svg(p, mode, opts))}" width="${size}" height="${size}" alt="">`;
+
+      const strip = document.getElementById("strip");
+      const grid = document.getElementById("grid");
+      const home = document.getElementById("home");
+
+      strip.innerHTML = ["light", "dark"].map((mode) => `
+        <div class="chrome ${mode}">
+          <div class="lbl">Navegador ${mode === "light" ? "claro" : "escuro"} · 16px real</div>
+          <div class="tabs">${P.slice(0, 5).map((p, i) => `<button class="tab" data-i="${i}">${img(p, mode, 16)}<span>${p.name}</span></button>`).join("")}</div>
+          <div class="tabs">${P.slice(5).map((p, i) => `<button class="tab" data-i="${i + 5}">${img(p, mode, 16)}<span>${p.name}</span></button>`).join("")}</div>
+          <div class="addr"><div class="url"><img data-url-icon="${mode}" alt=""><span>kuch.dev/blog/</span></div></div>
+        </div>`).join("");
+
+      grid.innerHTML = P.map((p, i) => `
+        <article class="card" data-i="${i}">
+          <div class="stage">
+            <div class="l"><span class="tag">claro</span>${img(p, "light", 112)}</div>
+            <div class="d"><span class="tag">escuro</span>${img(p, "dark", 112)}</div>
+          </div>
+          <div class="sizes">
+            ${["light", "dark"].map((m) => `<div class="${m[0]}">${[48, 32, 16].map((s) => `<figure>${img(p, m, s)}<figcaption>${s}</figcaption></figure>`).join("")}</div>`).join("")}
+          </div>
+          <div class="meta">
+            <h2><b>${String(i + 1).padStart(2, "0")}</b>${p.name}</h2>
+            <p>${p.note}</p>
+            <div class="chips">${p.chips.map((c) => `<span class="chip${c === "recomendado" || c === "adaptativo" ? " y" : ""}">${c}</span>`).join("")}</div>
+            <div class="actions">
+              <button class="btn primary" data-use="${i}">Usar nesta aba</button>
+              <a class="btn" download="favicon-${p.id}.svg" href="${uri(svg(p))}">Baixar SVG</a>
+            </div>
+          </div>
+        </article>`).join("");
+
+      home.innerHTML = ["light", "dark"].map((mode) => `
+        <div class="phone ${mode[0]}">${P.map((p, i) => `<div class="app" data-i="${i}">${img(p, mode, 56, { touchBg: true })}<span>${p.name}</span></div>`).join("")}</div>`).join("");
+
+      let current = 0;
+      function use(i) {
+        current = (i + P.length) % P.length;
+        const p = P[current];
+        document.getElementById("live-icon").href = uri(svg(p));
+        document.querySelectorAll("[data-i]").forEach((el) => el.classList.toggle("on", +el.dataset.i === current));
+        document.querySelectorAll("[data-url-icon]").forEach((el) => (el.src = uri(svg(p, el.dataset.urlIcon))));
+        document.getElementById("current").innerHTML = `Na aba agora: <b>${String(current + 1).padStart(2, "0")} · ${p.name}</b>`;
+        history.replaceState(null, "", "#" + p.id);
+      }
+      document.addEventListener("click", (e) => {
+        const t = e.target.closest("[data-use], .tab, .app");
+        if (t) use(+(t.dataset.use ?? t.dataset.i));
+      });
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowRight") use(current + 1);
+        if (e.key === "ArrowLeft") use(current - 1);
+      });
+      use(Math.max(0, P.findIndex((p) => "#" + p.id === location.hash)));
+    </script>
+  </body>
+</html>
