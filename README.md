@@ -11,6 +11,7 @@ site/
   versions/          landing pages (variant-a … variant-f) and blog pages (blog-e, blog-f)
   assets/            shared JS: content (EN/PT copy), prefs (theme/language), blog engine, switcher
   posts/             blog posts as markdown (see below)
+  icons/             favicon.svg (the source) and the PNG/ICO files rendered from it
   build.py           builds dist/
   dev.py             local preview with rebuild on change
   prerender.mjs      bakes rendered HTML into dist/ for SEO (headless Chrome)
@@ -18,6 +19,7 @@ site/
 archive/
   v1-nextjs-2024/    the previous Next.js site, kept as it was
   prototypes-2026-10/ the six landing prototypes and blogs as first built (run: python3 archive/prototypes-2026-10/serve.py)
+  favicon-2026-10/   the ten favicon proposals (run: python3 -m http.server -d archive/favicon-2026-10 4322)
 ```
 
 ## Run it
@@ -50,6 +52,13 @@ Every version stays reachable from any page:
 | `kuch.dev/v/<x>/` | where the `?v=` parameter lands |
 
 Only the official version is indexed by search engines; `/v/*` pages are `noindex`.
+
+## Favicon
+
+The "K." mark (proposal 01 in `archive/favicon-2026-10`). `site/icons/favicon.svg` is the source; after editing it,
+run `node site/icons/render.mjs` to redraw `favicon.ico` (16/32/48), `apple-touch-icon.png` (180),
+`icon-192.png`, `icon-512.png` and `icon-maskable-512.png`, and commit them. The build copies them to the site root
+and writes `site.webmanifest`; every page links them.
 
 ## Theme
 
