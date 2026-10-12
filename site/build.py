@@ -10,6 +10,7 @@ Source layout (site/):
     versions/            variant-<x>.html landing pages, blog-<x>.html blog pages (E and F)
     assets/              shared JS (content, prefs, switcher, blog engine)
     icons/               favicon.svg (source) and the rasters node site/icons/render.mjs makes from it
+    images/              images the pages use, copied as is to /images/
     posts/<slug>.md      posts with front matter; "draft: true" = announced as coming up, not published
     posts/<slug>.pt.md   optional Portuguese version
 
@@ -344,6 +345,7 @@ def build():
     write("_headers", HEADERS)
     for name in ICONS:
         shutil.copy(os.path.join(SITE, "icons", name), os.path.join(DIST, name))
+    shutil.copytree(os.path.join(SITE, "images"), os.path.join(DIST, "images"))
     write("site.webmanifest", json.dumps({
         "name": "Marcos Kuchak",
         "short_name": "Kuchak.",

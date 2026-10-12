@@ -57,6 +57,11 @@ for name in build.ICONS:
     if not os.path.exists(os.path.join(DIST, name)):
         fail(f"missing /{name}")
 
+# Images the shared content points to are in dist/
+for src in sorted(set(re.findall(r'"(/images/[^"]+)"', open(os.path.join(build.SITE, "assets", "content.js"), encoding="utf-8").read()))):
+    if not os.path.exists(os.path.join(DIST, src.lstrip("/"))):
+        fail(f"content.js: {src} is missing from dist/")
+
 # Every page links the favicon
 for root, _, files in os.walk(DIST):
     for f in files:
