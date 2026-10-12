@@ -32,6 +32,15 @@
       resume: "https://resume.kuch.dev",
       blog: "https://kuch.dev/posts",
     },
+    // "The art of creating" strip, carried over from the footer of the first kuch.dev (2024).
+    art: [
+      "/images/fun/keyboard.webp",
+      "/images/fun/astronaut-helmet.webp",
+      "/images/fun/jump.webp",
+      "/images/fun/horse-mask.webp",
+      "/images/fun/vr-skeleton.webp",
+      "/images/fun/astronaut-stairs.webp",
+    ],
     // Current kuch.dev palette, kept on purpose.
     palette: {
       yellow: "#fdbc16",
@@ -453,6 +462,17 @@
       resume: "Read the resume",
       footer: "Explore, inspire, create.",
     },
+    art: {
+      title: "The art of creating",
+      alt: [
+        "A wide-eyed man hugging an old keyboard, a mouse and a tangle of cables",
+        "A man in an astronaut helmet lit in green, looking up",
+        "A man jumping in a field with his arms open, phone in hand",
+        "A person in a horse mask celebrating with a phone",
+        "A skeleton wearing a VR headset",
+        "An astronaut sitting on a stairway, busy with a tablet",
+      ],
+    },
     ui: {
       copied: "Copied",
       copy: "Copy email",
@@ -840,6 +860,17 @@
       cta: "hi@kuch.dev",
       resume: "Ver o currículo",
       footer: "Explore, inspire, create.",
+    },
+    art: {
+      title: "A arte de criar",
+      alt: [
+        "Um homem de olhos arregalados abraçando um teclado antigo, um mouse e um emaranhado de cabos",
+        "Um homem com capacete de astronauta iluminado de verde, olhando pra cima",
+        "Um homem pulando num campo de braços abertos, com o celular na mão",
+        "Uma pessoa com máscara de cavalo comemorando com o celular",
+        "Um esqueleto usando óculos de realidade virtual",
+        "Um astronauta sentado numa escada, entretido com um tablet",
+      ],
     },
     ui: {
       copied: "Copiado",
