@@ -295,6 +295,7 @@ def sitemap(entries):
 # Posts replaced by a new one: old slug -> new slug. Their old URLs (both languages, old Next.js path too) 301 to the new post.
 RENAMED_POSTS = {
     "empower-your-commit-messages-with-sugar-git-and-ai": "i-took-the-ai-out-of-my-git-cli",
+    "effortless-entity-management-type-aliases-for-creation-and-restoration": "entities-your-agent-cant-break",
 }
 
 REDIRECTS = """# Old Next.js URLs
