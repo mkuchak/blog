@@ -5,12 +5,12 @@
   Posts are static markdown files in posts/*.md; posts/index.json is rebuilt by serve.py / build_posts.py.
   Rendering lives in blog.js; this file is only the E design around it.
 -->
-<html lang="pt-BR">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <script>
 (function () {
-  var cfg = {"official": "e", "versions": {"a": 1, "b": 1, "c": 1, "d": 1, "e": 1, "f": 1}, "langs": {"en": "", "pt": "/pt-BR"}}, page = {"kind": "post", "slug": "empower-your-commit-messages-with-sugar-git-and-ai", "version": "e", "lang": "pt"};
+  var cfg = {"official": "e", "versions": {"a": 1, "b": 1, "c": 1, "d": 1, "e": 1, "f": 1}, "langs": {"en": "", "pt": "/pt-BR"}}, page = {"kind": "post", "slug": "i-took-the-ai-out-of-my-git-cli", "version": "a", "lang": "en"};
   var q = new URLSearchParams(location.search), store = {};
   try { store.lang = localStorage.getItem("kuch:lang"); } catch (e) {}
   // Version: ?v=f, ?version=F, ?version=version-f
@@ -36,14 +36,14 @@
   location.replace(path + (qs ? "?" + qs : "") + location.hash);
 })();
 </script>
-    <link rel="canonical" href="https://kuch.dev/pt-BR/blog/empower-your-commit-messages-with-sugar-git-and-ai/" />
-    <meta name="description" content="Descubra como esta ferramenta muda a forma como você trabalha com commits no Git. Conheça os benefícios de adotar conventional commits, a automação de mensagens de commit com IA e a simplificação dos fluxos de trabalho. Aumente sua produtividade e mantenha seus repositórios organizados com esta ferramenta poderosa." />
+    <link rel="canonical" href="https://kuch.dev/blog/i-took-the-ai-out-of-my-git-cli/" />
+    <meta name="description" content="Sugar Git started as a handful of aliases in 2021, gained AI commit messages in 2024 and lost them in 2026. Then came 44 releases in three months. What changed, why, and what sgit does today." />
     <meta property="og:site_name" content="kuch.dev" />
-    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:locale" content="en_US" />
     <meta property="og:type" content="article" />
-    <meta property="og:title" content="Turbine suas mensagens de commit com Sugar Git e IA · Marcos Kuchak" />
-    <meta property="og:description" content="Descubra como esta ferramenta muda a forma como você trabalha com commits no Git. Conheça os benefícios de adotar conventional commits, a automação de mensagens de commit com IA e a simplificação dos fluxos de trabalho. Aumente sua produtividade e mantenha seus repositórios organizados com esta ferramenta poderosa." />
-    <meta property="og:url" content="https://kuch.dev/pt-BR/blog/empower-your-commit-messages-with-sugar-git-and-ai/" />
+    <meta property="og:title" content="I took the AI out of my Git CLI, and it got better · Marcos Kuchak" />
+    <meta property="og:description" content="Sugar Git started as a handful of aliases in 2021, gained AI commit messages in 2024 and lost them in 2026. Then came 44 releases in three months. What changed, why, and what sgit does today." />
+    <meta property="og:url" content="https://kuch.dev/blog/i-took-the-ai-out-of-my-git-cli/" />
     <meta property="og:image" content="https://github.com/mkuchak/blog/assets/3791148/95e049f3-aad0-40d0-919d-878c81842db5" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:creator" content="@marcoskuchak" />
@@ -53,20 +53,20 @@
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <meta name="robots" content="noindex" />
-    <meta name="kuch-post" content="empower-your-commit-messages-with-sugar-git-and-ai" />
-    <script>window.KUCH_SITE = {"root": "/", "pretty": true, "production": true, "version": "e", "official": "e", "lang": "pt"};</script>
+    <meta name="kuch-post" content="i-took-the-ai-out-of-my-git-cli" />
+    <script>window.KUCH_SITE = {"root": "/", "pretty": true, "production": true, "version": "a", "official": "e", "lang": "en"};</script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Turbine suas mensagens de commit com Sugar Git e IA · Marcos Kuchak</title>
+    <title>I took the AI out of my Git CLI, and it got better · Marcos Kuchak</title>
     <link rel="alternate" type="application/rss+xml" title="Marcos Kuchak · Field notes" href="feed.xml" />
-    <script src="/assets/content.js?v=306293f47b"></script>
+    <script src="/assets/content.js?v=0326c20dd3"></script>
     <script>window.KUCH_DRAFTS_ALL = {"en": [{"slug": "confidence-gates-letting-agents-act-alone-without-losing-sleep", "title": "Confidence gates: letting agents act alone without losing sleep", "topic": "AI Agents", "tags": ["Agents"], "published": false}, {"slug": "cutting-llm-cost-80-without-changing-the-model", "title": "Cutting LLM cost 80% without changing the model", "topic": "LLM Cost", "tags": ["Cost"], "published": false}, {"slug": "designing-mcp-tools-agents-can-actually-call", "title": "Designing MCP tools agents can actually call", "topic": "Model Context Protocol", "tags": ["MCP"], "published": false}, {"slug": "your-agent-doesnt-need-the-password", "title": "Your agent doesn't need the password", "topic": "Security", "tags": ["Security"], "published": false}], "pt": [{"slug": "confidence-gates-letting-agents-act-alone-without-losing-sleep", "title": "Confidence gates: deixando agentes agirem sozinhos sem perder o sono", "topic": "Agentes de IA", "tags": ["Agentes"], "published": false}, {"slug": "cutting-llm-cost-80-without-changing-the-model", "title": "Cortando 80% do custo de LLM sem trocar de modelo", "topic": "Custo de LLM", "tags": ["Custo"], "published": false}, {"slug": "designing-mcp-tools-agents-can-actually-call", "title": "Desenhando ferramentas MCP que agentes conseguem chamar", "topic": "Model Context Protocol", "tags": ["MCP"], "published": false}, {"slug": "your-agent-doesnt-need-the-password", "title": "Seu agente não precisa da senha", "topic": "Segurança", "tags": ["Segurança"], "published": false}]}; window.KUCH_DRAFTS = window.KUCH_DRAFTS_ALL[(window.KUCH && KUCH.lang) || "en"];</script>
-    <script>window.KUCH_VARIANT = { key: "E", name: "Blog · Editorial + runtime", defaultTheme: "light", page: "blog", blogPage: "/pt-BR/v/e/blog/" };</script>
-    <script src="/assets/prefs.js?v=306293f47b"></script>
-    <script src="/assets/switcher.js?v=306293f47b"></script>
+    <script>window.KUCH_VARIANT = { key: "E", name: "Blog · Editorial + runtime", defaultTheme: "light", page: "blog", blogPage: "/v/a/blog/" };</script>
+    <script src="/assets/prefs.js?v=0326c20dd3"></script>
+    <script src="/assets/switcher.js?v=0326c20dd3"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked@18.0.14/lib/marked.umd.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/dompurify@3.4.16/dist/purify.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets@11.12.0/highlight.min.js"></script>
-    <script src="/assets/blog.js?v=306293f47b"></script>
+    <script src="/assets/blog.js?v=0326c20dd3"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -547,7 +547,7 @@
           ["lang", "theme"].forEach((k) => cur.get(k) && !u.searchParams.has(k) && u.searchParams.set(k, cur.get(k)));
           return u.pathname + u.search + (hash ? "#" + hash : "");
         };
-        const landing = (hash) => carry("/pt-BR/v/e/" + (hash ? "#" + hash : ""));
+        const landing = (hash) => carry("/v/a/" + (hash ? "#" + hash : ""));
         const postHref = (slug) => carry(B.postUrl(slug));
         const tagHref = (tag) => carry(B.tagUrl(tag));
         const indexHref = () => carry(B.indexUrl());

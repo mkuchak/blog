@@ -1,39 +1,39 @@
 [
   {
-    "slug": "empower-your-commit-messages-with-sugar-git-and-ai",
-    "title": "Empower your commit messages with Sugar Git and AI",
-    "description": "Discover how this tool changes the way you work with Git commits. Explore the benefits of adopting conventional commits, automation of commit messages with AI, and streamlining of workflows. Boost your productivity and keep your repositories organized with this powerful tool.",
-    "topic": "Conventional Commits",
+    "slug": "i-took-the-ai-out-of-my-git-cli",
+    "title": "I took the AI out of my Git CLI, and it got better",
+    "description": "Sugar Git started as a handful of aliases in 2021, gained AI commit messages in 2024 and lost them in 2026. Then came 44 releases in three months. What changed, why, and what sgit does today.",
+    "topic": "Git",
     "cover": "https://github.com/mkuchak/blog/assets/3791148/95e049f3-aad0-40d0-919d-878c81842db5",
-    "date": "2024-02-16",
+    "date": "2026-10-12",
     "updated": null,
     "tags": [
       "Git",
       "Conventional Commits",
       "Sugar Git",
-      "AI",
-      "Workflow",
-      "Productivity"
+      "CLI",
+      "Bash",
+      "AI Agents"
     ],
-    "readingMinutes": 6,
+    "readingMinutes": 7,
     "langs": [
       "en",
       "pt"
     ],
     "i18n": {
       "pt": {
-        "title": "Turbine suas mensagens de commit com Sugar Git e IA",
-        "description": "Descubra como esta ferramenta muda a forma como você trabalha com commits no Git. Conheça os benefícios de adotar conventional commits, a automação de mensagens de commit com IA e a simplificação dos fluxos de trabalho. Aumente sua produtividade e mantenha seus repositórios organizados com esta ferramenta poderosa.",
-        "topic": "Conventional Commits",
+        "title": "Tirei a IA do meu CLI de Git, e ele ficou melhor",
+        "description": "O Sugar Git nasceu como meia dúzia de aliases em 2021, ganhou geração de commits com IA em 2024 e perdeu esse recurso em 2026. Depois disso vieram 44 releases em três meses. O que mudou, por quê, e o que o sgit faz hoje.",
+        "topic": "Git",
         "tags": [
           "Git",
           "Conventional Commits",
           "Sugar Git",
-          "IA",
-          "Workflow",
-          "Produtividade"
+          "CLI",
+          "Bash",
+          "Agentes de IA"
         ],
-        "readingMinutes": 6
+        "readingMinutes": 7
       }
     }
   },

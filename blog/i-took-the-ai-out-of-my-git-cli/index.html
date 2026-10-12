@@ -5,12 +5,13 @@
   Posts are static markdown files in posts/*.md; posts/index.json is rebuilt by serve.py / build_posts.py.
   Rendering lives in blog.js; this file is only the E design around it.
 -->
-<html lang="pt-BR">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
+    <style>html.kjs #kuch-ssr{display:none!important}</style><script>document.documentElement.classList.add("kjs")</script>
     <script>
 (function () {
-  var cfg = {"official": "e", "versions": {"a": 1, "b": 1, "c": 1, "d": 1, "e": 1, "f": 1}, "langs": {"en": "", "pt": "/pt-BR"}}, page = {"kind": "post", "slug": "empower-your-commit-messages-with-sugar-git-and-ai", "version": "a", "lang": "pt"};
+  var cfg = {"official": "e", "versions": {"a": 1, "b": 1, "c": 1, "d": 1, "e": 1, "f": 1}, "langs": {"en": "", "pt": "/pt-BR"}}, page = {"kind": "post", "slug": "i-took-the-ai-out-of-my-git-cli", "version": "e", "lang": "en"};
   var q = new URLSearchParams(location.search), store = {};
   try { store.lang = localStorage.getItem("kuch:lang"); } catch (e) {}
   // Version: ?v=f, ?version=F, ?version=version-f
@@ -36,14 +37,14 @@
   location.replace(path + (qs ? "?" + qs : "") + location.hash);
 })();
 </script>
-    <link rel="canonical" href="https://kuch.dev/pt-BR/blog/empower-your-commit-messages-with-sugar-git-and-ai/" />
-    <meta name="description" content="Descubra como esta ferramenta muda a forma como você trabalha com commits no Git. Conheça os benefícios de adotar conventional commits, a automação de mensagens de commit com IA e a simplificação dos fluxos de trabalho. Aumente sua produtividade e mantenha seus repositórios organizados com esta ferramenta poderosa." />
+    <link rel="canonical" href="https://kuch.dev/blog/i-took-the-ai-out-of-my-git-cli/" />
+    <meta name="description" content="Sugar Git started as a handful of aliases in 2021, gained AI commit messages in 2024 and lost them in 2026. Then came 44 releases in three months. What changed, why, and what sgit does today." />
     <meta property="og:site_name" content="kuch.dev" />
-    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:locale" content="en_US" />
     <meta property="og:type" content="article" />
-    <meta property="og:title" content="Turbine suas mensagens de commit com Sugar Git e IA · Marcos Kuchak" />
-    <meta property="og:description" content="Descubra como esta ferramenta muda a forma como você trabalha com commits no Git. Conheça os benefícios de adotar conventional commits, a automação de mensagens de commit com IA e a simplificação dos fluxos de trabalho. Aumente sua produtividade e mantenha seus repositórios organizados com esta ferramenta poderosa." />
-    <meta property="og:url" content="https://kuch.dev/pt-BR/blog/empower-your-commit-messages-with-sugar-git-and-ai/" />
+    <meta property="og:title" content="I took the AI out of my Git CLI, and it got better · Marcos Kuchak" />
+    <meta property="og:description" content="Sugar Git started as a handful of aliases in 2021, gained AI commit messages in 2024 and lost them in 2026. Then came 44 releases in three months. What changed, why, and what sgit does today." />
+    <meta property="og:url" content="https://kuch.dev/blog/i-took-the-ai-out-of-my-git-cli/" />
     <meta property="og:image" content="https://github.com/mkuchak/blog/assets/3791148/95e049f3-aad0-40d0-919d-878c81842db5" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:creator" content="@marcoskuchak" />
@@ -52,21 +53,23 @@
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
-    <meta name="robots" content="noindex" />
-    <meta name="kuch-post" content="empower-your-commit-messages-with-sugar-git-and-ai" />
-    <script>window.KUCH_SITE = {"root": "/", "pretty": true, "production": true, "version": "a", "official": "e", "lang": "pt"};</script>
+    <link rel="alternate" hreflang="en" href="https://kuch.dev/blog/i-took-the-ai-out-of-my-git-cli/" />
+    <link rel="alternate" hreflang="pt-BR" href="https://kuch.dev/pt-BR/blog/i-took-the-ai-out-of-my-git-cli/" />
+    <link rel="alternate" hreflang="x-default" href="https://kuch.dev/blog/i-took-the-ai-out-of-my-git-cli/" />
+    <meta name="kuch-post" content="i-took-the-ai-out-of-my-git-cli" />
+    <script>window.KUCH_SITE = {"root": "/", "pretty": true, "production": true, "version": "e", "official": "e", "lang": "en"};</script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Turbine suas mensagens de commit com Sugar Git e IA · Marcos Kuchak</title>
+    <title>I took the AI out of my Git CLI, and it got better · Marcos Kuchak</title>
     <link rel="alternate" type="application/rss+xml" title="Marcos Kuchak · Field notes" href="feed.xml" />
-    <script src="/assets/content.js?v=306293f47b"></script>
+    <script src="/assets/content.js?v=0326c20dd3"></script>
     <script>window.KUCH_DRAFTS_ALL = {"en": [{"slug": "confidence-gates-letting-agents-act-alone-without-losing-sleep", "title": "Confidence gates: letting agents act alone without losing sleep", "topic": "AI Agents", "tags": ["Agents"], "published": false}, {"slug": "cutting-llm-cost-80-without-changing-the-model", "title": "Cutting LLM cost 80% without changing the model", "topic": "LLM Cost", "tags": ["Cost"], "published": false}, {"slug": "designing-mcp-tools-agents-can-actually-call", "title": "Designing MCP tools agents can actually call", "topic": "Model Context Protocol", "tags": ["MCP"], "published": false}, {"slug": "your-agent-doesnt-need-the-password", "title": "Your agent doesn't need the password", "topic": "Security", "tags": ["Security"], "published": false}], "pt": [{"slug": "confidence-gates-letting-agents-act-alone-without-losing-sleep", "title": "Confidence gates: deixando agentes agirem sozinhos sem perder o sono", "topic": "Agentes de IA", "tags": ["Agentes"], "published": false}, {"slug": "cutting-llm-cost-80-without-changing-the-model", "title": "Cortando 80% do custo de LLM sem trocar de modelo", "topic": "Custo de LLM", "tags": ["Custo"], "published": false}, {"slug": "designing-mcp-tools-agents-can-actually-call", "title": "Desenhando ferramentas MCP que agentes conseguem chamar", "topic": "Model Context Protocol", "tags": ["MCP"], "published": false}, {"slug": "your-agent-doesnt-need-the-password", "title": "Seu agente não precisa da senha", "topic": "Segurança", "tags": ["Segurança"], "published": false}]}; window.KUCH_DRAFTS = window.KUCH_DRAFTS_ALL[(window.KUCH && KUCH.lang) || "en"];</script>
-    <script>window.KUCH_VARIANT = { key: "E", name: "Blog · Editorial + runtime", defaultTheme: "light", page: "blog", blogPage: "/pt-BR/v/a/blog/" };</script>
-    <script src="/assets/prefs.js?v=306293f47b"></script>
-    <script src="/assets/switcher.js?v=306293f47b"></script>
+    <script>window.KUCH_VARIANT = { key: "E", name: "Blog · Editorial + runtime", defaultTheme: "light", page: "blog", blogPage: "/blog/" };</script>
+    <script src="/assets/prefs.js?v=0326c20dd3"></script>
+    <script src="/assets/switcher.js?v=0326c20dd3"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked@18.0.14/lib/marked.umd.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/dompurify@3.4.16/dist/purify.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets@11.12.0/highlight.min.js"></script>
-    <script src="/assets/blog.js?v=306293f47b"></script>
+    <script src="/assets/blog.js?v=0326c20dd3"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -517,6 +520,99 @@
     </style>
   </head>
   <body>
+<div id="kuch-ssr"><a class="skip" href="#main">Skip to content</a> <div> <div class="wrap topline" aria-hidden="true"> <span>Vol. 17 · Florianópolis, Brazil</span> <span>kuch.dev<span class="nt"> / notes</span></span> <span><span>Day edition</span> · 2026</span> </div> <header class="mast"> <div class="wrap"> <a class="brand" href="/" aria-label="Marcos Kuchak">Kuchak<i>.</i></a> <nav aria-label="Primary"> <a href="/#principles">Principles</a> <a href="/#work">Work</a> <a href="/#journey">Journey</a> <a href="/#oss">Open source</a> <a href="/blog/" aria-current="page">Writing</a> </nav> <div class="tools"> <div class="kc" data-kuch-controls=""><div class="kc-group kc-lang" role="radiogroup" aria-label="Language"> <button type="button" role="radio" data-kc="lang" data-v="en" aria-checked="true" tabindex="0" aria-label="English" title="English">EN</button><button type="button" role="radio" data-kc="lang" data-v="pt" aria-checked="false" tabindex="-1" aria-label="Português" title="Português">PT</button></div><div class="kc-group kc-theme" role="radiogroup" aria-label="Theme"> <button type="button" role="radio" data-kc="theme" data-v="light" aria-checked="false" tabindex="-1" aria-label="Light" title="Light"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button><button type="button" role="radio" data-kc="theme" data-v="dark" aria-checked="false" tabindex="-1" aria-label="Dark" title="Dark"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"></path></svg></button><button type="button" role="radio" data-kc="theme" data-v="system" aria-checked="true" tabindex="0" aria-label="System" title="System"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"></rect><path d="M8 21h8M12 17v4"></path></svg></button></div></div> <a class="pill solid resume" href="https://resume.kuch.dev" target="_blank" rel="noreferrer" title="Resume"><span class="lbl">Resume</span> <span class="arr">↗</span></a> </div> </div> <span class="progress" aria-hidden="true" style="transform: scaleX(0);"></span> </header> <main tabindex="-1"> <div class="lead"> <div class="aura" aria-hidden="true"><i></i><i></i><i></i></div> <header class="wrap phead"> <nav class="crumbs" aria-label="Breadcrumb"> <a href="/">Home</a><span aria-hidden="true">/</span> <a href="/blog/">Field notes</a><span aria-hidden="true">/</span> <a href="/blog/?tag=Git" data-tag="Git">Git</a> </nav> <div class="inner"> <span class="topic">Git</span> <h1>I took the AI out of my Git CLI, and it got better</h1> <p class="dek">Sugar Git started as a handful of aliases in 2021, gained AI commit messages in 2024 and lost them in 2026. Then came 44 releases in three months. What changed, why, and what sgit does today.</p> </div> <div class="byline"> <img src="https://github.com/mkuchak.png" alt="" width="40" height="40"> <span class="who">Marcos Kuchak</span> <div class="meta"> <span>Published <time datetime="2026-10-12">12 Oct 2026</time></span> <span class="sep">·</span><span>7 min read</span> <span class="sep">·</span><span>1,516 words</span> </div> <div class="tags"><a class="tag" href="/blog/?tag=Git">Git</a><a class="tag" href="/blog/?tag=Conventional%20Commits">Conventional Commits</a><a class="tag" href="/blog/?tag=Sugar%20Git">Sugar Git</a><a class="tag" href="/blog/?tag=CLI">CLI</a><a class="tag" href="/blog/?tag=Bash">Bash</a><a class="tag" href="/blog/?tag=AI%20Agents">AI Agents</a></div> </div> <figure class="pcover"><img src="https://github.com/mkuchak/blog/assets/3791148/95e049f3-aad0-40d0-919d-878c81842db5" alt=""></figure> </header> </div> <div class="wrap pgrid"> <aside class="otp" aria-label="On this page"><h2>On this page</h2><ol><li class="l2"><a href="#from-aliases-to-a-cli" data-id="from-aliases-to-a-cli" class="on">From aliases to a CLI</a></li><li class="l2"><a href="#why-the-ai-left" data-id="why-the-ai-left" class="">Why the AI left</a></li><li class="l2"><a href="#commits" data-id="commits" class="">Commits</a></li><li class="l2"><a href="#branches-and-syncing" data-id="branches-and-syncing" class="">Branches and syncing</a></li><li class="l2"><a href="#force-pushes-that-dont-erase-anyones-work" data-id="force-pushes-that-dont-erase-anyones-work" class="">Force pushes that don't erase anyone's work</a></li><li class="l2"><a href="#stash-shelf-and-history" data-id="stash-shelf-and-history" class="">Stash, shelf and history</a></li><li class="l2"><a href="#reading-code" data-id="reading-code" class="">Reading code</a></li><li class="l2"><a href="#worktrees" data-id="worktrees" class="">Worktrees</a></li><li class="l2"><a href="#housekeeping" data-id="housekeeping" class="">Housekeeping</a></li><li class="l2"><a href="#how-its-maintained" data-id="how-its-maintained" class="">How it's maintained</a></li><li class="l2"><a href="#install" data-id="install" class="">Install</a></li></ol><div class="rt">7 min read</div></aside> <div> <details class="mtoc"><summary>On this page</summary><ol><li class="l2"><a href="#from-aliases-to-a-cli" data-id="from-aliases-to-a-cli">From aliases to a CLI</a></li><li class="l2"><a href="#why-the-ai-left" data-id="why-the-ai-left">Why the AI left</a></li><li class="l2"><a href="#commits" data-id="commits">Commits</a></li><li class="l2"><a href="#branches-and-syncing" data-id="branches-and-syncing">Branches and syncing</a></li><li class="l2"><a href="#force-pushes-that-dont-erase-anyones-work" data-id="force-pushes-that-dont-erase-anyones-work">Force pushes that don't erase anyone's work</a></li><li class="l2"><a href="#stash-shelf-and-history" data-id="stash-shelf-and-history">Stash, shelf and history</a></li><li class="l2"><a href="#reading-code" data-id="reading-code">Reading code</a></li><li class="l2"><a href="#worktrees" data-id="worktrees">Worktrees</a></li><li class="l2"><a href="#housekeeping" data-id="housekeeping">Housekeeping</a></li><li class="l2"><a href="#how-its-maintained" data-id="how-its-maintained">How it's maintained</a></li><li class="l2"><a href="#install" data-id="install">Install</a></li></ol></details> <article class="prose" lang="en"><p>In February 2024 I wrote here about <code>sgit commit</code>. You described your change in any language, the command sent the text to a model and came back with four commit messages in Conventional Commits format. You picked one and that was it.</p>
+<p>In April 2026 I deleted that feature. It was 72 lines, and <code>sgit commit</code> became a plain commit with a free-form message, no network and no menu. Version 1.0.0 shipped the same day. Over the next three months came 43 more releases, up to 2.20.0.</p>
+<p>This post replaces the original. Today's Sugar Git is a different tool, and the reason for the change says more about how I use Git now than the AI feature ever did.</p>
+<h2><a class="anchor" href="#from-aliases-to-a-cli" aria-hidden="true" tabindex="-1">#</a>From aliases to a CLI</h2><p>The project started on April 17, 2021 as a few aliases in <code>.gitconfig</code>: <code>git ch</code>, <code>git rb</code>, <code>git st</code>, <code>git lg</code>. Shortcuts for the things I typed twenty times a day.</p>
+<p>In November 2021 it became a real CLI, <code>sgit</code>, written in Bash with <a href="https://bashly.dev" target="_blank" rel="noopener noreferrer">Bashly</a>. Each command is a <code>.sh</code> file in <code>src/</code>, the whole interface (commands, flags, aliases, help text) lives in one <code>bashly.yml</code>, and the build produces a single executable file. No runtime and no dependencies beyond Bash 4, <code>curl</code> and <code>git</code>.</p>
+<p>AI came in 2024. It left in 2026, and the rest of the CLI grew more in three months than it had in five years.</p>
+<h2><a class="anchor" href="#why-the-ai-left" aria-hidden="true" tabindex="-1">#</a>Why the AI left</h2><p>The AI version of <code>sgit commit</code> made an HTTP call to a Worker of mine in the middle of the commit. No internet, or the endpoint down, and there was no commit. For a tool whose whole point is making Git faster, that's a bad dependency to carry.</p>
+<p>The shape was wrong too. The command opened an interactive menu with four options and waited for you to pick a number. That works for a person at a terminal and for nothing else: not a script, not a hook, not CI, not an agent.</p>
+<p>And the main reason: most of the time now, the commit message is written by the agent that wrote the code. It has the whole diff and the context of the task. <code>sgit commit</code> only had the sentence I typed. A model summarizing my sentence loses to an agent describing its own diff.</p>
+<p>So the command went back to being just sugar:</p>
+<figure class="code" data-lang="bash"><figcaption><span>bash</span><button type="button" class="copy" data-copy="">Copy</button></figcaption><pre><code class="language-bash hljs" data-highlighted="yes">sgit feat <span class="hljs-string">"add google sign-in"</span> -s auth -Ap
+<span class="hljs-comment"># git add --all</span>
+<span class="hljs-comment"># git commit -m "feat(auth): add google sign-in"</span>
+<span class="hljs-comment"># git push origin feature/login-com-google</span></code></pre></figure><p>Deterministic, offline, the same for me and for an agent. What's clever about sgit now is what happens after the commit: syncing, rewriting history and getting work back without losing anything.</p>
+<h2><a class="anchor" href="#commits" aria-hidden="true" tabindex="-1">#</a>Commits</h2><p>The twelve Conventional Commits types are commands: <code>feat</code>, <code>fix</code>, <code>chore</code>, <code>docs</code>, <code>build</code>, <code>ci</code>, <code>test</code>, <code>perf</code>, <code>refactor</code>, <code>revert</code>, <code>style</code> and <code>localize</code>. They all take the same flags.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>-s auth</code></td>
+<td>scope, becomes <code>feat(auth): ...</code></td>
+</tr>
+<tr>
+<td><code>-b</code></td>
+<td>breaking change, becomes <code>feat!: ...</code></td>
+</tr>
+<tr>
+<td><code>-A</code> / <code>-a &lt;file&gt;</code></td>
+<td>stage everything, or one file, before committing</td>
+</tr>
+<tr>
+<td><code>-p</code></td>
+<td>push after the commit</td>
+</tr>
+<tr>
+<td><code>-e</code></td>
+<td>open the editor to write the body</td>
+</tr>
+<tr>
+<td><code>-d</code> / <code>-t</code></td>
+<td>custom date and time on the commit</td>
+</tr>
+</tbody></table>
+</div><p>Before 1.0 these were twelve nearly identical files of 22 lines each. They became one-line calls to a shared function, and 264 lines of duplication went away.</p>
+<p>Three commands look after history while you work:</p>
+<figure class="code" data-lang="bash"><figcaption><span>bash</span><button type="button" class="copy" data-copy="">Copy</button></figcaption><pre><code class="language-bash hljs" data-highlighted="yes">sgit temp -A <span class="hljs-comment"># chore: WIP auth.js</span>
+sgit temp -A <span class="hljs-comment"># running it again amends the last one: chore: WIP(2) auth.js</span>
+sgit squash 2 <span class="hljs-string">"fix(auth): handle expired tokens with a single retry"</span>
+sgit edit 2593413 <span class="hljs-string">"feat(auth): add google sign-in"</span></code></pre></figure><p><code>temp</code> is the "save progress" commit I used to make by hand before switching branches. Running it again doesn't add a commit. It amends the previous one and bumps the counter. <code>squash</code> folds the last N commits into one (or everything since a ref, with <code>--since main</code>). <code>edit</code> rewrites the message of an old commit without opening the interactive rebase editor: sgit injects a <code>GIT_SEQUENCE_EDITOR</code> that marks the commit as <code>reword</code> and writes the new message itself.</p>
+<p>And <code>sgit undo</code> takes back the last commit and keeps the files.</p>
+<h2><a class="anchor" href="#branches-and-syncing" aria-hidden="true" tabindex="-1">#</a>Branches and syncing</h2><figure class="code" data-lang="bash"><figcaption><span>bash</span><button type="button" class="copy" data-copy="">Copy</button></figcaption><pre><code class="language-bash hljs" data-highlighted="yes">sgit take -f <span class="hljs-string">"login com google"</span> <span class="hljs-comment"># feature/login-com-google</span>
+sgit take -H <span class="hljs-string">"token leak"</span> -F main <span class="hljs-comment"># hotfix/token-leak, branched from main</span>
+sgit take <span class="hljs-comment"># UUID name, for when the name doesn't matter</span>
+sgit <span class="hljs-built_in">ls</span> <span class="hljs-comment"># just the current branch</span>
+sgit ll -v <span class="hljs-comment"># every branch, with ahead/behind and upstream state</span>
+sgit clean -r <span class="hljs-comment"># delete branches already merged into main, local and remote</span></code></pre></figure><p>The command I lean on most is <code>sgit sync</code>: fetch, then rebase on top of <code>main</code> (or another branch, if you pass one). The first version did exactly that and nothing more. In May it got three fixes, all born from real pain in repositories with several people pushing.</p>
+<p>First: when someone force-pushes any branch, <code>git fetch</code> can fail with <code>cannot lock ref 'refs/remotes/origin/...'</code>. The manual fix is a <code>git update-ref -d</code> that nobody remembers. Now sgit reads the error, deletes the stuck refs and retries on its own. That lives in a helper, <code>fetch_with_recovery</code>, which <code>get</code>, <code>take</code>, <code>wipe</code>, <code>incoming</code> and <code>outgoing</code> also use.</p>
+<p>Second: if the fetch still failed, the rebase ran against stale refs and the result looked right without being right. Now sync stops.</p>
+<p>Third: after your PR is squash-merged, your local commits are redundant with <code>main</code>, and <code>git rebase</code> stops on each one with "The previous cherry-pick is now empty". Sync now uses <code>--empty=drop</code> and drops those commits quietly.</p>
+<p><code>sgit wipe</code> got the same treatment. It resets the branch to the remote's state, and it used to do that against the last fetch, which could be days old. Now it fetches first and refuses to reset against stale data. With <code>--all</code> it also removes untracked and ignored files, and lists them before asking for confirmation.</p>
+<h2><a class="anchor" href="#force-pushes-that-dont-erase-anyones-work" aria-hidden="true" tabindex="-1">#</a>Force pushes that don't erase anyone's work</h2><p><code>sgit put -f</code> uses <code>--force-with-lease</code>, not <code>--force</code>. If someone pushed to the same branch after your last fetch, the push is refused:</p>
+<figure class="code" data-lang="text"><figcaption><span>text</span><button type="button" class="copy" data-copy="">Copy</button></figcaption><pre><code class="language-text hljs language-plaintext" data-highlighted="yes">$ sgit put -f ! [rejected] feature/login-com-google -&gt; feature/login-com-google (stale info)
+error: failed to push some refs to 'origin'</code></pre></figure><p>When you really do want to overwrite (the branch is yours alone, or the remote is in a state you don't care about), there's <code>--no-lease</code>. It has no one-letter shortcut on purpose. Typing the whole flag is a small speed bump, sized to the damage it can do.</p>
+<h2><a class="anchor" href="#stash-shelf-and-history" aria-hidden="true" tabindex="-1">#</a>Stash, shelf and history</h2><p><code>sgit stash</code> is Git's stash with clearer verbs: <code>put</code>, <code>get</code>, <code>ls</code>, <code>peek</code>, <code>keep</code>, <code>drop</code>, and <code>move</code>, which stashes, switches branch and pops on the other side.</p>
+<p><code>sgit shelf</code> is the part I miss when I use plain Git. Stash keeps working-tree changes. The shelf keeps whole commits, with their hash, message, author and date:</p>
+<figure class="code" data-lang="text"><figcaption><span>text</span><button type="button" class="copy" data-copy="">Copy</button></figcaption><pre><code class="language-text hljs language-plaintext" data-highlighted="yes">$ sgit shelf put 2 -m "token handling, revisit"
+Shelved 2 commit(s) as 20261012-182434-2c-3ee5 f72c5d1 fix(auth): retry once on 401 a69c744 fix(auth): handle expired token $ sgit shelf ls
+[0] 20261012-182434-2c-3ee5 (2026-10-12 18:24, 2 commit(s)) Label: token handling, revisit f72c5d1 fix(auth): retry once on 401 a69c744 fix(auth): handle expired token</code></pre></figure><p>The commits live under <code>refs/sgit/shelf/&lt;id&gt;</code>, so nothing is lost and the reflog covers even an accidental <code>drop</code>. <code>sgit shelf get</code> cherry-picks the chain back, and on a conflict it keeps the shelf and tells you exactly what to run once you've resolved it.</p>
+<p>For when something has already gone wrong, <code>sgit history</code> is the reflog made readable:</p>
+<figure class="code" data-lang="text"><figcaption><span>text</span><button type="button" class="copy" data-copy="">Copy</button></figcaption><pre><code class="language-text hljs language-plaintext" data-highlighted="yes">$ sgit history
+[0] 9 seconds ago commit fix(auth): handle expired tokens with a single retry
+[1] 19 seconds ago reset moving to HEAD~2
+[2] 9 seconds ago cherry fix(auth): retry once on 401</code></pre></figure><p><code>sgit history restore 1</code> moves HEAD back to that point, after asking for confirmation.</p>
+<h2><a class="anchor" href="#reading-code" aria-hidden="true" tabindex="-1">#</a>Reading code</h2><p><code>sgit who auth.js:42</code> is a <code>git blame</code> that doesn't stop at the hash. It shows the full message of the commit that touched that line. If the message was written well, it answers "why is this like this" without leaving the terminal.</p>
+<p><code>sgit log "token"</code> searches history with author and date filters, and <code>sgit incoming</code> and <code>sgit outgoing</code> show what's on the remote and not here, and the other way around.</p>
+<h2><a class="anchor" href="#worktrees" aria-hidden="true" tabindex="-1">#</a>Worktrees</h2><p><code>sgit wt add fix/rate-limit --from main</code> creates the branch, creates the worktree in a sibling folder and sets up the environment:</p>
+<figure class="code" data-lang="text"><figcaption><span>text</span><button type="button" class="copy" data-copy="">Copy</button></figcaption><pre><code class="language-text hljs language-plaintext" data-highlighted="yes">Preparing worktree (new branch 'fix/rate-limit')
+Auto-linking .env files (no .sgitlinks found)... Linked .env Worktree ready! Path: ../fix-rate-limit Branch: fix/rate-limit</code></pre></figure><p>It looks for <code>.env</code> files in the project and symlinks them into the new worktree (skipping <code>node_modules</code>, <code>dist</code> and friends), then installs dependencies. If the project needs more than that, a <code>.sgitlinks</code> file at the root lists what to link. <code>sgit wt rm</code> run from inside a worktree removes that worktree.</p>
+<p>This is how I run several agents in parallel on the same repository: one worktree per task, each with a working <code>.env</code> from the first command.</p>
+<h2><a class="anchor" href="#housekeeping" aria-hidden="true" tabindex="-1">#</a>Housekeeping</h2><p><code>sgit init --type node</code> creates the repository with a <code>.gitignore</code> for the ecosystem and the settings every team ends up turning on by hand: <code>pull.rebase</code>, <code>rerere.enabled</code>, <code>merge.conflictStyle zdiff3</code>, <code>diff.algorithm histogram</code>, <code>fetch.prune</code>, <code>branch.sort -committerdate</code>.</p>
+<p><code>sgit purge</code> deletes build artifacts and caches for Node, Rust, Python, Java, Go, .NET, Ruby, Dart and mobile. Start with <code>--dry-run</code>.</p>
+<p>And <code>sgit update</code> checks the installed version against the latest GitHub release and updates itself.</p>
+<h2><a class="anchor" href="#how-its-maintained" aria-hidden="true" tabindex="-1">#</a>How it's maintained</h2><p>There are 158 tests with <a href="https://github.com/bats-core/bats-core" target="_blank" rel="noopener noreferrer">bats-core</a>, split by area (commits, branches, sync, shelf, worktree, history). Each sync fix above went in together with a test for its scenario: a force-pushed remote, a squash-merged PR, an unreachable remote.</p>
+<p>Every push to <code>main</code> compiles the binary with Bashly, runs the tests, works out the version from the Conventional Commits (<code>feat</code> bumps minor, <code>fix</code> bumps patch, <code>!</code> bumps major) and publishes a GitHub release with the binary and the changelog. It's the same flow that publishes this blog, and it's why 44 releases in three months took no effort at all.</p>
+<p>The compiled binary also left the repository. It's reproducible from the source, and keeping it under version control only produced merge conflicts.</p>
+<h2><a class="anchor" href="#install" aria-hidden="true" tabindex="-1">#</a>Install</h2><p>You need Bash 4+ (<code>brew install bash</code> on a Mac), <code>curl</code> and <code>git</code>.</p>
+<figure class="code" data-lang="bash"><figcaption><span>bash</span><button type="button" class="copy" data-copy="">Copy</button></figcaption><pre><code class="language-bash hljs" data-highlighted="yes">curl -sL https://github.com/mkuchak/sugar-git/releases/latest/download/sgit | <span class="hljs-built_in">sudo</span> <span class="hljs-built_in">tee</span> /usr/local/bin/sgit &gt; /dev/null &amp;&amp; <span class="hljs-built_in">sudo</span> <span class="hljs-built_in">chmod</span> +x /usr/local/bin/sgit <span class="hljs-comment"># completions, in ~/.bashrc or ~/.zshrc</span>
+<span class="hljs-built_in">eval</span> <span class="hljs-string">"<span class="hljs-subst">$(sgit completions)</span>"</span></code></pre></figure><p><code>sgit -h</code> lists everything, and <code>sgit &lt;command&gt; -h</code> explains each one with examples. The code is on <a href="https://github.com/mkuchak/sugar-git" target="_blank" rel="noopener noreferrer">GitHub</a>.</p>
+</article> </div> <div class="pend"> <div class="share"> <span class="lbl">Share</span> <button class="tag" type="button">Copy link</button> <a class="tag" href="https://x.com/intent/post?text=I%20took%20the%20AI%20out%20of%20my%20Git%20CLI%2C%20and%20it%20got%20better&amp;url=http%3A%2F%2F127.0.0.1%3A36463%2Fblog%2Fi-took-the-ai-out-of-my-git-cli%2F" target="_blank" rel="noopener noreferrer">X ↗</a> <a class="tag" href="https://www.linkedin.com/sharing/share-offsite/?url=http%3A%2F%2F127.0.0.1%3A36463%2Fblog%2Fi-took-the-ai-out-of-my-git-cli%2F" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a> <a class="tag gh" href="https://github.com/mkuchak/blog/blob/main/site/posts/i-took-the-ai-out-of-my-git-cli.md" target="_blank" rel="noopener noreferrer">Edit on GitHub ↗</a> </div> <nav class="pn" aria-label="Keep reading"> <a class="prev" href="/blog/effortless-entity-management-type-aliases-for-creation-and-restoration/"><small>← Previous</small><span class="tp">Domain-Driven Design</span><b>Effortless Entity Management: Type Aliases for Creation and Restoration</b></a> </nav> <aside class="author"> <img src="https://github.com/mkuchak.png" alt="Marcos Kuchak" width="96" height="96"> <div> <span class="hello">Hey, I'm Marcos</span> <div class="rl">Senior <mark>Full-Stack</mark> Software Engineer · AI Agents, LLM &amp; MCP Systems</div> <p>I build AI agents that hold up in production. I like talking about agent architecture, MCP, evals and LLM cost. Send a note.</p> <div class="links"> <a href="/">About me →</a> <a href="mailto:hi@kuch.dev">hi@kuch.dev</a> <a href="https://github.com/mkuchak" target="_blank" rel="noreferrer">GitHub ↗</a> <a href="https://linkedin.com/in/mkuchak" target="_blank" rel="noreferrer">LinkedIn ↗</a> </div> </div> </aside> <a class="backall" href="/blog/">← All posts</a> </div> </div></main> <footer class="foot"> <div class="wrap"> <a class="brand" href="/">Kuchak<i>.</i></a> <span class="small">© 2026 <b>kuch.dev</b>. Explore, inspire, create.</span> <span class="set">Set in Inter, Noto Serif, Yellowtail and JetBrains Mono.</span> <a class="pill ghost" href="#top">Back to top ↑</a> </div> </footer></div></div><script>document.getElementById("kuch-ssr").remove()</script>
     <a class="skip" href="#main">Skip to content</a>
     <div id="app"></div>
 
@@ -547,7 +643,7 @@
           ["lang", "theme"].forEach((k) => cur.get(k) && !u.searchParams.has(k) && u.searchParams.set(k, cur.get(k)));
           return u.pathname + u.search + (hash ? "#" + hash : "");
         };
-        const landing = (hash) => carry("/pt-BR/v/a/" + (hash ? "#" + hash : ""));
+        const landing = (hash) => carry("/" + (hash ? "#" + hash : ""));
         const postHref = (slug) => carry(B.postUrl(slug));
         const tagHref = (tag) => carry(B.tagUrl(tag));
         const indexHref = () => carry(B.indexUrl());

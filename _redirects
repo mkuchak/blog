@@ -1,6 +1,11 @@
 # Old Next.js URLs
 /posts /blog/ 301
 /posts/ /blog/ 301
+/post/empower-your-commit-messages-with-sugar-git-and-ai /blog/i-took-the-ai-out-of-my-git-cli/ 301
+/blog/empower-your-commit-messages-with-sugar-git-and-ai /blog/i-took-the-ai-out-of-my-git-cli/ 301
+/blog/empower-your-commit-messages-with-sugar-git-and-ai/ /blog/i-took-the-ai-out-of-my-git-cli/ 301
+/pt-BR/blog/empower-your-commit-messages-with-sugar-git-and-ai /pt-BR/blog/i-took-the-ai-out-of-my-git-cli/ 301
+/pt-BR/blog/empower-your-commit-messages-with-sugar-git-and-ai/ /pt-BR/blog/i-took-the-ai-out-of-my-git-cli/ 301
 /post/:slug /blog/:slug/ 301
 /tags/:tag /blog/?tag=:tag 301
 /about / 301
