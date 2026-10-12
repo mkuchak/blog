@@ -61,15 +61,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>I took the AI out of my Git CLI, and it got better · Marcos Kuchak</title>
     <link rel="alternate" type="application/rss+xml" title="Marcos Kuchak · Field notes" href="feed.xml" />
-    <script src="/assets/content.js?v=b687006a07"></script>
+    <script src="/assets/content.js?v=0f7339b34c"></script>
     <script>window.KUCH_DRAFTS_ALL = {"en": [{"slug": "confidence-gates-letting-agents-act-alone-without-losing-sleep", "title": "Confidence gates: letting agents act alone without losing sleep", "topic": "AI Agents", "tags": ["Agents"], "published": false}, {"slug": "cutting-llm-cost-80-without-changing-the-model", "title": "Cutting LLM cost 80% without changing the model", "topic": "LLM Cost", "tags": ["Cost"], "published": false}, {"slug": "designing-mcp-tools-agents-can-actually-call", "title": "Designing MCP tools agents can actually call", "topic": "Model Context Protocol", "tags": ["MCP"], "published": false}, {"slug": "your-agent-doesnt-need-the-password", "title": "Your agent doesn't need the password", "topic": "Security", "tags": ["Security"], "published": false}], "pt": [{"slug": "confidence-gates-letting-agents-act-alone-without-losing-sleep", "title": "Confidence gates: deixando agentes agirem sozinhos sem perder o sono", "topic": "Agentes de IA", "tags": ["Agentes"], "published": false}, {"slug": "cutting-llm-cost-80-without-changing-the-model", "title": "Cortando 80% do custo de LLM sem trocar de modelo", "topic": "Custo de LLM", "tags": ["Custo"], "published": false}, {"slug": "designing-mcp-tools-agents-can-actually-call", "title": "Desenhando ferramentas MCP que agentes conseguem chamar", "topic": "Model Context Protocol", "tags": ["MCP"], "published": false}, {"slug": "your-agent-doesnt-need-the-password", "title": "Seu agente não precisa da senha", "topic": "Segurança", "tags": ["Segurança"], "published": false}]}; window.KUCH_DRAFTS = window.KUCH_DRAFTS_ALL[(window.KUCH && KUCH.lang) || "en"];</script>
     <script>window.KUCH_VARIANT = { key: "E", name: "Blog · Editorial + runtime", defaultTheme: "light", page: "blog", blogPage: "/blog/" };</script>
-    <script src="/assets/prefs.js?v=b687006a07"></script>
-    <script src="/assets/switcher.js?v=b687006a07"></script>
+    <script src="/assets/prefs.js?v=0f7339b34c"></script>
+    <script src="/assets/switcher.js?v=0f7339b34c"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked@18.0.14/lib/marked.umd.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/dompurify@3.4.16/dist/purify.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets@11.12.0/highlight.min.js"></script>
-    <script src="/assets/blog.js?v=b687006a07"></script>
+    <script src="/assets/blog.js?v=0f7339b34c"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -513,6 +513,28 @@
         .aura i:nth-child(1) { width: 340px; height: 340px; }
         .aura i:nth-child(2) { width: 300px; height: 300px; }
       }
+      /* ---------- the art of creating (carried over from the first kuch.dev) ---------- */
+      .art { padding: 24px 0 8px; margin-top: 110px; }
+      .art + footer.foot { margin-top: 40px; }
+      .art-title { display: inline-block; font: 400 clamp(2.2rem, 4vw, 3rem)/1.1 var(--script); color: var(--y); letter-spacing: 0; transform: rotate(-3deg); margin: 0 0 6px; }
+      .art-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: clamp(10px, 2.2vw, 28px); padding: 22px 6px 30px; margin: 0; list-style: none; }
+      .art .ph { --k: 1; }
+      .art .tilt {
+        display: block; aspect-ratio: 1; border-radius: 22px; overflow: hidden; background: var(--mist);
+        transform: rotate(calc(var(--t) * var(--k) * 1deg));
+        box-shadow: 0 18px 40px -26px rgba(15, 14, 20, 0.55);
+        transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease);
+      }
+      .art .tilt img { display: block; width: 100%; height: 100%; object-fit: cover; }
+      .art .ph:hover { position: relative; z-index: 2; }
+      .art .ph:hover .tilt { transform: rotate(0deg) translateY(-8px) scale(1.07); box-shadow: 0 30px 60px -28px rgba(15, 14, 20, 0.7); }
+      .motion .art .ph { opacity: 0; transform: translateY(44px) scale(0.92); transition: opacity 0.8s var(--ease), transform 0.9s var(--ease); transition-delay: calc(var(--i) * 90ms); }
+      .motion .art.in .ph { opacity: 1; transform: none; }
+      @media (max-width: 720px) {
+        .art-grid { grid-template-columns: repeat(3, 1fr); padding: 16px 4px 22px; }
+        .art .ph { --k: 0.5; }
+        .art .tilt { border-radius: 16px; }
+      }
       @media (prefers-reduced-motion: reduce) {
         *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
       }
@@ -612,7 +634,7 @@ Auto-linking .env files (no .sgitlinks found)... Linked .env Worktree ready! Pat
 <h2><a class="anchor" href="#install" aria-hidden="true" tabindex="-1">#</a>Install</h2><p>You need Bash 4+ (<code>brew install bash</code> on a Mac), <code>curl</code> and <code>git</code>.</p>
 <figure class="code" data-lang="bash"><figcaption><span>bash</span><button type="button" class="copy" data-copy="">Copy</button></figcaption><pre><code class="language-bash hljs" data-highlighted="yes">curl -sL https://github.com/mkuchak/sugar-git/releases/latest/download/sgit | <span class="hljs-built_in">sudo</span> <span class="hljs-built_in">tee</span> /usr/local/bin/sgit &gt; /dev/null &amp;&amp; <span class="hljs-built_in">sudo</span> <span class="hljs-built_in">chmod</span> +x /usr/local/bin/sgit <span class="hljs-comment"># completions, in ~/.bashrc or ~/.zshrc</span>
 <span class="hljs-built_in">eval</span> <span class="hljs-string">"<span class="hljs-subst">$(sgit completions)</span>"</span></code></pre></figure><p><code>sgit -h</code> lists everything, and <code>sgit &lt;command&gt; -h</code> explains each one with examples. The code is on <a href="https://github.com/mkuchak/sugar-git" target="_blank" rel="noopener noreferrer">GitHub</a>.</p>
-</article> </div> <div class="pend"> <div class="share"> <span class="lbl">Share</span> <button class="tag" type="button">Copy link</button> <a class="tag" href="https://x.com/intent/post?text=I%20took%20the%20AI%20out%20of%20my%20Git%20CLI%2C%20and%20it%20got%20better&amp;url=http%3A%2F%2F127.0.0.1%3A40025%2Fblog%2Fi-took-the-ai-out-of-my-git-cli%2F" target="_blank" rel="noopener noreferrer">X ↗</a> <a class="tag" href="https://www.linkedin.com/sharing/share-offsite/?url=http%3A%2F%2F127.0.0.1%3A40025%2Fblog%2Fi-took-the-ai-out-of-my-git-cli%2F" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a> <a class="tag gh" href="https://github.com/mkuchak/blog/blob/main/site/posts/i-took-the-ai-out-of-my-git-cli.md" target="_blank" rel="noopener noreferrer">Edit on GitHub ↗</a> </div> <nav class="pn" aria-label="Keep reading"> <a class="prev" href="/blog/entities-your-agent-cant-break/"><small>← Previous</small><span class="tp">Domain-Driven Design</span><b>Entities your agent can't break</b></a> </nav> <aside class="author"> <img src="https://github.com/mkuchak.png" alt="Marcos Kuchak" width="96" height="96"> <div> <span class="hello">Hey, I'm Marcos</span> <div class="rl">Senior <mark>Full-Stack</mark> Software Engineer · AI Agents, LLM &amp; MCP Systems</div> <p>I build AI agents that hold up in production. I like talking about agent architecture, MCP, evals and LLM cost. Send a note.</p> <div class="links"> <a href="/">About me →</a> <a href="mailto:hi@kuch.dev">hi@kuch.dev</a> <a href="https://github.com/mkuchak" target="_blank" rel="noreferrer">GitHub ↗</a> <a href="https://linkedin.com/in/mkuchak" target="_blank" rel="noreferrer">LinkedIn ↗</a> </div> </div> </aside> <a class="backall" href="/blog/">← All posts</a> </div> </div></main> <footer class="foot"> <div class="wrap"> <a class="brand" href="/">Kuchak<i>.</i></a> <span class="small">© 2026 <b>kuch.dev</b>. Explore, inspire, create.</span> <span class="set">Set in Inter, Noto Serif, Yellowtail and JetBrains Mono.</span> <a class="pill ghost" href="#top">Back to top ↑</a> </div> </footer></div></div><script>document.getElementById("kuch-ssr").remove()</script>
+</article> </div> <div class="pend"> <div class="share"> <span class="lbl">Share</span> <button class="tag" type="button">Copy link</button> <a class="tag" href="https://x.com/intent/post?text=I%20took%20the%20AI%20out%20of%20my%20Git%20CLI%2C%20and%20it%20got%20better&amp;url=http%3A%2F%2F127.0.0.1%3A33123%2Fblog%2Fi-took-the-ai-out-of-my-git-cli%2F" target="_blank" rel="noopener noreferrer">X ↗</a> <a class="tag" href="https://www.linkedin.com/sharing/share-offsite/?url=http%3A%2F%2F127.0.0.1%3A33123%2Fblog%2Fi-took-the-ai-out-of-my-git-cli%2F" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a> <a class="tag gh" href="https://github.com/mkuchak/blog/blob/main/site/posts/i-took-the-ai-out-of-my-git-cli.md" target="_blank" rel="noopener noreferrer">Edit on GitHub ↗</a> </div> <nav class="pn" aria-label="Keep reading"> <a class="prev" href="/blog/entities-your-agent-cant-break/"><small>← Previous</small><span class="tp">Domain-Driven Design</span><b>Entities your agent can't break</b></a> </nav> <aside class="author"> <img src="https://github.com/mkuchak.png" alt="Marcos Kuchak" width="96" height="96"> <div> <span class="hello">Hey, I'm Marcos</span> <div class="rl">Senior <mark>Full-Stack</mark> Software Engineer · AI Agents, LLM &amp; MCP Systems</div> <p>I build AI agents that hold up in production. I like talking about agent architecture, MCP, evals and LLM cost. Send a note.</p> <div class="links"> <a href="/">About me →</a> <a href="mailto:hi@kuch.dev">hi@kuch.dev</a> <a href="https://github.com/mkuchak" target="_blank" rel="noreferrer">GitHub ↗</a> <a href="https://linkedin.com/in/mkuchak" target="_blank" rel="noreferrer">LinkedIn ↗</a> </div> </div> </aside> <a class="backall" href="/blog/">← All posts</a> </div> </div></main> <section class="art in" aria-labelledby="art-title"> <div class="wrap"> <h2 class="art-title">The art of creating</h2> <ul class="art-grid"><li class="ph" style="--i:0;--t:-8"><span class="tilt"><img src="/images/fun/keyboard.webp" alt="A wide-eyed man hugging an old keyboard, a mouse and a tangle of cables" width="320" height="320" loading="lazy" decoding="async"></span></li><li class="ph" style="--i:1;--t:7"><span class="tilt"><img src="/images/fun/astronaut-helmet.webp" alt="A man in an astronaut helmet lit in green, looking up" width="320" height="320" loading="lazy" decoding="async"></span></li><li class="ph" style="--i:2;--t:-6"><span class="tilt"><img src="/images/fun/jump.webp" alt="A man jumping in a field with his arms open, phone in hand" width="320" height="320" loading="lazy" decoding="async"></span></li><li class="ph" style="--i:3;--t:9"><span class="tilt"><img src="/images/fun/horse-mask.webp" alt="A person in a horse mask celebrating with a phone" width="320" height="320" loading="lazy" decoding="async"></span></li><li class="ph" style="--i:4;--t:-7"><span class="tilt"><img src="/images/fun/vr-skeleton.webp" alt="A skeleton wearing a VR headset" width="320" height="320" loading="lazy" decoding="async"></span></li><li class="ph" style="--i:5;--t:6"><span class="tilt"><img src="/images/fun/astronaut-stairs.webp" alt="An astronaut sitting on a stairway, busy with a tablet" width="320" height="320" loading="lazy" decoding="async"></span></li></ul> </div> </section> <footer class="foot"> <div class="wrap"> <a class="brand" href="/">Kuchak<i>.</i></a> <span class="small">© 2026 <b>kuch.dev</b>. Explore, inspire, create.</span> <span class="set">Set in Inter, Noto Serif, Yellowtail and JetBrains Mono.</span> <a class="pill ghost" href="#top">Back to top ↑</a> </div> </footer></div></div><script>document.getElementById("kuch-ssr").remove()</script>
     <a class="skip" href="#main">Skip to content</a>
     <div id="app"></div>
 
@@ -677,6 +699,14 @@ Auto-linking .env files (no .sgitlinks found)... Linked .env Worktree ready! Pat
             <span class="progress" aria-hidden="true"></span>
           </header>
           <main id="main" tabindex="-1"><div class="wrap loading">…</div></main>
+          <section class="art" aria-labelledby="art-title">
+            <div class="wrap">
+              <h2 class="art-title" id="art-title">${esc(c.art.title)}</h2>
+              <ul class="art-grid">${m.art
+                .map((src, i) => `<li class="ph" style="--i:${i};--t:${[-8, 7, -6, 9, -7, 6][i]}"><span class="tilt"><img src="${src}" alt="${esc(c.art.alt[i])}" width="320" height="320" loading="lazy" decoding="async" /></span></li>`)
+                .join("")}</ul>
+            </div>
+          </section>
           <footer class="foot">
             <div class="wrap">
               <a class="brand" href="${landing()}">Kuchak<i>.</i></a>
@@ -702,6 +732,7 @@ Auto-linking .env files (no .sgitlinks found)... Linked .env Worktree ready! Pat
           { threshold: 0.12, rootMargin: "0px 0px -4% 0px" }
         );
         const reveal = () => main.querySelectorAll(".rv:not(.in)").forEach((el) => io.observe(el));
+        io.observe(document.querySelector(".art"));
 
         // Page progress: post view tracks the article, index tracks the page.
         let progressTarget = null;

@@ -58,15 +58,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>I took the AI out of my Git CLI, and it got better · Marcos Kuchak</title>
     <link rel="alternate" type="application/rss+xml" title="Marcos Kuchak · Field notes" href="feed.xml" />
-    <script src="/assets/content.js?v=b687006a07"></script>
+    <script src="/assets/content.js?v=0f7339b34c"></script>
     <script>window.KUCH_DRAFTS_ALL = {"en": [{"slug": "confidence-gates-letting-agents-act-alone-without-losing-sleep", "title": "Confidence gates: letting agents act alone without losing sleep", "topic": "AI Agents", "tags": ["Agents"], "published": false}, {"slug": "cutting-llm-cost-80-without-changing-the-model", "title": "Cutting LLM cost 80% without changing the model", "topic": "LLM Cost", "tags": ["Cost"], "published": false}, {"slug": "designing-mcp-tools-agents-can-actually-call", "title": "Designing MCP tools agents can actually call", "topic": "Model Context Protocol", "tags": ["MCP"], "published": false}, {"slug": "your-agent-doesnt-need-the-password", "title": "Your agent doesn't need the password", "topic": "Security", "tags": ["Security"], "published": false}], "pt": [{"slug": "confidence-gates-letting-agents-act-alone-without-losing-sleep", "title": "Confidence gates: deixando agentes agirem sozinhos sem perder o sono", "topic": "Agentes de IA", "tags": ["Agentes"], "published": false}, {"slug": "cutting-llm-cost-80-without-changing-the-model", "title": "Cortando 80% do custo de LLM sem trocar de modelo", "topic": "Custo de LLM", "tags": ["Custo"], "published": false}, {"slug": "designing-mcp-tools-agents-can-actually-call", "title": "Desenhando ferramentas MCP que agentes conseguem chamar", "topic": "Model Context Protocol", "tags": ["MCP"], "published": false}, {"slug": "your-agent-doesnt-need-the-password", "title": "Seu agente não precisa da senha", "topic": "Segurança", "tags": ["Segurança"], "published": false}]}; window.KUCH_DRAFTS = window.KUCH_DRAFTS_ALL[(window.KUCH && KUCH.lang) || "en"];</script>
     <script>window.KUCH_VARIANT = { key: "E", name: "Blog · Editorial + runtime", defaultTheme: "light", page: "blog", blogPage: "/v/a/blog/" };</script>
-    <script src="/assets/prefs.js?v=b687006a07"></script>
-    <script src="/assets/switcher.js?v=b687006a07"></script>
+    <script src="/assets/prefs.js?v=0f7339b34c"></script>
+    <script src="/assets/switcher.js?v=0f7339b34c"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked@18.0.14/lib/marked.umd.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/dompurify@3.4.16/dist/purify.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets@11.12.0/highlight.min.js"></script>
-    <script src="/assets/blog.js?v=b687006a07"></script>
+    <script src="/assets/blog.js?v=0f7339b34c"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -510,6 +510,28 @@
         .aura i:nth-child(1) { width: 340px; height: 340px; }
         .aura i:nth-child(2) { width: 300px; height: 300px; }
       }
+      /* ---------- the art of creating (carried over from the first kuch.dev) ---------- */
+      .art { padding: 24px 0 8px; margin-top: 110px; }
+      .art + footer.foot { margin-top: 40px; }
+      .art-title { display: inline-block; font: 400 clamp(2.2rem, 4vw, 3rem)/1.1 var(--script); color: var(--y); letter-spacing: 0; transform: rotate(-3deg); margin: 0 0 6px; }
+      .art-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: clamp(10px, 2.2vw, 28px); padding: 22px 6px 30px; margin: 0; list-style: none; }
+      .art .ph { --k: 1; }
+      .art .tilt {
+        display: block; aspect-ratio: 1; border-radius: 22px; overflow: hidden; background: var(--mist);
+        transform: rotate(calc(var(--t) * var(--k) * 1deg));
+        box-shadow: 0 18px 40px -26px rgba(15, 14, 20, 0.55);
+        transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease);
+      }
+      .art .tilt img { display: block; width: 100%; height: 100%; object-fit: cover; }
+      .art .ph:hover { position: relative; z-index: 2; }
+      .art .ph:hover .tilt { transform: rotate(0deg) translateY(-8px) scale(1.07); box-shadow: 0 30px 60px -28px rgba(15, 14, 20, 0.7); }
+      .motion .art .ph { opacity: 0; transform: translateY(44px) scale(0.92); transition: opacity 0.8s var(--ease), transform 0.9s var(--ease); transition-delay: calc(var(--i) * 90ms); }
+      .motion .art.in .ph { opacity: 1; transform: none; }
+      @media (max-width: 720px) {
+        .art-grid { grid-template-columns: repeat(3, 1fr); padding: 16px 4px 22px; }
+        .art .ph { --k: 0.5; }
+        .art .tilt { border-radius: 16px; }
+      }
       @media (prefers-reduced-motion: reduce) {
         *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
       }
@@ -581,6 +603,14 @@
             <span class="progress" aria-hidden="true"></span>
           </header>
           <main id="main" tabindex="-1"><div class="wrap loading">…</div></main>
+          <section class="art" aria-labelledby="art-title">
+            <div class="wrap">
+              <h2 class="art-title" id="art-title">${esc(c.art.title)}</h2>
+              <ul class="art-grid">${m.art
+                .map((src, i) => `<li class="ph" style="--i:${i};--t:${[-8, 7, -6, 9, -7, 6][i]}"><span class="tilt"><img src="${src}" alt="${esc(c.art.alt[i])}" width="320" height="320" loading="lazy" decoding="async" /></span></li>`)
+                .join("")}</ul>
+            </div>
+          </section>
           <footer class="foot">
             <div class="wrap">
               <a class="brand" href="${landing()}">Kuchak<i>.</i></a>
@@ -606,6 +636,7 @@
           { threshold: 0.12, rootMargin: "0px 0px -4% 0px" }
         );
         const reveal = () => main.querySelectorAll(".rv:not(.in)").forEach((el) => io.observe(el));
+        io.observe(document.querySelector(".art"));
 
         // Page progress: post view tracks the article, index tracks the page.
         let progressTarget = null;
