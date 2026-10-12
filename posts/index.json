@@ -38,18 +38,18 @@
     }
   },
   {
-    "slug": "effortless-entity-management-type-aliases-for-creation-and-restoration",
-    "title": "Effortless Entity Management: Type Aliases for Creation and Restoration",
-    "description": "Dive into how TypeScript type aliases simplify the creation and restoration of Domain-Driven Design (DDD) entities, offering a cleaner constructor pattern compared to traditional static factory methods. Discover the elegance and ease of maintenance that this approach brings to your code.",
+    "slug": "entities-your-agent-cant-break",
+    "title": "Entities your agent can't break",
+    "description": "These days an agent writes a good chunk of your domain code, and it takes whatever path the code leaves open. How to model creating and restoring entities in TypeScript, with classes, so the wrong shortcut doesn't even compile.",
     "topic": "Domain-Driven Design",
     "cover": "https://github.com/mkuchak/blog/assets/3791148/3f04ab80-ccf4-46d9-8ce2-360c60b0fe31",
-    "date": "2024-02-08",
+    "date": "2026-09-28",
     "updated": null,
     "tags": [
       "Domain-Driven Design",
       "TypeScript",
-      "Design Patterns",
-      "Type Aliases"
+      "Object-Oriented Programming",
+      "AI Agents"
     ],
     "readingMinutes": 8,
     "langs": [
@@ -58,14 +58,14 @@
     ],
     "i18n": {
       "pt": {
-        "title": "Gerenciamento de entidades sem esforço: type aliases para criação e restauração",
-        "description": "Veja como os type aliases do TypeScript simplificam a criação e a restauração de entidades no Domain-Driven Design (DDD), com um padrão de constructor mais limpo do que os tradicionais static factory methods. Descubra a elegância e a facilidade de manutenção que essa abordagem traz para o seu código.",
+        "title": "Entidades que o agente não consegue quebrar",
+        "description": "Hoje quem escreve boa parte do código de domínio é um agente, e ele vai pelo caminho que o código deixa aberto. Como modelar a criação e a restauração de entidades em TypeScript, com classes, pra que o atalho errado nem compile.",
         "topic": "Domain-Driven Design",
         "tags": [
           "Domain-Driven Design",
           "TypeScript",
-          "Padrões de Projeto",
-          "Type Aliases"
+          "Orientação a Objetos",
+          "Agentes de IA"
         ],
         "readingMinutes": 8
       }

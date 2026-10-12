@@ -6,6 +6,11 @@
 /blog/empower-your-commit-messages-with-sugar-git-and-ai/ /blog/i-took-the-ai-out-of-my-git-cli/ 301
 /pt-BR/blog/empower-your-commit-messages-with-sugar-git-and-ai /pt-BR/blog/i-took-the-ai-out-of-my-git-cli/ 301
 /pt-BR/blog/empower-your-commit-messages-with-sugar-git-and-ai/ /pt-BR/blog/i-took-the-ai-out-of-my-git-cli/ 301
+/post/effortless-entity-management-type-aliases-for-creation-and-restoration /blog/entities-your-agent-cant-break/ 301
+/blog/effortless-entity-management-type-aliases-for-creation-and-restoration /blog/entities-your-agent-cant-break/ 301
+/blog/effortless-entity-management-type-aliases-for-creation-and-restoration/ /blog/entities-your-agent-cant-break/ 301
+/pt-BR/blog/effortless-entity-management-type-aliases-for-creation-and-restoration /pt-BR/blog/entities-your-agent-cant-break/ 301
+/pt-BR/blog/effortless-entity-management-type-aliases-for-creation-and-restoration/ /pt-BR/blog/entities-your-agent-cant-break/ 301
 /post/:slug /blog/:slug/ 301
 /tags/:tag /blog/?tag=:tag 301
 /about / 301
