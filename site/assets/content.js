@@ -379,10 +379,10 @@
       {
         name: "sugar-git",
         url: "https://github.com/mkuchak/sugar-git",
-        tagline: "Conventional commits with AI-written messages",
-        detail: "A Git CLI with semantic branches and AI commit messages. Maintained since 2021.",
-        tags: ["Bash", "AI", "Git"],
-        stat: "43 releases",
+        tagline: "Git with conventions and a safety net",
+        detail: "A Git CLI for Conventional Commits, semantic branches, safe syncs and force pushes, shelved commits and agent-ready worktrees. Maintained since 2021, 158 tests.",
+        tags: ["Bash", "Git", "CLI"],
+        stat: "44 releases",
       },
       {
         name: "llm-factory",
@@ -411,10 +411,10 @@
     },
     writing: [
       {
-        title: "Empower your commit messages with Sugar Git and AI",
-        url: "https://kuch.dev/post/empower-your-commit-messages-with-sugar-git-and-ai",
-        tags: ["Git", "AI"],
-        date: "Feb 2024",
+        title: "I took the AI out of my Git CLI, and it got better",
+        url: "https://kuch.dev/blog/i-took-the-ai-out-of-my-git-cli/",
+        tags: ["Git", "CLI"],
+        date: "Oct 2026",
         published: true,
       },
       {
@@ -767,10 +767,10 @@
       {
         name: "sugar-git",
         url: "https://github.com/mkuchak/sugar-git",
-        tagline: "Conventional commits com mensagens escritas por IA",
-        detail: "Uma CLI de Git com branches semânticas e mensagens de commit geradas por IA. Mantida desde 2021.",
-        tags: ["Bash", "IA", "Git"],
-        stat: "43 releases",
+        tagline: "Git com convenções e rede de segurança",
+        detail: "Uma CLI de Git para Conventional Commits, branches semânticas, sync e force push seguros, commits guardados na shelf e worktrees prontas para agentes. Mantida desde 2021, 158 testes.",
+        tags: ["Bash", "Git", "CLI"],
+        stat: "44 releases",
       },
       {
         name: "llm-factory",
@@ -799,10 +799,10 @@
     },
     writing: [
       {
-        title: "Empower your commit messages with Sugar Git and AI",
-        url: "https://kuch.dev/post/empower-your-commit-messages-with-sugar-git-and-ai",
-        tags: ["Git", "IA"],
-        date: "fev 2024",
+        title: "Tirei a IA do meu CLI de Git, e ele ficou melhor",
+        url: "https://kuch.dev/pt-BR/blog/i-took-the-ai-out-of-my-git-cli/",
+        tags: ["Git", "CLI"],
+        date: "out 2026",
         published: true,
       },
       {
