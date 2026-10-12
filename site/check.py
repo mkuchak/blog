@@ -121,6 +121,14 @@ for lang, L in build.LANGS.items():
         if os.path.exists(os.path.join(DIST, f"{prefix}/blog/{d['slug']}/index.html".lstrip("/"))):
             fail(f"draft {d['slug']} must not have a page")
 
+# Renamed posts: the new slug is published and the old one left no page behind
+for old, new in build.RENAMED_POSTS.items():
+    if new not in [p["slug"] for p in published]:
+        fail(f"RENAMED_POSTS: {new} is not a published post")
+    for L in build.LANGS.values():
+        if os.path.exists(os.path.join(DIST, f"{L['prefix']}/blog/{old}/index.html".lstrip("/"))):
+            fail(f"{L['prefix']}/blog/{old}/ still exists; it should only redirect")
+
 # In-page links in every post (both languages) point at a real heading. Ids follow blog.js slugify (GitHub style).
 def heading_id(text):
     text = re.sub(r"\[([^\]]*)\]\([^)]*\)", r"\1", text).replace("`", "").replace("**", "").replace("*", "")
